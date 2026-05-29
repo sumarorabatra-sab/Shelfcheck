@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShelfCheck — UAE School Library Tools</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  --ink: #1C1C2E;
+  --ink-soft: #2d2d44;
+  --ink-muted: #6b7280;
+  --parchment: #FAF8F5;
+  --parchment-dark: #F0EDE8;
+  --gold: #C9A84C;
+  --gold-light: #E8C97A;
+  --gold-pale: #FDF8EC;
+  --red: #C0392B;
+  --red-soft: #FDECEA;
+  --amber: #D68910;
+  --amber-soft: #FEF9E7;
+  --green: #1A7A45;
+  --green-soft: #EAFAF1;
+  --blue: #1A5276;
+  --blue-soft: #EAF2FB;
+  --border: #E2DDD6;
+  --uae-red: #FF0000;
+  --uae-red-soft: rgba(255,0,0,0.08);
+  --uae-green: #00732F;
+  --uae-green-soft: rgba(0,115,47,0.08);
+  --shadow-sm: 0 2px 8px rgba(28,28,46,0.08);
+  --shadow-md: 0 4px 24px rgba(28,28,46,0.12);
+  --shadow-lg: 0 8px 40px rgba(28,28,46,0.16);
+  --radius: 14px;
+  --radius-sm: 8px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--parchment);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ── UAE FLAG ACCENT BAR ── */
+.uae-bar {
+  height: 4px;
+  background: linear-gradient(to right, var(--uae-red) 0%, var(--uae-red) 33%, #fff 33%, #fff 38%, var(--uae-green) 38%, var(--uae-green) 100%);
+  position: relative;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--ink);
+  position: sticky; top:0; z-index:100;
+  box-shadow: var(--shadow-md);
+}
+.header-inner {
+  max-width: 1100px; margin:0 auto;
+  padding: 14px 32px;
+  display: flex; align-items:center; justify-content:space-between;
+}
+.logo { display:flex; align-items:center; gap:12px; text-decoration:none; cursor:pointer; }
+.logo-mark {
+  width:40px; height:40px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; font-weight:700; color:var(--ink);
+  letter-spacing:-1px; font-family:'Playfair Display',serif;
+  box-shadow: 0 2px 8px rgba(201,168,76,0.4);
+  position:relative; overflow:hidden;
+}
+.logo-mark::after {
+  content:'';
+  position:absolute; left:0; top:0; bottom:0; width:4px;
+  background: linear-gradient(to bottom, var(--uae-red) 0%, var(--uae-red) 50%, var(--uae-green) 50%, var(--uae-green) 100%);
+}
+.logo-text h1 {
+  font-family:'Playfair Display',serif;
+  font-size:20px; font-weight:700; color:#fff; letter-spacing:0.3px;
+}
+.logo-text p { font-size:11px; color:rgba(255,255,255,0.45); letter-spacing:0.5px; margin-top:1px; }
+.header-right { display:flex; align-items:center; gap:10px; }
+.header-tag {
+  padding:5px 12px; border-radius:20px;
+  font-size:11px; font-weight:600; letter-spacing:0.5px;
+  background:rgba(201,168,76,0.15); color:var(--gold-light);
+  border:1px solid rgba(201,168,76,0.2);
+}
+.header-flag {
+  display:flex; align-items:center; gap:0;
+  border-radius:4px; overflow:hidden;
+  border:1px solid rgba(255,255,255,0.15);
+  height:20px;
+}
+.hf-red { width:8px; height:20px; background:var(--uae-red); }
+.hf-white { width:22px; height:20px; background:#fff; }
+.hf-green { width:8px; height:20px; background:var(--uae-green); }
+
+/* ── MAIN NAV TABS ── */
+.main-nav {
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.main-nav-inner {
+  max-width:1100px; margin:0 auto;
+  padding:0 32px;
+  display:flex; gap:0;
+}
+.main-nav-tab {
+  padding:13px 24px; border:none; background:transparent;
+  font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500;
+  color:rgba(255,255,255,0.45); cursor:pointer;
+  transition:all 0.2s;
+  display:flex; align-items:center; gap:8px;
+  border-bottom:3px solid transparent; margin-bottom:-1px;
+  white-space:nowrap;
+}
+.main-nav-tab:hover { color:rgba(255,255,255,0.75); }
+.main-nav-tab.active {
+  color:#fff;
+  border-bottom-color:var(--gold);
+}
+.main-nav-tab.active .nav-icon { color:var(--gold-light); }
+.nav-badge {
+  font-size:9px; font-weight:700; letter-spacing:0.5px;
+  padding:2px 6px; border-radius:10px;
+  background:rgba(201,168,76,0.15); color:var(--gold-light);
+  border:1px solid rgba(201,168,76,0.2); text-transform:uppercase;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 56px 32px 48px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero-shelfcheck {
+  background: linear-gradient(160deg, var(--ink) 0%, #2a2a45 60%, #1a3a5c 100%);
+}
+.hero-readinglist {
+  background: linear-gradient(160deg, #0d1f12 0%, #1a3320 60%, #0f2a1a 100%);
+}
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(201,168,76,0.07) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 20%, rgba(26,90,134,0.1) 0%, transparent 50%);
+}
+.hero-readinglist::before {
+  background: radial-gradient(ellipse at 30% 50%, rgba(0,115,47,0.12) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 20%, rgba(201,168,76,0.08) 0%, transparent 50%);
+}
+/* UAE flag stripe accent on hero */
+.hero::after {
+  content:'';
+  position:absolute; left:0; top:0; bottom:0; width:5px;
+  background: linear-gradient(to bottom, var(--uae-red) 0%, var(--uae-red) 34%, #fff 34%, #fff 38%, var(--uae-green) 38%, var(--uae-green) 100%);
+}
+.hero-inner { position:relative; max-width:640px; margin:0 auto; }
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:7px;
+  padding:6px 14px; border-radius:20px;
+  background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.2);
+  font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase;
+  color:var(--gold-light); margin-bottom:20px;
+}
+.hero-readinglist .hero-eyebrow {
+  background:rgba(0,115,47,0.15); border-color:rgba(0,180,80,0.25); color:#4ade80;
+}
+.hero h2 {
+  font-family:'Playfair Display',serif;
+  font-size:38px; font-weight:700; color:#fff;
+  line-height:1.15; margin-bottom:14px;
+  letter-spacing:-0.5px;
+}
+.hero h2 em { font-style:italic; color:var(--gold-light); }
+.hero-readinglist h2 em { color:#4ade80; }
+.hero-sub {
+  font-size:15px; color:rgba(255,255,255,0.5);
+  line-height:1.6; margin-bottom:0; font-weight:300;
+}
+
+/* ── MAIN ── */
+.main { max-width:1100px; margin:0 auto; padding:40px 32px; }
+
+/* ── INNER TABS (ShelfCheck sub-tabs) ── */
+.tabs {
+  display:flex; gap:3px;
+  background:var(--parchment-dark);
+  border-radius:12px; padding:4px;
+  margin-bottom:32px;
+  border:1px solid var(--border);
+  width:fit-content;
+}
+.tab {
+  padding:9px 20px; border:none;
+  background:transparent; border-radius:9px;
+  font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500;
+  color:var(--ink-muted); cursor:pointer; transition:all 0.2s;
+  display:flex; align-items:center; gap:7px; white-space:nowrap;
+}
+.tab:hover { background:rgba(255,255,255,0.7); color:var(--ink); }
+.tab.active { background:var(--ink); color:#fff; box-shadow:var(--shadow-sm); }
+.tab.active .ti { color:var(--gold-light); }
+.tab .premium-dot {
+  width:6px; height:6px; border-radius:50%;
+  background:var(--gold); margin-left:2px;
+}
+
+/* ── CARD ── */
+.card {
+  background:#fff; border-radius:var(--radius);
+  border:1px solid var(--border); box-shadow:var(--shadow-sm);
+  overflow:hidden;
+}
+.card-header {
+  padding:22px 28px 18px;
+  border-bottom:1px solid var(--parchment-dark);
+}
+.card-header h2 { font-family:'Playfair Display',serif; font-size:20px; }
+.card-header p { font-size:13px; color:var(--ink-muted); margin-top:4px; line-height:1.5; }
+.card-body { padding:28px; }
+
+/* ── SEARCH FORM ── */
+.search-grid {
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  gap:14px; margin-bottom:14px;
+}
+.field { display:flex; flex-direction:column; gap:6px; }
+.field-label {
+  font-size:11px; font-weight:600; text-transform:uppercase;
+  letter-spacing:0.8px; color:var(--ink-soft);
+}
+.field-label .req { color:var(--gold); margin-left:2px; }
+.field-label .opt { color:#bbb; font-weight:400; text-transform:none; letter-spacing:0; font-size:10px; }
+
+input, select {
+  width:100%; padding:11px 14px;
+  border:1.5px solid var(--border); border-radius:9px;
+  font-family:'DM Sans',sans-serif; font-size:14px; color:var(--ink);
+  background:var(--parchment); transition:all 0.2s; outline:none;
+  -webkit-appearance:none;
+}
+input:focus, select:focus {
+  border-color:var(--gold); background:#fff;
+  box-shadow:0 0 0 3px rgba(201,168,76,0.1);
+}
+input::placeholder { color:#c0b8b0; }
+
+.search-actions { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:14px; }
+
+.btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:11px 24px; border-radius:9px;
+  font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600;
+  cursor:pointer; transition:all 0.2s; border:none; white-space:nowrap;
+}
+.btn-primary { background:var(--ink); color:#fff; }
+.btn-primary:hover { background:var(--ink-soft); transform:translateY(-1px); box-shadow:var(--shadow-sm); }
+.btn-primary:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+.btn-ghost {
+  background:transparent; color:var(--ink-muted);
+  border:1.5px solid var(--border);
+}
+.btn-ghost:hover { border-color:var(--ink); color:var(--ink); background:var(--parchment); }
+.btn-gold { background:var(--gold); color:var(--ink); font-weight:700; }
+.btn-gold:hover { background:var(--gold-light); transform:translateY(-1px); }
+.btn-uae-green { background:var(--uae-green); color:#fff; font-weight:700; }
+.btn-uae-green:hover { background:#005a24; transform:translateY(-1px); box-shadow:var(--shadow-sm); }
+.btn-uae-green:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+/* ── NOTICE ── */
+.notice {
+  padding:12px 16px; border-radius:8px;
+  font-size:12px; line-height:1.6; margin-top:16px;
+  display:flex; gap:10px; align-items:flex-start;
+}
+.notice-neutral {
+  background:var(--parchment-dark); border:1px solid var(--border); color:var(--ink-muted);
+}
+.notice-uae {
+  background: linear-gradient(to right, var(--uae-red-soft), transparent);
+  border:1px solid rgba(255,0,0,0.12); color:var(--ink-soft);
+  border-left:3px solid var(--uae-red);
+}
+.notice-icon { font-size:14px; flex-shrink:0; margin-top:1px; }
+
+/* ── EMPTY STATE ── */
+.empty {
+  text-align:center; padding:56px 28px;
+}
+.empty-icon { font-size:52px; margin-bottom:16px; opacity:0.3; }
+.empty-title { font-family:'Playfair Display',serif; font-size:20px; color:#ccc; margin-bottom:8px; }
+.empty-sub { font-size:13px; color:#bbb; }
+
+/* ── LOADING ── */
+.loading {
+  display:flex; flex-direction:column; align-items:center;
+  justify-content:center; padding:56px 28px; gap:16px;
+}
+.spinner {
+  width:36px; height:36px;
+  border:3px solid var(--parchment-dark);
+  border-top-color:var(--gold); border-radius:50%;
+  animation:spin 0.75s linear infinite;
+}
+.spinner-green { border-top-color:var(--uae-green); }
+@keyframes spin { to { transform:rotate(360deg); } }
+.loading p { font-size:13px; color:var(--ink-muted); }
+.loading small { font-size:11px; color:#bbb; }
+
+/* ── RESULTS ── */
+.result-card {
+  border-radius:12px; border:1.5px solid var(--border);
+  overflow:hidden; animation:fadeUp 0.3s ease; margin-bottom:20px;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(10px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+.result-head {
+  padding:18px 22px; display:flex; align-items:flex-start;
+  gap:16px; justify-content:space-between;
+}
+.rh-red { background:var(--red-soft); border-bottom:1px solid #F5C6C2; }
+.rh-amber { background:var(--amber-soft); border-bottom:1px solid #FAD7A0; }
+.rh-green { background:var(--green-soft); border-bottom:1px solid #A9DFBF; }
+
+.verdict {
+  padding:5px 14px; border-radius:20px;
+  font-size:11px; font-weight:700; letter-spacing:0.8px;
+  text-transform:uppercase; white-space:nowrap; flex-shrink:0;
+}
+.v-red { background:var(--red); color:#fff; }
+.v-amber { background:var(--amber); color:#fff; }
+.v-green { background:var(--green); color:#fff; }
+
+.result-title { font-family:'Playfair Display',serif; font-size:17px; font-weight:600; line-height:1.3; }
+.result-meta { font-size:12px; color:var(--ink-muted); margin-top:3px; }
+
+.result-body { padding:20px 22px; background:#fff; }
+
+/* FLAGS */
+.flag {
+  display:flex; gap:10px; padding:10px 14px;
+  border-radius:8px; margin-bottom:8px; align-items:flex-start;
+}
+.flag-r { background:#FDF2F2; border:1px solid #F5C6C2; }
+.flag-a { background:#FFFBF0; border:1px solid #FAD7A0; }
+.flag-g { background:#F0FAF5; border:1px solid #A9DFBF; }
+.flag-b { background:var(--blue-soft); border:1px solid #AED6F1; }
+.flag-icon { font-size:15px; flex-shrink:0; margin-top:1px; }
+.flag-rule { font-size:13px; font-weight:600; color:var(--ink); }
+.flag-note { font-size:12px; color:#666; margin-top:3px; line-height:1.4; }
+
+/* COMPLIANCE GRID */
+.comp-grid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:8px; margin:14px 0;
+}
+.comp-item {
+  padding:10px 12px; border-radius:8px;
+  background:var(--parchment); border:1px solid var(--border);
+}
+.comp-label { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.6px; color:#aaa; margin-bottom:3px; }
+.comp-val { font-size:13px; font-weight:500; }
+.cv-ok { color:var(--green); }
+.cv-warn { color:var(--amber); }
+.cv-flag { color:var(--red); }
+
+/* AI SECTION */
+.ai-section { border-top:1px solid var(--parchment-dark); padding-top:16px; margin-top:16px; }
+.ai-title {
+  font-size:11px; font-weight:700; text-transform:uppercase;
+  letter-spacing:1px; color:var(--ink-muted); margin-bottom:12px;
+  display:flex; align-items:center; gap:7px;
+}
+.ai-badge {
+  padding:2px 8px; background:var(--parchment-dark);
+  border-radius:4px; font-size:10px; color:#aaa; font-weight:400;
+  text-transform:none; letter-spacing:0;
+}
+.narrative {
+  font-size:13px; line-height:1.7; color:var(--ink-soft);
+  background:var(--parchment); padding:13px 15px;
+  border-radius:8px; border:1px solid var(--border);
+  margin-top:10px;
+}
+.info-grid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+  gap:8px; margin-top:12px;
+}
+.info-item { display:flex; flex-direction:column; gap:2px; }
+.info-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#ccc; }
+.info-val { font-size:13px; font-weight:500; color:var(--ink); }
+
+/* RATING BADGE */
+.rating-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:6px 14px; border-radius:20px;
+  background:var(--blue-soft); border:1px solid #AED6F1;
+  font-size:13px; font-weight:600; color:var(--blue);
+  margin:8px 0;
+}
+
+/* SUMMARY CARDS */
+.summary-row { display:flex; gap:12px; margin-bottom:24px; flex-wrap:wrap; }
+.sum-card {
+  flex:1; min-width:110px; padding:16px 18px;
+  border-radius:12px; text-align:center; border:1.5px solid var(--border);
+}
+.sum-count { font-family:'Playfair Display',serif; font-size:30px; font-weight:700; line-height:1; }
+.sum-label { font-size:11px; color:var(--ink-muted); margin-top:5px; text-transform:uppercase; letter-spacing:0.6px; }
+.sum-red { background:var(--red-soft); border-color:#F5C6C2; }
+.sum-red .sum-count { color:var(--red); }
+.sum-amber { background:var(--amber-soft); border-color:#FAD7A0; }
+.sum-amber .sum-count { color:var(--amber); }
+.sum-green { background:var(--green-soft); border-color:#A9DFBF; }
+.sum-green .sum-count { color:var(--green); }
+.sum-total { background:var(--parchment-dark); }
+.sum-total .sum-count { color:var(--ink); }
+
+/* BULK UPLOAD */
+.upload-zone {
+  border:2px dashed var(--border); border-radius:12px;
+  padding:40px 24px; text-align:center;
+  background:var(--parchment); transition:all 0.2s; cursor:pointer;
+}
+.upload-zone:hover { border-color:var(--gold); background:var(--gold-pale); }
+.upload-zone.dragover { border-color:var(--gold); background:var(--gold-pale); transform:scale(1.01); }
+.upload-icon { font-size:36px; margin-bottom:12px; opacity:0.5; }
+.upload-title { font-size:15px; font-weight:600; color:var(--ink-soft); margin-bottom:6px; }
+.upload-sub { font-size:12px; color:var(--ink-muted); margin-bottom:16px; }
+#file-input { display:none; }
+
+.template-cards { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:20px; }
+.tmpl-card {
+  padding:16px 18px; border-radius:10px;
+  border:1.5px solid var(--border); background:#fff;
+  display:flex; align-items:center; gap:14px;
+}
+.tmpl-icon {
+  width:40px; height:40px; border-radius:8px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:18px;
+}
+.tmpl-en .tmpl-icon { background:var(--blue-soft); }
+.tmpl-ar .tmpl-icon { background:var(--gold-pale); }
+.tmpl-info h4 { font-size:14px; font-weight:600; margin-bottom:3px; }
+.tmpl-info p { font-size:11px; color:var(--ink-muted); line-height:1.4; }
+.tmpl-dl {
+  margin-left:auto; flex-shrink:0;
+  padding:7px 14px; border-radius:7px;
+  background:var(--parchment-dark); border:1px solid var(--border);
+  font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s;
+  color:var(--ink-soft);
+}
+.tmpl-dl:hover { background:var(--ink); color:#fff; }
+
+/* PROGRESS */
+.prog-wrap {
+  height:6px; background:var(--parchment-dark); border-radius:3px;
+  margin:14px 0 6px; overflow:hidden;
+}
+.prog-bar {
+  height:100%;
+  background: linear-gradient(to right, var(--uae-green), var(--gold));
+  border-radius:3px; transition:width 0.3s ease;
+}
+.prog-label { font-size:12px; color:var(--ink-muted); }
+
+/* ── READING LIST STYLES ── */
+.rl-form-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:16px; margin-bottom:20px;
+}
+.rl-book-card {
+  border-radius:14px; border:1.5px solid var(--border);
+  overflow:hidden; animation:fadeUp 0.4s ease;
+  margin-bottom:16px; background:#fff;
+}
+.rl-book-card:last-child { margin-bottom:0; }
+.rl-book-head {
+  padding:18px 22px 14px;
+  background: linear-gradient(135deg, #f8fffe 0%, #f0f9f4 100%);
+  border-bottom:1px solid #d4edde;
+  display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+}
+.rl-book-title {
+  font-family:'Playfair Display',serif; font-size:18px; font-weight:600; line-height:1.25;
+  color:var(--ink);
+}
+.rl-book-author { font-size:13px; color:var(--ink-muted); margin-top:4px; }
+.rl-compliance-badge {
+  padding:5px 12px; border-radius:20px; flex-shrink:0;
+  font-size:11px; font-weight:700; letter-spacing:0.5px;
+  white-space:nowrap;
+  background:var(--uae-green); color:#fff;
+}
+.rl-book-body { padding:18px 22px; }
+.rl-level-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:5px 12px; border-radius:20px;
+  background:var(--gold-pale); border:1px solid rgba(201,168,76,0.3);
+  font-size:12px; font-weight:600; color:var(--amber);
+  margin-bottom:12px;
+}
+.rl-description {
+  font-size:13px; line-height:1.7; color:var(--ink-soft);
+  background:var(--parchment); padding:12px 14px;
+  border-radius:8px; border:1px solid var(--border);
+  margin-bottom:10px;
+}
+.rl-meta-row {
+  display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;
+}
+.rl-meta-tag {
+  padding:4px 10px; border-radius:12px;
+  font-size:11px; font-weight:500;
+  background:var(--parchment-dark); color:var(--ink-muted);
+  border:1px solid var(--border);
+}
+.rl-compliance-note {
+  font-size:11px; color:var(--uae-green); font-weight:600;
+  display:flex; align-items:center; gap:5px; margin-top:8px;
+}
+.rl-date-stamp {
+  font-size:11px; color:#bbb; text-align:center;
+  padding:16px 0 4px; font-style:italic;
+}
+
+/* Free tier banner */
+.free-tier-banner {
+  background: linear-gradient(135deg, #1a3320 0%, #0d1f12 100%);
+  border-radius:12px; padding:20px 24px;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:16px; margin-bottom:24px; border:1px solid rgba(0,115,47,0.3);
+}
+.ftb-left h3 {
+  font-family:'Playfair Display',serif; font-size:17px; color:#fff; margin-bottom:4px;
+}
+.ftb-left p { font-size:12px; color:rgba(255,255,255,0.5); }
+.ftb-count {
+  font-family:'Playfair Display',serif; font-size:28px; font-weight:700;
+  color:var(--gold-light); white-space:nowrap;
+}
+.ftb-count span { font-size:13px; color:rgba(255,255,255,0.4); font-weight:400; font-family:'DM Sans',sans-serif; display:block; text-align:center; margin-top:2px; }
+
+/* Footer */
+.footer {
+  background:var(--ink); color:rgba(255,255,255,0.3);
+  font-size:12px; line-height:1.7; text-align:center;
+  padding:28px 32px; margin-top:60px;
+}
+.footer a { color:rgba(255,255,255,0.4); text-decoration:none; }
+.footer-uae {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  margin-bottom:10px;
+}
+.footer-stripe {
+  display:flex; height:3px; width:60px; border-radius:2px; overflow:hidden;
+}
+.fs-r { flex:1; background:var(--uae-red); }
+.fs-w { flex:1; background:#fff; }
+.fs-g { flex:1; background:var(--uae-green); }
+
+@media(max-width:768px) {
+  .main { padding:20px 16px; }
+  .hero { padding:36px 20px 32px; }
+  .hero h2 { font-size:26px; }
+  .search-grid { grid-template-columns:1fr; }
+  .rl-form-grid { grid-template-columns:1fr; }
+  .tabs { width:100%; overflow-x:auto; }
+  .template-cards { grid-template-columns:1fr; }
+  .header-inner { padding:14px 20px; }
+  .main-nav-inner { padding:0 16px; overflow-x:auto; }
+  .main-nav-tab { padding:12px 16px; font-size:12px; }
+  .free-tier-banner { flex-direction:column; text-align:center; }
+  .hero::after { display:none; }
+}
+</style>
+</head>
+<body>
+
+<div class="uae-bar"></div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo" onclick="window.scrollTo(0,0)">
+      <div class="logo-mark">SC</div>
+      <div class="logo-text">
+        <h1>ShelfCheck</h1>
+        <p>UAE School Library Tools</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="header-flag">
+        <div class="hf-red"></div>
+        <div class="hf-white"></div>
+        <div class="hf-green"></div>
+      </div>
+      <span class="header-tag">🇦🇪 UAE Compliant</span>
+    </div>
+  </div>
+
+  <!-- MAIN NAV -->
+  <nav class="main-nav">
+    <div class="main-nav-inner">
+      <button class="main-nav-tab active" id="main-tab-shelfcheck" onclick="switchMainTab('shelfcheck')">
+        <span class="nav-icon">🔍</span> ShelfCheck
+        <span class="nav-badge">Free</span>
+      </button>
+      <button class="main-nav-tab" id="main-tab-readinglist" onclick="switchMainTab('readinglist')">
+        <span class="nav-icon">📚</span> Reading List Generator
+        <span class="nav-badge">New</span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: SHELFCHECK
+══════════════════════════════════════════════ -->
+<div id="page-shelfcheck">
+
+  <section class="hero hero-shelfcheck">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">✦ UAE School Libraries</div>
+      <h2>Book Screening for<br><em>School Libraries</em></h2>
+      <p class="hero-sub">Instantly screen any book against UAE content guidelines.<br>Know what belongs on your shelf — before it becomes a problem.</p>
+    </div>
+  </section>
+
+  <main class="main">
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('single')" id="tab-single">
+        <span class="ti">🔍</span> Single Book Check
+      </button>
+      <button class="tab" onclick="switchTab('bulk')" id="tab-bulk">
+        <span class="ti">📋</span> Bulk Check
+        <span class="premium-dot" title="Premium feature"></span>
+      </button>
+      <button class="tab" onclick="switchTab('report')" id="tab-report">
+        <span class="ti">📄</span> Report
+        <span class="premium-dot" title="Premium feature"></span>
+      </button>
+    </div>
+
+    <!-- SINGLE CHECK -->
+    <div id="panel-single">
+      <div class="card">
+        <div class="card-header">
+          <h2>Single Book Check <span style="font-size:12px; font-weight:400; color:var(--uae-green); background:var(--uae-green-soft); padding:2px 10px; border-radius:12px; margin-left:8px; vertical-align:middle; border:1px solid rgba(0,115,47,0.2);">Free</span></h2>
+          <p>Enter any book's details below to screen it against UAE content guidelines.</p>
+        </div>
+        <div class="card-body">
+          <div class="search-grid">
+            <div class="field">
+              <label class="field-label">ISBN <span class="req">★ recommended</span></label>
+              <input type="text" id="isbn" placeholder="e.g. 9780743273565" maxlength="20"/>
+            </div>
+            <div class="field">
+              <label class="field-label">Book Title</label>
+              <input type="text" id="title" placeholder="e.g. The God Delusion"/>
+            </div>
+            <div class="field">
+              <label class="field-label">Author</label>
+              <input type="text" id="author" placeholder="e.g. Richard Dawkins"/>
+            </div>
+          </div>
+          <div style="display:flex; gap:14px; align-items:flex-end; flex-wrap:wrap;">
+            <div class="field" style="flex:1; min-width:200px;">
+              <label class="field-label">Publisher <span class="opt">(recommended for Arabic books)</span></label>
+              <input type="text" id="publisher" placeholder="Publisher name"/>
+            </div>
+            <div class="field" style="min-width:160px;">
+              <label class="field-label">Country</label>
+              <select id="country">
+                <option value="UAE">🇦🇪 UAE</option>
+                <option disabled>── Coming Soon ──</option>
+                <option disabled>🇸🇦 Saudi Arabia</option>
+                <option disabled>🇧🇭 Bahrain</option>
+                <option disabled>🇰🇼 Kuwait</option>
+                <option disabled>🇶🇦 Qatar</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="search-actions">
+            <button class="btn btn-primary" onclick="runCheck()" id="check-btn">
+              <span>🔍</span> Check This Book
+            </button>
+            <button class="btn btn-ghost" onclick="clearForm()">Clear</button>
+            <button class="btn btn-ghost" onclick="demo('flag')">Try Example →</button>
+            <button class="btn btn-ghost" onclick="demo('clear')">Try Clear →</button>
+          </div>
+
+          <div class="notice notice-uae">
+            <span class="notice-icon">🇦🇪</span>
+            <span>ShelfCheck screens books against UAE content guidelines and compiled reference data. Results are for guidance only — final decisions remain with your school leadership. Exercise discretion at all times. Fines for non-compliant library content can be significant.</span>
+          </div>
+        </div>
+
+        <div id="results">
+          <div class="empty">
+            <div class="empty-icon">🔍</div>
+            <div class="empty-title">Ready to Screen</div>
+            <div class="empty-sub">Enter a title, author, or ISBN above and press Check</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BULK CHECK -->
+    <div id="panel-bulk" style="display:none;">
+      <div class="card" style="margin-bottom:20px;">
+        <div class="card-header">
+          <h2>Bulk Book Check <span style="font-size:12px; font-weight:600; color:var(--gold); background:var(--gold-pale); padding:2px 10px; border-radius:12px; margin-left:8px; vertical-align:middle; border:1px solid rgba(201,168,76,0.2);">Premium</span></h2>
+          <p>Upload your book list and screen multiple titles at once. Download a full compliance report when complete.</p>
+        </div>
+        <div class="card-body">
+          <div style="margin-bottom:24px;">
+            <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:var(--ink-muted); margin-bottom:12px;">
+              Step 1 — Download the right template for your book list
+            </div>
+            <div class="template-cards">
+              <div class="tmpl-card tmpl-en">
+                <div class="tmpl-icon">🇬🇧</div>
+                <div class="tmpl-info">
+                  <h4>English Books Template</h4>
+                  <p>ISBN · Title · Author · Publisher (optional)</p>
+                </div>
+                <button class="tmpl-dl" onclick="downloadTemplate('english')">⬇ Download</button>
+              </div>
+              <div class="tmpl-card tmpl-ar">
+                <div class="tmpl-icon">🇦🇪</div>
+                <div class="tmpl-info">
+                  <h4>Arabic Books Template</h4>
+                  <p>Title · Author · Publisher · ISBN (optional)</p>
+                </div>
+                <button class="tmpl-dl" onclick="downloadTemplate('arabic')">⬇ Download</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:var(--ink-muted); margin-bottom:12px;">
+            Step 2 — Fill in the template and upload it here
+          </div>
+          <div class="upload-zone" id="drop-zone" onclick="document.getElementById('file-input').click()"
+            ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+            <input type="file" id="file-input" accept=".xlsx,.xls,.csv" onchange="handleFileSelect(event)"/>
+            <div class="upload-icon">📂</div>
+            <div class="upload-title">Click to upload or drag & drop your file here</div>
+            <div class="upload-sub">Accepts .xlsx or .csv files only</div>
+            <button class="btn btn-ghost" style="pointer-events:none;">Choose File</button>
+          </div>
+
+          <div id="file-name" style="font-size:12px; color:var(--ink-muted); margin-top:8px; display:none;"></div>
+
+          <div style="margin-top:16px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="runBulkCheck()" id="bulk-btn" disabled style="opacity:0.4;">
+              <span>🔍</span> Run Bulk Check
+            </button>
+            <span id="bulk-status" style="font-size:12px; color:var(--ink-muted);"></span>
+          </div>
+
+          <div id="bulk-progress" style="display:none;">
+            <div class="prog-wrap"><div class="prog-bar" id="prog-fill" style="width:0%"></div></div>
+            <div class="prog-label" id="prog-label">Processing...</div>
+          </div>
+
+          <div class="notice notice-neutral" style="margin-top:16px;">
+            <span class="notice-icon">💡</span>
+            <span>Use the exact template provided above to ensure accurate results. Do not rename columns or sheets. Delete sample rows before uploading.</span>
+          </div>
+        </div>
+      </div>
+      <div id="bulk-results"></div>
+    </div>
+
+    <!-- REPORT -->
+    <div id="panel-report" style="display:none;">
+      <div class="card">
+        <div class="card-header" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+          <div>
+            <h2>Compliance Report <span style="font-size:12px; font-weight:600; color:var(--gold); background:var(--gold-pale); padding:2px 10px; border-radius:12px; margin-left:8px; vertical-align:middle; border:1px solid rgba(201,168,76,0.2);">Premium</span></h2>
+            <p style="margin-top:4px; font-size:13px; color:var(--ink-muted);">Summary of all books screened in this session</p>
+          </div>
+          <button class="btn btn-gold" id="dl-btn" onclick="downloadReport()" style="opacity:0.4; cursor:not-allowed;" disabled>
+            ⬇️ Download Report
+          </button>
+        </div>
+        <div id="report-body" style="padding:28px;">
+          <div class="empty">
+            <div class="empty-icon">📄</div>
+            <div class="empty-title">No Results Yet</div>
+            <div class="empty-sub">Run single or bulk checks first, then return here to download your report</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     PAGE: READING LIST GENERATOR
+══════════════════════════════════════════════ -->
+<div id="page-readinglist" style="display:none;">
+
+  <section class="hero hero-readinglist">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">✦ UAE-Compliant Book Recommendations</div>
+      <h2>Reading List<br><em>Generator</em></h2>
+      <p class="hero-sub">AI-curated, UAE-compliant book recommendations for school librarians.<br>Every title pre-screened. Every suggestion grade-appropriate.</p>
+    </div>
+  </section>
+
+  <main class="main">
+
+    <div class="free-tier-banner">
+      <div class="ftb-left">
+        <h3>Free Tier — 3 Titles Per Search</h3>
+        <p>Upgrade coming soon for unlimited lists, PDF export & Arabic titles</p>
+      </div>
+      <div class="ftb-count">3<span>titles / search</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2>Generate a Reading List <span style="font-size:12px; font-weight:400; color:var(--uae-green); background:var(--uae-green-soft); padding:2px 10px; border-radius:12px; margin-left:8px; vertical-align:middle; border:1px solid rgba(0,115,47,0.2);">Free</span></h2>
+        <p>Select a grade and genre to get 3 UAE-compliant, age-appropriate book recommendations.</p>
+      </div>
+      <div class="card-body">
+        <div class="rl-form-grid">
+          <div class="field">
+            <label class="field-label">Grade <span class="req">★</span></label>
+            <select id="rl-grade" onchange="updateGenreOptions()">
+              <option value="">— Select Grade —</option>
+              <option value="KG1">KG1</option>
+              <option value="KG2">KG2</option>
+              <option value="GR1">Grade 1</option>
+              <option value="GR2">Grade 2</option>
+              <option value="GR3">Grade 3</option>
+              <option value="GR4">Grade 4</option>
+              <option value="GR5">Grade 5</option>
+              <option value="GR6">Grade 6</option>
+              <option value="GR7">Grade 7</option>
+              <option value="GR8">Grade 8</option>
+              <option value="GR9">Grade 9</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field-label">Genre <span class="req">★</span></label>
+            <select id="rl-genre">
+              <option value="">— Select Grade First —</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="search-actions">
+          <button class="btn btn-uae-green" onclick="generateReadingList()" id="rl-btn">
+            <span>📚</span> Generate Reading List
+          </button>
+          <button class="btn btn-ghost" onclick="clearReadingList()">Clear</button>
+        </div>
+
+        <div class="notice notice-uae" style="margin-top:16px;">
+          <span class="notice-icon">🇦🇪</span>
+          <span>All titles are screened against UAE content guidelines before output. Authors on banned lists and titles flagged by UAE authorities are excluded. Recommendations are based on AI knowledge of published books and UAE compliance standards.</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="rl-results" style="margin-top:24px;">
+      <div class="empty">
+        <div class="empty-icon">📚</div>
+        <div class="empty-title">Your Reading List Will Appear Here</div>
+        <div class="empty-sub">Select a grade and genre above, then press Generate</div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-uae">
+    <div class="footer-stripe"><div class="fs-r"></div><div class="fs-w"></div><div class="fs-g"></div></div>
+    <strong>ShelfCheck</strong>
+    <div class="footer-stripe"><div class="fs-r"></div><div class="fs-w"></div><div class="fs-g"></div></div>
+  </div>
+  Book Screening &amp; Reading List Tools for UAE School Libraries<br>
+  Data compiled from UAE government content guidelines and official regulatory frameworks.<br>
+  ⚠️ This tool assists librarians in screening books. It does not constitute legal advice. Final decisions on library content remain with school leadership and management.<br>
+  ShelfCheck is not affiliated with any government department.
+</footer>
+
+<script>
+// ══════════════════════════════════════════════
+// MAIN PAGE NAVIGATION
+// ══════════════════════════════════════════════
+function switchMainTab(tab) {
+  ['shelfcheck','readinglist'].forEach(t => {
+    document.getElementById('page-'+t).style.display = t===tab?'block':'none';
+    document.getElementById('main-tab-'+t).classList.toggle('active', t===tab);
+  });
+}
+
+// ══════════════════════════════════════════════
+// SHELFCHECK DATA
+// ══════════════════════════════════════════════
+const DB = {
+  banned_authors: [
+    {en:"Steven Pinker",ar:"استيفن بينكر"},{en:"Richard Dawkins",ar:"ريتشارد دوكينز"},
+    {en:"Sam Harris",ar:"سام هاريس"},{en:"Daniel Dennett",ar:"دانيال دينيت"},
+    {en:"Christopher Hitchens",ar:"كريستوفر هيتشنز"},{en:"Lawrence Krauss",ar:"لورانس كراوس"},
+    {en:"Nicholas Carr",ar:"نيكولاس كار"},{en:"Michel Onfray",ar:"ميشيل أونفري"},
+    {en:"Gene Sharp",ar:"جين شارب"},{en:"Yusuf Al-Qaradawi",ar:"يوسف القرضاوي"},
+    {en:"Hassan Al-Banna",ar:"حسن البنا"},{en:"Sayyid Qutb",ar:"سيد قطب"},
+    {en:"Tariq Al-Suwaidan",ar:"طارق السويدان"},{en:"Amr Khalid",ar:"عمرو خالد"},
+    {en:"Mohammed Al-Arifi",ar:"محمد العريفي"},{en:"Mohammed Al-Ghazzali",ar:"محمد الغزالي"},
+    {en:"Raghib Al-Sarjani",ar:"راغب السرجاني"},{en:"Said Hawwa",ar:"سعيد حوى"},
+    {en:"Safar Al-Hawali",ar:"سفر الحوالي"},{en:"Salman Al-Awdah",ar:"سلمان العودة"},
+    {en:"Wajdi Ghunaim",ar:"وجدي غنيم"},{en:"Nabil Al-Awadi",ar:"نبيل العوضي"},
+    {en:"Ayed Al-Qarni",ar:"عائض القرني"},{en:"Hassan Al-Hudaybi",ar:"حسن الهضيبي"},
+    {en:"Zainab Al-Ghazali",ar:"زينب الغزالي"},{en:"Omar Abdul-Kafi",ar:"عمر عبدالكافي"},
+    {en:"Mohammed Qutb",ar:"محمد قطب"},{en:"Abul Hasan Al-Nadwi",ar:"أبو الحسن الندوي"},
+    {en:"Abu Ali Al-Mawdudi",ar:"أبو علي المودودي"},{en:"Abdul-Majid Al-Zindani",ar:"عبدالمجيد الزنداني"},
+    {en:"Ali Mohammed Al-Sallabi",ar:"علي محمد الصلابي"},{en:"Rashid Al-Ghannoushi",ar:"راشد الغنوشي"},
+    {en:"Fathi Yakn",ar:"فتحي يكن"},{en:"Omar Al-Tilmisani",ar:"عمر التلمساني"},
+    {en:"Abdul-Qader Awdah",ar:"عبدالقادر عودة"},{en:"Jamal Al-Banna",ar:"جمال البنا"},
+    {en:"Anwar Al-Jundi",ar:"أنور الجندي"},{en:"Mustafa Mashhur",ar:"مصطفى مشهور"},
+    {en:"Mohammed Surur",ar:"محمد سرور زين العابدين"},{en:"Hassan Ayyub",ar:"حسن أيوب"},
+    {en:"Hassan Al-Turabi",ar:"حسن الترابي"},{en:"Mahmoud Ghazlan",ar:"محمود غزلان"},
+    {en:"Munar Al-Ghadban",ar:"منير محمد الغضبان"},{en:"Nasser Al-Omar",ar:"ناصر بن سليمان العمر"},
+    {en:"Hisham Awadi",ar:"هشام عوضي"},{en:"Nawaf Takruri",ar:"نواف هايل تكروري"},
+    {en:"Saoud Al-Fanesan",ar:"سعود الفنيسان"},{en:"Fahmi Huwaidi",ar:"فهمي هويدي"},
+    {en:"Majdi Kamel",ar:"مجدي محمد كامل"},{en:"Malik Bennabi",ar:"مالك بن نبي"},
+    {en:"Yusuf al-Qaradawi",ar:"يوسف القرضاوي"},{en:"Ishaq Ahmad Farhan",ar:"إسحاق أحمد فرحان"},
+    {en:"Mohammed Al-Rashid",ar:"محمد أحمد الراشد"},{en:"Rauf Shalabi",ar:"رؤوف شلبي"},
+    {en:"Mohammed Rabi",ar:"محمد ربيع"},{en:"Abdul-Muta'al Al-Jabri",ar:"عبدالمتعال الجبري"},
+    {en:"Bertrand Russell",ar:"برتراند رسل"},
+    {en:"Yuval Noah Harari",ar:"يوفال نوح هراري"},
+  ],
+  banned_publishers: [
+    "KUBE Publishing","Islamic Foundation","NAIT","MAS","IIIT","ISNA",
+    "Les Editions Tawhid","Les Editions Al Bouraq","Les Editions Nawa",
+    "Maison d'Ennour","La Librairie Al Qalam","Casa Islamica","Gema Insani Press",
+    "Islamic Book Trust","Islamic Publications","Adam Publishers",
+    "Islamic Foundation Trust","Markazi Maktaba Islami","Islamic Research Academy",
+    "ILM Verlag","Shade 7 Publishing","Idara Publishing","Bustan Kitab",
+    "Edizioni del Calamo","Da'wah Books","Islamic Publishing House",
+    "Dar Ibn Hazm","Dar Ibn Kathir","Dar Ibn Al-Jawzi","Dar Al-Salam",
+    "Dar Al-Shuruq","Dar Al-Taqwa","Dar Al-Bayariq","Dar Al-Da'wa",
+    "Dar Al-Bashir","Dar Al-Sahwa","Dar Al-Fath","Dar Al-Kalima",
+    "Dar Al-Nafais","Dar Al-Rayyan","Dar Al-Bashair Al-Islamiyya",
+    "Arab Network for Research and Publishing",
+    "Arab Center for Research and Policy Studies",
+    "Al Jazeera Studies Center","European Council for Fatwa and Research",
+  ],
+  moe_2025: [
+    {en:"Religion and Science",ar:"الدين والعلم",author:"Bertrand Russell"},
+    {en:"Sapiens",ar:"العاقل",author:"Yuval Noah Harari"},
+    {en:"The End of Faith",ar:"نهاية الإيمان",author:"Sam Harris"},
+    {en:"The God Delusion",ar:"وهم الإله",author:"Richard Dawkins"},
+    {en:"Waking Up",ar:"الصحوة",author:"Sam Harris"},
+    {en:"God is Not Great",ar:"الله ليس عظيماً",author:"Christopher Hitchens"},
+    {en:"Enlightenment Now",ar:"عصر التنوير",author:"Steven Pinker"},
+    {en:"A Universe from Nothing",ar:"كون من لا شيء",author:"Lawrence Krauss"},
+    {en:"The Selfish Gene",ar:"الجين الأناني",author:"Richard Dawkins"},
+    {en:"Breaking the Spell",ar:"كسر التعويذة",author:"Daniel Dennett"},
+    {en:"Atheism: A Very Short Introduction",ar:"الإلحاد مقدمة قصيرة",author:"Julian Baggini"},
+    {en:"The Blind Watchmaker",ar:"صانع الساعات الأعمى",author:"Richard Dawkins"},
+    {en:"A Brief History of Time",ar:"تاريخ موجز للزمن",author:"Stephen Hawking"},
+    {en:"The Magic of Reality",ar:"سحر الواقع",author:"Richard Dawkins"},
+    {en:"Mortality",ar:"الفناء",author:"Christopher Hitchens"},
+    {en:"Milestones",ar:"معالم في الطريق",author:"Sayyid Qutb"},
+    {en:"In the Shade of the Quran",ar:"في ظلال القرآن",author:"Sayyid Qutb"},
+    {en:"The Islamic State",ar:"الدولة الإسلامية",author:"Abu Ali Al-Mawdudi"},
+    {en:"Jihad in Islam",ar:"الجهاد في الإسلام",author:"Abu Ali Al-Mawdudi"},
+  ],
+  flagged_titles: [
+    {t:"Elmer",a:"David McKee",reason:"Rainbow imagery",action:"REMOVE",series:true},
+    {t:"Captain Underpants",a:"Dav Pilkey",reason:"Inappropriate content",action:"REMOVE",series:true},
+    {t:"Dog Man",a:"Dav Pilkey",reason:"Inappropriate content",action:"REMOVE",series:true},
+    {t:"Rainbow Fairies",a:"Daisy Meadows",reason:"Rainbow imagery",action:"REMOVE",series:true},
+    {t:"Teen Pioneers",a:"Ben Hubbard",reason:"Content flagged during compliance review",action:"REMOVE"},
+    {t:"Frankenstein",a:"Nick Dear",reason:"Flagged — Note: Mary Shelley original novel is permitted",action:"REMOVE"},
+    {t:"New Penguin Book of Love Poetry",a:"Jon Stallworthy",reason:"Inappropriate content",action:"REMOVE"},
+    {t:"My Story",a:"Marilyn Monroe",reason:"Sexual content",action:"REMOVE"},
+    {t:"Bad Girls",a:"Jacqueline Wilson",reason:"Flagged during compliance review",action:"REMOVE"},
+    {t:"Love Frankie",a:"Jacqueline Wilson",reason:"LGBTQ+ themes",action:"REMOVE"},
+    {t:"Boy in the Dress",a:"David Walliams",reason:"Gender/LGBTQ+ themes",action:"REMOVE"},
+    {t:"Billy Bonker",a:"Giles Andreae",reason:"Flagged during compliance review",action:"REMOVE"},
+    {t:"Red",a:"Michael Hall",reason:"LGBTQ+ themes",action:"REMOVE"},
+    {t:"Australia to Zimbabwe",a:"Various",reason:"Flagged during compliance review",action:"REMOVE"},
+    {t:"Bedtime Stories for Rebel Girls",a:"Elena Favilli",reason:"Contains LGBTQ+ biographical content",action:"REVIEW"},
+    {t:"Dork Diaries",a:"Rachel Renée Russell",reason:"Noted as bad role model — no removal action requested",action:"WATCH",series:true},
+    {t:"Horrid Henry",a:"Francesca Simon",reason:"Noted as bad role model — no removal action requested",action:"WATCH",series:true},
+    {t:"Things They Carried",a:"Tim O'Brien",reason:"Flagged during compliance review",action:"REMOVE"},
+    {t:"Fast Food Nation",a:"Eric Schlosser",reason:"Flagged during compliance review",action:"REMOVE"},
+    {t:"Hunger Games",a:"Suzanne Collins",reason:"Flagged during compliance review",action:"REMOVE"},
+    {t:"The Time Machine",a:"H.G. Wells",reason:"Flagged during compliance review",action:"REMOVE"},
+    {t:"Drama",a:"Raina Telgemeier",reason:"LGBTQ+ themes",action:"REMOVE"},
+    {t:"George",a:"Alex Gino",reason:"LGBTQ+ themes",action:"REMOVE"},
+    {t:"I Am Jazz",a:"Jessica Herthel",reason:"Transgender themes",action:"REMOVE"},
+    {t:"Prince and Knight",a:"Daniel Haack",reason:"LGBTQ+ themes",action:"REMOVE"},
+    {t:"The Family Book",a:"Todd Parr",reason:"Same-sex family depictions",action:"REMOVE"},
+    {t:"Worm Loves Worm",a:"J.J. Austrian",reason:"Same-sex marriage themes",action:"REMOVE"},
+    {t:"This Day in June",a:"Gayle Pitman",reason:"LGBTQ+ Pride content",action:"REMOVE"},
+    {t:"Bill's New Frock",a:"Anne Fine",reason:"Gender/LGBTQ+ themes",action:"REMOVE"},
+    {t:"The Handmaid's Tale",a:"Margaret Atwood",reason:"Flagged during compliance review",action:"REMOVE"},
+  ],
+  all_books_banned_authors: [
+    {author:"sarah j maas", display:"Sarah J. Maas"},
+    {author:"colleen hoover", display:"Colleen Hoover"},
+    {author:"dav pilkey", display:"Dav Pilkey"},
+  ],
+  age_ratings: {
+    "E":  "General — suitable for all ages. No sexual content, violence, drugs or inappropriate language.",
+    "3+": "Ages 3 and above. Simple stories, educational. No violence, sexual content or adult themes.",
+    "6+": "Ages 6 and above. Minimal fantasy violence only. No sexual content, drugs, alcohol or strong language.",
+    "10+":"Ages 10 and above. Superhero/fantasy, some cartoon violence. No sexual content, drugs or strong language.",
+    "13+":"Ages 13 and above. Fantasy adventure, some violence. No sexual content, drug use or explicit language.",
+    "17+":"Ages 17 and above. Mature themes, some sexual suggestion, real combat violence. Strong language may be present.",
+    "21+":"Ages 21 and above only. Extreme violence, partial nudity. NOT appropriate for school libraries.",
+  },
+};
+
+let allResults = [];
+let uploadedData = [];
+const norm = s => (s||'').toLowerCase().replace(/[^a-z0-9\u0600-\u06ff\s]/g,'').trim();
+
+// ── SHELFCHECK TABS ──
+function switchTab(t) {
+  ['single','bulk','report'].forEach(x => {
+    document.getElementById('panel-'+x).style.display = x===t?'block':'none';
+    document.getElementById('tab-'+x).classList.toggle('active', x===t);
+  });
+  if(t==='report') renderReport();
+}
+
+// ── DATABASE CHECK ──
+function dbCheck(isbn, title, author, publisher) {
+  const flags = [];
+  const nt = norm(title), na = norm(author), np = norm(publisher);
+
+  for(const a of DB.banned_authors) {
+    const em = na.length>2 && (norm(a.en||'').includes(na)||na.includes(norm(a.en||'')));
+    const am = na.length>2 && (norm(a.ar||'').includes(na)||na.includes(norm(a.ar||'')));
+    if(em||am) flags.push({sev:'RED', rule:`Banned author: ${a.en}${a.ar?' ('+a.ar+')':''}`, note:'All books by this author are non-compliant regardless of title.'});
+  }
+
+  for(const a of DB.all_books_banned_authors) {
+    if(na.length>4 && na.includes(a.author) && !flags.some(f=>f.rule.includes(a.display))) {
+      flags.push({sev:'RED', rule:`Banned author: ${a.display}`, note:'All titles by this author are non-compliant.'});
+    }
+  }
+
+  for(const p of DB.banned_publishers) {
+    if(np.length>2 && (norm(p).includes(np)||np.includes(norm(p)))) {
+      flags.push({sev:'RED', rule:`Banned publisher: ${p}`, note:'All books from this publisher are non-compliant regardless of title.'});
+    }
+  }
+
+  for(const b of DB.moe_2025) {
+    const tm = nt.length>2 && (norm(b.en).includes(nt)||nt.includes(norm(b.en)));
+    if(tm) flags.push({sev:'RED', rule:`Non-compliant title: "${b.en}"`, note:`Author: ${b.author}. This title does not meet UAE content guidelines.`});
+  }
+
+  for(const b of DB.flagged_titles) {
+    const tm = nt.length>2 && (norm(b.t).includes(nt)||nt.includes(norm(b.t)));
+    if(tm) {
+      const sev = b.action==='WATCH'?'AMBER':b.action==='REVIEW'?'AMBER':'RED';
+      flags.push({sev, rule:b.action==='WATCH'?`Under review: "${b.t}"`:b.action==='REVIEW'?`Requires review: "${b.t}"`:`Non-compliant title: "${b.t}"`, note:`${b.reason}.${b.series?' Entire series affected.':''}${b.action==='WATCH'?' Monitoring — no removal action required at this time.':''}`});
+    }
+  }
+
+  return flags;
+}
+
+// ── AI CHECK ──
+async function aiCheck(isbn, title, author, publisher, dbFlags) {
+  const sys = `You are ShelfCheck, a UAE school library book screening assistant.
+Screen books against UAE content guidelines. Be precise. Do not over-flag.
+
+UAE CONTENT GUIDELINES — official framework:
+- LGBTQ+ content of any kind (fiction, non-fiction, biography)
+- Rainbow imagery (flagged as of 2024, even in children's books)
+- Maps showing Israel or "Persian Gulf" (must say "Arabian Gulf")
+- Nudity or anatomical diagrams (including science textbooks)
+- Art/art history books containing nude paintings
+- Sexual content, drug use, alcohol (any depiction)
+- Atheism, secularism, anti-religious content
+- Political extremism or glorification of banned groups
+- Iran/Hezbollah political content
+- Content disrespectful of Islam, UAE leadership or national values
+- Teen mental health books (often contain sex/drug chapters)
+
+UAE MEDIA COUNCIL AGE RATINGS:
+E=Everyone, 3+=simple stories no violence, 6+=minimal fantasy violence,
+10+=cartoon violence ok, 13+=some violence no sex, 17+=mature some sexual suggestion,
+21+=extreme adult content NOT for school libraries
+
+Respond ONLY in this exact JSON (no markdown):
+{"found":true/false,"full_title":"...","genre":"...","fiction":true/false,"year":"...","age_group":"...","popularity":"...","themes":"...","synopsis":"...","rating":"E/3+/6+/10+/13+/17+/21+","rating_reason":"...","compliance":{"lgbtq":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"rainbows":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"maps":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"nudity":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"sex_drugs":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"violence":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"religious":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"political":{"s":"CLEAR/FLAG/REVIEW","d":"..."}},"verdict":"SAFE/REVIEW/FLAG","summary":"...","librarian_tip":"..."}`;
+
+  const msg = `Screen this book:\nISBN: ${isbn||'N/A'} | Title: ${title||'N/A'} | Author: ${author||'N/A'} | Publisher: ${publisher||'N/A'}\nDB flags: ${dbFlags.length?dbFlags.map(f=>f.rule).join('; '):'None'}`;
+
+  const res = await fetch('/api/claude',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-20250514', max_tokens:1000,
+      system:sys, messages:[{role:'user',content:msg}]
+    })
+  });
+  const d = await res.json();
+  const txt = d.content?.[0]?.text||'';
+  try { return JSON.parse(txt.replace(/```json|```/g,'').trim()); } catch { return null; }
+}
+
+// ── RENDER RESULT ──
+function renderResult(isbn, title, author, publisher, dbFlags, ai) {
+  const hasRed = dbFlags.some(f=>f.sev==='RED')||(ai?.verdict==='FLAG');
+  const hasAmber = dbFlags.some(f=>f.sev==='AMBER')||(ai?.verdict==='REVIEW');
+
+  const verdict = hasRed?'NON-COMPLIANT':hasAmber?'REVIEW REQUIRED':'CLEAR';
+  const vc = hasRed?'v-red':hasAmber?'v-amber':'v-green';
+  const hc = hasRed?'rh-red':hasAmber?'rh-amber':'rh-green';
+  const icon = hasRed?'🔴':hasAmber?'🟡':'🟢';
+
+  const dTitle = ai?.full_title||title||'Unknown Title';
+  const dAuthor = ai?.author_name||author||'';
+
+  let h = `<div class="result-card">
+    <div class="result-head ${hc}">
+      <div>
+        <div class="result-title">${dTitle}</div>
+        <div class="result-meta">${dAuthor?'by '+dAuthor:''}${isbn?' · ISBN: '+isbn:''}${publisher?' · '+publisher:''}</div>
+      </div>
+      <span class="verdict ${vc}">${icon} ${verdict}</span>
+    </div>
+    <div class="result-body">`;
+
+  if(dbFlags.length>0) {
+    h += `<div style="margin-bottom:16px;">`;
+    for(const f of dbFlags) {
+      const fc = f.sev==='RED'?'flag-r':'flag-a';
+      const fi = f.sev==='RED'?'🔴':'🟡';
+      h += `<div class="flag ${fc}"><div class="flag-icon">${fi}</div><div><div class="flag-rule">${f.rule}</div>${f.note?`<div class="flag-note">${f.note}</div>`:''}</div></div>`;
+    }
+    h += `</div>`;
+  } else {
+    h += `<div class="flag flag-g" style="margin-bottom:16px;"><div class="flag-icon">✅</div><div><div class="flag-rule">No matches found in screening databases</div><div class="flag-note">This title, author and publisher do not appear in current non-compliant reference data.</div></div></div>`;
+  }
+
+  if(ai) {
+    h += `<div class="ai-section"><div class="ai-title">Content Assessment <span class="ai-badge">AI-assisted · Based on UAE content guidelines</span></div>`;
+
+    if(ai.compliance) {
+      const labels = {lgbtq:'LGBTQ+',rainbows:'Rainbows',maps:'Maps/Geography',nudity:'Nudity/Body',sex_drugs:'Sex/Drugs/Alcohol',violence:'Violence',religious:'Religious Content',political:'Political Content'};
+      h += `<div class="comp-grid">`;
+      for(const [k,label] of Object.entries(labels)) {
+        const c = ai.compliance[k];
+        if(!c) continue;
+        const cs = c.s==='FLAG'?'cv-flag':c.s==='REVIEW'?'cv-warn':'cv-ok';
+        const ci = c.s==='FLAG'?'🔴':c.s==='REVIEW'?'🟡':'✅';
+        h += `<div class="comp-item"><div class="comp-label">${label}</div><div class="comp-val ${cs}">${ci} ${c.s}</div>${c.d&&c.d!=='N/A'?`<div style="font-size:11px;color:#aaa;margin-top:2px;">${c.d}</div>`:''}</div>`;
+      }
+      h += `</div>`;
+    }
+
+    if(ai.rating) {
+      h += `<div class="flag flag-b" style="margin:10px 0;"><div class="flag-icon">🏷️</div><div><div class="flag-rule">UAE Age Rating: <strong>${ai.rating}</strong></div><div class="flag-note">${DB.age_ratings[ai.rating]||''}</div>${ai.rating_reason?`<div class="flag-note" style="margin-top:3px;">${ai.rating_reason}</div>`:''}</div></div>`;
+    }
+
+    if(ai.found) {
+      h += `<div class="info-grid">`;
+      const fields = [['Genre',ai.genre],['Type',ai.fiction!==undefined?(ai.fiction?'Fiction':'Non-Fiction'):null],['Age Group',ai.age_group],['Year',ai.year],['Popularity',ai.popularity],['Themes',ai.themes]];
+      for(const [l,v] of fields) { if(v) h += `<div class="info-item"><div class="info-label">${l}</div><div class="info-val">${v}</div></div>`; }
+      h += `</div>`;
+      if(ai.synopsis) h += `<div class="narrative" style="margin-top:12px;"><strong>Synopsis:</strong> ${ai.synopsis}</div>`;
+    }
+
+    if(ai.summary) h += `<div class="narrative" style="margin-top:10px;"><strong>Assessment:</strong> ${ai.summary}</div>`;
+    if(ai.librarian_tip) h += `<div class="narrative" style="margin-top:8px; border-left:3px solid var(--gold); padding-left:12px;"><strong>💡 Librarian Note:</strong> ${ai.librarian_tip}</div>`;
+
+    h += `</div>`;
+  }
+
+  h += `</div></div>`;
+
+  const finalVerdict = hasRed?'RED':hasAmber?'AMBER':'GREEN';
+  return {html:h, verdict:finalVerdict, title:dTitle, author:dAuthor};
+}
+
+// ── SINGLE CHECK ──
+async function runCheck() {
+  const isbn=document.getElementById('isbn').value.trim();
+  const title=document.getElementById('title').value.trim();
+  const author=document.getElementById('author').value.trim();
+  const publisher=document.getElementById('publisher').value.trim();
+
+  if(!isbn&&!title&&!author) {
+    document.getElementById('results').innerHTML=`<div style="padding:20px 28px; color:var(--amber); font-weight:500;">⚠️ Please enter at least a title, author or ISBN.</div>`;
+    return;
+  }
+
+  const btn=document.getElementById('check-btn');
+  btn.disabled=true; btn.innerHTML='<span class="spinner" style="width:16px;height:16px;border-width:2px;display:inline-block;margin-right:6px;"></span> Screening...';
+
+  document.getElementById('results').innerHTML=`<div class="loading"><div class="spinner"></div><p>Screening against UAE content guidelines...</p><small>Checking reference databases · AI content assessment</small></div>`;
+
+  try {
+    const dbFlags = dbCheck(isbn,title,author,publisher);
+    const ai = await aiCheck(isbn,title,author,publisher,dbFlags);
+    const r = renderResult(isbn,title,author,publisher,dbFlags,ai);
+    document.getElementById('results').innerHTML=`<div style="padding:0 22px 22px;">${r.html}</div>`;
+    allResults.push({isbn,title:r.title,author:r.author,publisher,verdict:r.verdict,dbFlags,ai,ts:new Date()});
+  } catch(e) {
+    const dbFlags=dbCheck(isbn,title,author,publisher);
+    const r=renderResult(isbn,title,author,publisher,dbFlags,null);
+    document.getElementById('results').innerHTML=`<div style="padding:0 22px 22px;">${r.html}</div>`;
+    allResults.push({isbn,title:r.title,author:r.author,publisher,verdict:r.verdict,dbFlags,ai:null,ts:new Date()});
+  }
+
+  btn.disabled=false; btn.innerHTML='<span>🔍</span> Check This Book';
+}
+
+// ── BULK CHECK ──
+function handleDragOver(e){e.preventDefault();document.getElementById('drop-zone').classList.add('dragover');}
+function handleDragLeave(){document.getElementById('drop-zone').classList.remove('dragover');}
+function handleDrop(e){e.preventDefault();handleDragLeave();const f=e.dataTransfer.files[0];if(f)processUpload(f);}
+function handleFileSelect(e){const f=e.target.files[0];if(f)processUpload(f);}
+
+async function processUpload(file) {
+  const fn = document.getElementById('file-name');
+  fn.style.display='block'; fn.textContent=`📎 ${file.name} (${(file.size/1024).toFixed(1)} KB)`;
+
+  try {
+    const XLSX = await loadXLSX();
+    const data = await file.arrayBuffer();
+    const wb = XLSX.read(data, {type:'array'});
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const rows = XLSX.utils.sheet_to_json(ws, {header:1, defval:''});
+
+    uploadedData = [];
+    const headers = (rows[0]||[]).map(h=>String(h).toLowerCase());
+
+    for(let i=1;i<rows.length;i++) {
+      const row = rows[i];
+      if(!row.some(c=>c)) continue;
+      let isbn='',title='',author='',publisher='';
+      for(let j=0;j<headers.length;j++) {
+        const h=headers[j], v=String(row[j]||'').trim();
+        if(h.includes('isbn')) isbn=v;
+        else if(h.includes('title')||h.includes('عنوان')) title=v;
+        else if(h.includes('author')||h.includes('مؤلف')) author=v;
+        else if(h.includes('publisher')||h.includes('ناشر')) publisher=v;
+        else if(!isbn&&/^\d{10,13}$/.test(v.replace(/-/g,''))) isbn=v;
+        else if(!title&&v.length>2) title=v;
+        else if(!author&&v.length>2) author=v;
+      }
+      if(isbn||title||author) uploadedData.push({isbn,title,author,publisher});
+    }
+
+    document.getElementById('bulk-btn').disabled=false;
+    document.getElementById('bulk-btn').style.opacity='1';
+    document.getElementById('bulk-status').textContent=`✅ ${uploadedData.length} books ready to screen`;
+  } catch(e) {
+    fn.textContent=`❌ Error reading file. Please use the provided template.`;
+    document.getElementById('bulk-status').textContent='';
+  }
+}
+
+async function loadXLSX() {
+  if(window.XLSX) return window.XLSX;
+  return new Promise((res,rej)=>{
+    const s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    s.onload=()=>res(window.XLSX); s.onerror=rej;
+    document.head.appendChild(s);
+  });
+}
+
+async function runBulkCheck() {
+  if(!uploadedData.length) return;
+  const btn=document.getElementById('bulk-btn');
+  btn.disabled=true;
+  document.getElementById('bulk-progress').style.display='block';
+  document.getElementById('bulk-results').innerHTML='';
+
+  let results=[];
+  for(let i=0;i<uploadedData.length;i++) {
+    const b=uploadedData[i];
+    const pct=Math.round(((i+1)/uploadedData.length)*100);
+    document.getElementById('prog-fill').style.width=pct+'%';
+    document.getElementById('prog-label').textContent=`Checking ${i+1} of ${uploadedData.length}: "${b.title||b.isbn||'...'}"`;
+
+    const dbFlags=dbCheck(b.isbn,b.title,b.author,b.publisher);
+    let ai=null;
+    if(dbFlags.length===0&&b.title) {
+      try { ai=await aiCheck(b.isbn,b.title,b.author,b.publisher,dbFlags); } catch{}
+    }
+    const r=renderResult(b.isbn,b.title,b.author,b.publisher,dbFlags,ai);
+    results.push(r);
+    allResults.push({isbn:b.isbn,title:r.title,author:r.author,publisher:b.publisher,verdict:r.verdict,dbFlags,ai,ts:new Date()});
+  }
+
+  const reds=results.filter(r=>r.verdict==='RED').length;
+  const ambers=results.filter(r=>r.verdict==='AMBER').length;
+  const greens=results.filter(r=>r.verdict==='GREEN').length;
+
+  document.getElementById('bulk-results').innerHTML=`
+    <div class="summary-row">
+      <div class="sum-card sum-total"><div class="sum-count">${results.length}</div><div class="sum-label">Total Checked</div></div>
+      <div class="sum-card sum-red"><div class="sum-count">${reds}</div><div class="sum-label">Non-Compliant</div></div>
+      <div class="sum-card sum-amber"><div class="sum-count">${ambers}</div><div class="sum-label">Review Required</div></div>
+      <div class="sum-card sum-green"><div class="sum-count">${greens}</div><div class="sum-label">Clear</div></div>
+    </div>
+    ${results.map(r=>r.html).join('')}`;
+
+  document.getElementById('prog-label').textContent=`✅ Complete — ${results.length} books screened`;
+  btn.disabled=false;
+}
+
+// ── REPORT ──
+function renderReport() {
+  if(!allResults.length) return;
+  const reds=allResults.filter(r=>r.verdict==='RED');
+  const ambers=allResults.filter(r=>r.verdict==='AMBER');
+  const greens=allResults.filter(r=>r.verdict==='GREEN');
+
+  let h=`<div class="summary-row">
+    <div class="sum-card sum-total"><div class="sum-count">${allResults.length}</div><div class="sum-label">Total</div></div>
+    <div class="sum-card sum-red"><div class="sum-count">${reds.length}</div><div class="sum-label">Non-Compliant</div></div>
+    <div class="sum-card sum-amber"><div class="sum-count">${ambers.length}</div><div class="sum-label">Review</div></div>
+    <div class="sum-card sum-green"><div class="sum-count">${greens.length}</div><div class="sum-label">Clear</div></div>
+  </div>`;
+
+  const section=(title,items,cls,borderColor)=>{
+    if(!items.length) return '';
+    let s=`<h3 style="font-family:'Playfair Display',serif;font-size:16px;margin:20px 0 10px;color:${borderColor};">${title} (${items.length})</h3>`;
+    for(const r of items) {
+      s+=`<div style="padding:10px 14px;background:${cls};border-radius:8px;margin-bottom:6px;border-left:3px solid ${borderColor};">
+        <strong>${r.title}</strong>${r.author?' by '+r.author:''}
+        ${r.dbFlags.length?`<div style="font-size:11px;color:#888;margin-top:3px;">${r.dbFlags.map(f=>f.rule).join(' · ')}</div>`:''}
+      </div>`;
+    }
+    return s;
+  };
+
+  h+=section('🔴 Non-Compliant',reds,'var(--red-soft)','var(--red)');
+  h+=section('🟡 Review Required',ambers,'var(--amber-soft)','var(--amber)');
+  h+=section('🟢 Clear',greens,'var(--green-soft)','var(--green)');
+
+  document.getElementById('report-body').innerHTML=h;
+  const dlBtn=document.getElementById('dl-btn');
+  dlBtn.disabled=false; dlBtn.style.opacity='1'; dlBtn.style.cursor='pointer';
+}
+
+function downloadReport() {
+  const date=new Date().toLocaleDateString('en-GB');
+  let csv=`ShelfCheck — Book Screening Report\nDate: ${date}\n\n`;
+  csv+=`SUMMARY\nTotal,${allResults.length}\nNon-Compliant,${allResults.filter(r=>r.verdict==='RED').length}\nReview Required,${allResults.filter(r=>r.verdict==='AMBER').length}\nClear,${allResults.filter(r=>r.verdict==='GREEN').length}\n\n`;
+  csv+=`DETAILS\nVerdict,Title,Author,ISBN,Publisher,Reason\n`;
+  for(const r of allResults) {
+    const reason=r.dbFlags.map(f=>f.rule).join('; ')||(r.ai?.summary||'AI Assessment — See full report');
+    csv+=`"${r.verdict}","${r.title}","${r.author||''}","${r.isbn||''}","${r.publisher||''}","${reason}"\n`;
+  }
+  csv+=`\nNOTE: This report is for internal library use only. Final decisions on content remain with school leadership.`;
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download=`ShelfCheck_Report_${date.replace(/\//g,'-')}.csv`; a.click();
+}
+
+function downloadTemplate(type) {
+  if(type==='english') {
+    const csv=`ISBN (Mandatory),Book Title (Mandatory),Author (Mandatory),Publisher (Optional)\n9780743273565,The Great Gatsby,F. Scott Fitzgerald,Scribner\n9780061096525,To Kill a Mockingbird,Harper Lee,HarperCollins\n(delete these sample rows and add your books here),,,`;
+    const blob=new Blob([csv],{type:'text/csv'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+    a.download='ShelfCheck_English_Template.csv'; a.click();
+  } else {
+    const csv=`Book Title - عنوان الكتاب (Mandatory),Author - المؤلف (Mandatory),Publisher - الناشر (Mandatory),ISBN (Optional)\nمعالم في الطريق,سيد قطب,دار الشروق,\n(delete sample rows and add your books here),,,`;
+    const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+    a.download='ShelfCheck_Arabic_Template.csv'; a.click();
+  }
+}
+
+function demo(type) {
+  if(type==='flag') { document.getElementById('title').value='The God Delusion'; document.getElementById('author').value='Richard Dawkins'; }
+  else { document.getElementById('title').value="Charlotte's Web"; document.getElementById('author').value='E.B. White'; }
+  document.getElementById('isbn').value=''; document.getElementById('publisher').value='';
+}
+function clearForm() {
+  ['isbn','title','author','publisher'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('results').innerHTML=`<div class="empty"><div class="empty-icon">🔍</div><div class="empty-title">Ready to Screen</div><div class="empty-sub">Enter a title, author or ISBN above and press Check</div></div>`;
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter' && document.getElementById('page-shelfcheck').style.display!=='none' && document.getElementById('panel-single').style.display!=='none') runCheck();
+});
+
+// ══════════════════════════════════════════════
+// READING LIST GENERATOR
+// ══════════════════════════════════════════════
+const GENRES_LOWER = ['Picture Books','Early Readers','Animal Stories','Fantasy & Imagination','Humor/Funny Stories','Folk Tales & Fairy Tales','STEM & Nonfiction','Social-Emotional Learning','Graphic Stories','Poetry & Rhyming'];
+const GENRES_UPPER = ['Realistic Fiction','Historical Fiction','Fantasy Fiction','Science Fiction','Dystopian Fiction','Adventure & Action','Mystery & Adventure','Literary Fiction','Autobiography & Biography','Science & Political Fiction','Self Help'];
+
+function updateGenreOptions() {
+  const grade = document.getElementById('rl-grade').value;
+  const genreEl = document.getElementById('rl-genre');
+  genreEl.innerHTML = '';
+
+  if(!grade) {
+    genreEl.innerHTML = '<option value="">— Select Grade First —</option>';
+    return;
+  }
+
+  const genres = ['KG1','KG2','GR1','GR2'].includes(grade) ? GENRES_LOWER : GENRES_UPPER;
+  genreEl.innerHTML = '<option value="">— Select Genre —</option>';
+  genres.forEach(g => {
+    const o = document.createElement('option');
+    o.value = g; o.textContent = g;
+    genreEl.appendChild(o);
+  });
+}
+
+function getReadingLevelText(grade) {
+  const lower = ['KG1','KG2'];
+  const earlyMid = ['GR1','GR2','GR3'];
+  const mid = ['GR4','GR5','GR6','GR7','GR8','GR9'];
+  if(lower.includes(grade)) return 'Easy';
+  if(earlyMid.includes(grade)) return 'Easy / Intermediate';
+  if(mid.includes(grade)) return 'Intermediate / Advanced';
+  return 'Age-appropriate';
+}
+
+async function generateReadingList() {
+  const grade = document.getElementById('rl-grade').value;
+  const genre = document.getElementById('rl-genre').value;
+
+  if(!grade || !genre) {
+    document.getElementById('rl-results').innerHTML = `<div style="padding:20px 0; color:var(--amber); font-weight:500;">⚠️ Please select both a grade and a genre.</div>`;
+    return;
+  }
+
+  const btn = document.getElementById('rl-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner spinner-green" style="width:16px;height:16px;border-width:2px;display:inline-block;margin-right:6px;"></span> Generating...';
+
+  document.getElementById('rl-results').innerHTML = `<div class="loading"><div class="spinner spinner-green"></div><p>Generating UAE-compliant reading list...</p><small>Screening titles · Applying grade-level filters</small></div>`;
+
+  const levelText = getReadingLevelText(grade);
+
+  const systemPrompt = `You are a UAE school library specialist generating compliant reading lists for librarians.
+
+STRICT EXCLUSION RULES — never recommend these:
+Banned authors: Richard Dawkins, Sam Harris, Christopher Hitchens, Yuval Noah Harari, Sayyid Qutb, Hassan Al-Banna, Sarah J. Maas, Colleen Hoover, Dav Pilkey.
+Banned titles: Dog Man, Captain Underpants, Elmer series, Rainbow Fairies, Love Frankie, Bad Girls, Boy in the Dress, I Am Jazz, The God Delusion, Sapiens, The Handmaid's Tale, Hunger Games, Fast Food Nation, Things They Carried.
+
+UAE CONTENT RULES — all recommended books must be free of:
+- LGBTQ+ content or characters (any kind)
+- Rainbow imagery as LGBTQ+ symbolism
+- Nudity, sexual content, or anatomical diagrams
+- Alcohol, drugs, or substance use
+- Atheism, secularism, or anti-religious content
+- Content disrespectful of Islam or UAE leadership
+- Israel references or "Persian Gulf" naming (must be "Arabian Gulf")
+- Political extremism
+
+READING LEVEL LOGIC:
+- KG1/KG2: Easy only (simple text, picture books)
+- GR1/GR2/GR3: Easy or Intermediate (early chapter books, illustrated)
+- GR4–GR9: Intermediate or Advanced (chapter books, novels)
+For each book you recommend, assign and state the reading level: Easy, Intermediate, or Advanced. Show it as a bracket like: "GR2 Easy / GR3 Intermediate"
+
+OUTPUT: Recommend exactly 3 books. Respond ONLY in valid JSON, no markdown:
+{"books":[{"title":"...","author":"...","reading_level_bracket":"...","description":"...","compliance_status":"✅ UAE Compliant","genre":"...","themes":"..."}],"compliance_date":"${new Date().toLocaleDateString('en-GB',{month:'long',year:'numeric'})}"}`;
+
+  const userMsg = `Grade: ${grade} | Genre: ${genre} | Reading level range: ${levelText}
+Recommend 3 age-appropriate, UAE-compliant books for this grade and genre. Focus on quality titles that are well-established and widely available. Each book must pass all UAE content rules.`;
+
+  try {
+    const res = await fetch('/api/claude', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1500,
+        system: systemPrompt,
+        messages: [{role:'user', content: userMsg}]
+      })
+    });
+
+    if(!res.ok) {
+      const errBody = await res.json().catch(()=>({}));
+      const errMsg = errBody?.error?.message || `HTTP ${res.status}`;
+      throw new Error(errMsg);
+    }
+
+    const d = await res.json();
+    const txt = d.content?.[0]?.text || '';
+    let parsed;
+    try {
+      parsed = JSON.parse(txt.replace(/```json|```/g,'').trim());
+    } catch {
+      throw new Error('Response was not valid JSON — raw: ' + txt.substring(0,300));
+    }
+
+    renderReadingList(parsed, grade, genre);
+  } catch(e) {
+    document.getElementById('rl-results').innerHTML = `
+      <div class="card">
+        <div class="card-body">
+          <div style="color:var(--red); font-weight:600; margin-bottom:8px;">⚠️ Generation failed</div>
+          <div style="font-size:13px; color:var(--ink-muted); margin-bottom:8px;">Error: <strong>${e.message || 'Unknown'}</strong></div>
+          <div style="font-size:12px; color:#bbb;">401 = API key missing/invalid. CORS = proxy required. Please check browser console for details.</div>
+        </div>
+      </div>`;
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<span>📚</span> Generate Reading List';
+}
+
+function renderReadingList(data, grade, genre) {
+  if(!data || !data.books || !data.books.length) {
+    document.getElementById('rl-results').innerHTML = `<div class="empty"><div class="empty-icon">📚</div><div class="empty-title">No results returned</div><div class="empty-sub">Please try again.</div></div>`;
+    return;
+  }
+
+  let html = `
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:20px;">
+      <div>
+        <div style="font-family:'Playfair Display',serif; font-size:20px; font-weight:600; color:var(--ink);">${genre} — ${grade}</div>
+        <div style="font-size:12px; color:var(--ink-muted); margin-top:3px;">3 UAE-compliant recommendations · ${getReadingLevelText(grade)} level</div>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <div style="padding:5px 12px; border-radius:20px; background:var(--uae-green-soft); border:1px solid rgba(0,115,47,0.2); font-size:11px; font-weight:700; color:var(--uae-green); letter-spacing:0.5px;">🇦🇪 UAE SCREENED</div>
+      </div>
+    </div>`;
+
+  data.books.forEach((book, i) => {
+    html += `
+      <div class="rl-book-card">
+        <div class="rl-book-head">
+          <div>
+            <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--uae-green); margin-bottom:6px; opacity:0.7;">Book ${i+1} of 3</div>
+            <div class="rl-book-title">${escHtml(book.title)}</div>
+            <div class="rl-book-author">by ${escHtml(book.author)}</div>
+          </div>
+          <span class="rl-compliance-badge">${escHtml(book.compliance_status||'✅ UAE Compliant')}</span>
+        </div>
+        <div class="rl-book-body">
+          <div class="rl-level-badge">📖 ${escHtml(book.reading_level_bracket||getReadingLevelText(grade))}</div>
+          <div class="rl-description">${escHtml(book.description)}</div>
+          <div class="rl-meta-row">
+            ${book.genre ? `<span class="rl-meta-tag">📚 ${escHtml(book.genre)}</span>` : ''}
+            ${book.themes ? `<span class="rl-meta-tag">✨ ${escHtml(book.themes)}</span>` : ''}
+            <span class="rl-meta-tag">🎓 ${grade}</span>
+          </div>
+          <div class="rl-compliance-note">✅ Screened against UAE content guidelines — no prohibited content detected</div>
+        </div>
+      </div>`;
+  });
+
+  html += `<div class="rl-date-stamp">Compliance data last updated ${escHtml(data.compliance_date||new Date().toLocaleDateString('en-GB',{month:'long',year:'numeric'}))}</div>`;
+
+  document.getElementById('rl-results').innerHTML = html;
+}
+
+function escHtml(s) {
+  return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function clearReadingList() {
+  document.getElementById('rl-grade').value = '';
+  document.getElementById('rl-genre').innerHTML = '<option value="">— Select Grade First —</option>';
+  document.getElementById('rl-results').innerHTML = `
+    <div class="empty">
+      <div class="empty-icon">📚</div>
+      <div class="empty-title">Your Reading List Will Appear Here</div>
+      <div class="empty-sub">Select a grade and genre above, then press Generate</div>
+    </div>`;
+}
+</script>
+</body>
+</html>
