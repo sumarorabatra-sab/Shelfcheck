@@ -3,803 +3,813 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ShelfCheck — UAE School Library Tools</title>
+<title>ShelfCheck — Book Screening for School Libraries</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
-
 :root {
-  --ink:#1C1C2E; --ink-soft:#2d2d44; --ink-muted:#6b7280;
-  --parchment:#FAF8F5; --parchment-dark:#F0EDE8;
-  --gold:#C9A84C; --gold-light:#E8C97A; --gold-pale:#FDF8EC;
-  --red:#C0392B; --red-soft:#FDECEA;
-  --amber:#D68910; --amber-soft:#FEF9E7;
-  --green:#1A7A45; --green-soft:#EAFAF1;
-  --blue:#1A5276; --blue-soft:#EAF2FB;
-  --border:#E2DDD6;
-  --uae-red:#FF0000; --uae-red-soft:rgba(255,0,0,0.07);
-  --uae-green:#00732F; --uae-green-soft:rgba(0,115,47,0.08);
-  --shadow-sm:0 2px 8px rgba(28,28,46,0.08);
-  --shadow-md:0 4px 24px rgba(28,28,46,0.13);
-  --shadow-lg:0 8px 40px rgba(28,28,46,0.18);
-  --radius:14px;
+  --ink: #1C2B1E;
+  --ink2: #2a3d2d;
+  --gold: #C9932A;
+  --gold2: #E8B84B;
+  --gold3: #F5D98A;
+  --gold-pale: #FDF6E3;
+  --uae-red: #EF3340;
+  --uae-red2: #c0272d;
+  --uae-green: #00732F;
+  --uae-green2: #009940;
+  --uae-green-pale: #eaf7ef;
+  --cream: #FAF6EE;
+  --cream2: #F3EDE0;
+  --cream3: #EBE3D2;
+  --white: #FFFFFF;
+  --border: #DDD5C4;
+  --border2: #CFC6B4;
+  --muted: #7A7060;
+  --red-soft: #FFF0EF;
+  --amber: #C67C00;
+  --amber-soft: #FFF8EC;
+  --green-soft: #E6F7EE;
+  --blue: #1A5276;
+  --blue-soft: #EBF5FB;
+  --shadow-sm: 0 2px 12px rgba(28,43,30,0.07);
+  --shadow-md: 0 6px 28px rgba(28,43,30,0.11);
+  --r: 14px;
+  --r-sm: 9px;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'DM Sans',sans-serif;background:var(--parchment);color:var(--ink);min-height:100vh;}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;}
 
-/* ── UAE BAR ── */
-.uae-bar{height:5px;background:linear-gradient(to right,var(--uae-red) 0%,var(--uae-red) 33%,#fff 33%,#fff 38%,var(--uae-green) 38%,var(--uae-green) 100%);}
+/* ── FLAG BAR ── */
+.flag-bar{height:4px;display:flex;}
+.fb-g{flex:1;background:var(--uae-green);}
+.fb-w{flex:1;background:#fff;border-top:1px solid #eee;border-bottom:1px solid #eee;}
+.fb-r{flex:1;background:var(--uae-red);}
 
 /* ── HEADER ── */
-.header{background:var(--ink);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-md);}
-.header-inner{max-width:1140px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;}
-.logo{display:flex;align-items:center;gap:12px;cursor:pointer;}
-.logo-mark{width:42px;height:42px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--ink);font-family:'Playfair Display',serif;box-shadow:0 2px 10px rgba(201,168,76,0.45);position:relative;overflow:hidden;}
-.logo-mark::after{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(to bottom,var(--uae-red) 50%,var(--uae-green) 50%);}
-.logo-text h1{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;}
-.logo-text p{font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0.5px;margin-top:1px;}
+.header{
+  background:var(--white);
+  border-bottom:1.5px solid var(--border);
+  box-shadow:var(--shadow-sm);
+  position:sticky;top:0;z-index:200;
+}
+.header-inner{
+  max-width:1100px;margin:0 auto;
+  padding:0 28px;height:62px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo-mark{
+  width:42px;height:42px;
+  background:linear-gradient(135deg,var(--uae-green) 0%,var(--uae-green2) 100%);
+  border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px;font-weight:700;color:#fff;
+  letter-spacing:-0.5px;
+  box-shadow:0 3px 12px rgba(0,115,47,0.3);
+  position:relative;
+}
+/* tick in C */
+.logo-mark .lm-text{position:relative;}
+.logo-mark .lm-tick{
+  position:absolute;top:-3px;right:-7px;
+  font-size:9px;color:var(--gold2);font-family:'Outfit',sans-serif;font-weight:700;
+}
+.logo-text h1{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:700;color:var(--ink);letter-spacing:0.3px;}
+.logo-text p{font-size:11px;color:var(--muted);letter-spacing:0.5px;margin-top:1px;}
 .header-right{display:flex;align-items:center;gap:10px;}
-.header-tag{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:0.5px;background:rgba(201,168,76,0.15);color:var(--gold-light);border:1px solid rgba(201,168,76,0.2);}
-.header-flag{display:flex;border-radius:4px;overflow:hidden;border:1px solid rgba(255,255,255,0.12);height:22px;}
-.hf-r{width:9px;background:var(--uae-red);}
-.hf-w{width:24px;background:#fff;}
-.hf-g{width:9px;background:var(--uae-green);}
-
-/* ── MAIN NAV ── */
-.main-nav{background:var(--ink);border-top:1px solid rgba(255,255,255,0.06);}
-.main-nav-inner{max-width:1140px;margin:0 auto;padding:0 32px;display:flex;}
-.main-nav-tab{padding:13px 24px;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:rgba(255,255,255,0.4);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:8px;border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap;}
-.main-nav-tab:hover{color:rgba(255,255,255,0.75);}
-.main-nav-tab.active{color:#fff;border-bottom-color:var(--gold);}
-.nav-badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;background:rgba(201,168,76,0.15);color:var(--gold-light);border:1px solid rgba(201,168,76,0.2);text-transform:uppercase;letter-spacing:0.5px;}
-.nav-badge-green{background:rgba(0,115,47,0.2);color:#4ade80;border-color:rgba(0,180,80,0.25);}
+.lang-tag{
+  padding:5px 12px;border-radius:20px;
+  font-size:11px;font-weight:600;letter-spacing:0.3px;
+  background:var(--uae-green-pale);color:var(--uae-green);
+  border:1px solid rgba(0,115,47,0.2);
+  display:flex;align-items:center;gap:5px;
+}
 
 /* ── HERO ── */
-.hero{padding:72px 32px 60px;text-align:center;position:relative;overflow:hidden;min-height:320px;display:flex;align-items:center;justify-content:center;}
-
-/* ShelfCheck hero — deep library */
-.hero-shelfcheck{background:#0f0e17;}
-.hero-shelfcheck .hero-bg{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.12) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 30%, rgba(255,0,0,0.06) 0%, transparent 45%),
-    radial-gradient(ellipse at 50% 80%, rgba(0,115,47,0.08) 0%, transparent 50%);
+.hero{
+  background:linear-gradient(160deg, #1a3d20 0%, #0f2d15 40%, #1a2a10 70%, #2d1a0a 100%);
+  padding:48px 28px 0;
+  position:relative;overflow:hidden;
 }
-/* Animated floating books decoration */
-.hero-shelfcheck .hero-books{
-  position:absolute;inset:0;overflow:hidden;pointer-events:none;
-}
-.hero-shelfcheck .hero-books::before{
-  content:'📚 📖 📕 📗 📘 📙';
-  position:absolute;bottom:-10px;left:0;right:0;
-  font-size:52px;letter-spacing:32px;opacity:0.06;
-  white-space:nowrap;overflow:hidden;
-  filter:blur(1px);
-}
-/* Bookshelf silhouette via CSS */
-.hero-shelf{
-  position:absolute;bottom:0;left:0;right:0;height:5px;
-  background:linear-gradient(to right,transparent 0%,rgba(201,168,76,0.3) 20%,rgba(201,168,76,0.5) 50%,rgba(201,168,76,0.3) 80%,transparent 100%);
-}
-/* Vertical book spines left and right */
-.hero-spine{position:absolute;top:20%;bottom:20%;width:6px;border-radius:3px;opacity:0.15;}
-.hero-spine-1{left:8%;background:var(--uae-red);transform:rotate(-2deg);}
-.hero-spine-2{left:10%;background:var(--gold);transform:rotate(1deg);}
-.hero-spine-3{left:12%;background:var(--uae-green);transform:rotate(-1deg);}
-.hero-spine-4{right:8%;background:var(--gold-light);transform:rotate(2deg);}
-.hero-spine-5{right:10%;background:var(--uae-red);transform:rotate(-1deg);}
-.hero-spine-6{right:12%;background:var(--uae-green);transform:rotate(1deg);}
-
-/* Reading list hero — warm UAE green library */
-.hero-readinglist{background:#091a0f;}
-.hero-readinglist .hero-bg{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse at 25% 40%, rgba(0,115,47,0.2) 0%, transparent 55%),
-    radial-gradient(ellipse at 75% 60%, rgba(201,168,76,0.1) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 10%, rgba(255,0,0,0.05) 0%, transparent 40%);
-}
-/* Open book pattern */
-.hero-readinglist .hero-pattern{
+/* Geometric UAE pattern overlay */
+.hero-pattern{
   position:absolute;inset:0;
   background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(0,115,47,0.04) 28px, rgba(0,115,47,0.04) 29px),
-    repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(201,168,76,0.03) 40px, rgba(201,168,76,0.03) 41px);
+    radial-gradient(circle at 80% 20%, rgba(201,147,42,0.15) 0%, transparent 40%),
+    radial-gradient(circle at 10% 80%, rgba(239,51,64,0.08) 0%, transparent 35%),
+    radial-gradient(circle at 50% 50%, rgba(0,153,64,0.06) 0%, transparent 50%);
 }
+/* Arabic geometric pattern */
+.hero-geo{
+  position:absolute;right:-60px;top:-60px;
+  width:320px;height:320px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='rgba(201,147,42,0.12)' stroke-width='0.8'%3E%3Cpolygon points='40,5 55,20 75,20 62,35 68,55 40,45 12,55 18,35 5,20 25,20'/%3E%3Cpolygon points='40,15 50,25 65,25 55,37 60,50 40,42 20,50 25,37 15,25 30,25'/%3E%3Ccircle cx='40' cy='40' r='18'/%3E%3Ccircle cx='40' cy='40' r='10'/%3E%3C/g%3E%3C/svg%3E") repeat;
+  opacity:0.6;
+  pointer-events:none;
+}
+.hero-inner{
+  position:relative;max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:flex-end;
+}
+.hero-text{padding-bottom:40px;}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 14px;border-radius:20px;
+  background:rgba(201,147,42,0.15);border:1px solid rgba(201,147,42,0.3);
+  font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--gold3);margin-bottom:16px;
+}
+.hero h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:40px;font-weight:700;color:#fff;
+  line-height:1.15;margin-bottom:12px;
+}
+.hero h2 em{font-style:italic;color:var(--gold2);}
+.hero-sub{
+  font-size:14px;color:rgba(255,255,255,0.55);
+  line-height:1.7;margin-bottom:20px;font-weight:300;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;color:rgba(255,255,255,0.4);font-style:italic;
+}
+.hero-tag::before{content:'—';margin-right:2px;color:rgba(255,255,255,0.2);}
 
-.hero-inner{position:relative;z-index:2;max-width:660px;margin:0 auto;}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:7px;padding:6px 16px;border-radius:20px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold-light);margin-bottom:22px;}
-.hero-readinglist .hero-eyebrow{background:rgba(0,115,47,0.15);border-color:rgba(0,180,80,0.2);color:#4ade80;}
-.hero h2{font-family:'Playfair Display',serif;font-size:44px;font-weight:700;color:#fff;line-height:1.12;margin-bottom:16px;letter-spacing:-0.5px;}
-.hero h2 em{font-style:italic;color:var(--gold-light);}
-.hero-readinglist h2 em{color:#4ade80;}
-.hero-sub{font-size:16px;color:rgba(255,255,255,0.45);line-height:1.65;font-weight:300;max-width:500px;margin:0 auto;}
-/* UAE flag stripe on left edge of hero */
-.hero::after{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(to bottom,var(--uae-red) 33%,#fff 33%,#fff 38%,var(--uae-green) 38%);}
+/* illustrated shelf */
+.hero-visual{
+  display:flex;align-items:flex-end;justify-content:center;
+  padding-bottom:0;
+  position:relative;
+}
+.shelf-scene{
+  width:100%;max-width:380px;
+  position:relative;
+}
+/* Books SVG inline */
+.shelf-svg{width:100%;height:auto;display:block;}
 
 /* ── MAIN ── */
-.main{max-width:1140px;margin:0 auto;padding:40px 32px;}
+.main{max-width:1100px;margin:0 auto;padding:32px 28px 56px;}
 
-/* ── INNER TABS ── */
-.tabs{display:flex;gap:3px;background:var(--parchment-dark);border-radius:12px;padding:4px;margin-bottom:32px;border:1px solid var(--border);width:fit-content;}
-.tab{padding:9px 20px;border:none;background:transparent;border-radius:9px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--ink-muted);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:7px;white-space:nowrap;}
-.tab:hover{background:rgba(255,255,255,0.7);color:var(--ink);}
-.tab.active{background:var(--ink);color:#fff;box-shadow:var(--shadow-sm);}
-.tab.active .ti{color:var(--gold-light);}
-.tab .pdot{width:6px;height:6px;border-radius:50%;background:var(--gold);margin-left:2px;}
+/* ── TABS ── */
+.tabs{
+  display:flex;gap:3px;
+  background:var(--white);
+  border-radius:12px;padding:4px;
+  border:1.5px solid var(--border);
+  box-shadow:var(--shadow-sm);
+  width:fit-content;margin-bottom:24px;
+}
+.tab{
+  padding:9px 20px;border:none;
+  background:transparent;border-radius:9px;
+  font-family:'Outfit',sans-serif;font-size:13px;font-weight:500;
+  color:var(--muted);cursor:pointer;transition:all 0.2s;
+  display:flex;align-items:center;gap:7px;white-space:nowrap;
+}
+.tab:hover{background:var(--cream);color:var(--ink);}
+.tab.active{
+  background:linear-gradient(135deg,var(--uae-green) 0%,var(--uae-green2) 100%);
+  color:#fff;box-shadow:0 2px 8px rgba(0,115,47,0.25);
+}
+.tab.active .ti{color:var(--gold2);}
+.premium-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);margin-left:2px;}
 
-/* ── CARDS ── */
-.card{background:#fff;border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow-sm);overflow:hidden;}
-.card-header{padding:22px 28px 18px;border-bottom:1px solid var(--parchment-dark);}
-.card-header h2{font-family:'Playfair Display',serif;font-size:20px;}
-.card-header p{font-size:13px;color:var(--ink-muted);margin-top:4px;line-height:1.5;}
-.card-body{padding:28px;}
+/* ── CARD ── */
+.card{
+  background:var(--white);border-radius:var(--r);
+  border:1.5px solid var(--border);box-shadow:var(--shadow-sm);
+  overflow:hidden;
+}
+.card-header{
+  padding:20px 26px 17px;
+  border-bottom:1.5px solid var(--cream2);
+  background:linear-gradient(to bottom,var(--cream) 0%,var(--white) 100%);
+  display:flex;align-items:flex-start;gap:14px;
+}
+.card-header-icon{
+  width:38px;height:38px;border-radius:9px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  background:var(--uae-green-pale);border:1px solid rgba(0,115,47,0.15);
+}
+.card-header h2{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;margin-bottom:3px;}
+.card-header p{font-size:12px;color:var(--muted);line-height:1.55;}
+.card-body{padding:24px 26px;}
 
 /* ── FORM ── */
 .search-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;}
 .field{display:flex;flex-direction:column;gap:6px;}
-.field-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--ink-soft);}
-.field-label .req{color:var(--gold);margin-left:2px;}
-.field-label .opt{color:#bbb;font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;}
-input,select{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--parchment);transition:all 0.2s;outline:none;-webkit-appearance:none;}
-input:focus,select:focus{border-color:var(--gold);background:#fff;box-shadow:0 0 0 3px rgba(201,168,76,0.1);}
-input::placeholder{color:#c0b8b0;}
-select:disabled{opacity:0.5;cursor:not-allowed;background:#f5f3f0;}
-.search-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;}
-
-/* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border-radius:9px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;border:none;white-space:nowrap;}
-.btn-primary{background:var(--ink);color:#fff;}
-.btn-primary:hover{background:var(--ink-soft);transform:translateY(-1px);box-shadow:var(--shadow-sm);}
+.field-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--ink2);}
+.req{color:var(--gold);margin-left:3px;font-size:10px;}
+.opt{color:#bbb;font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;}
+input,select{
+  width:100%;padding:11px 14px;
+  border:1.5px solid var(--border2);border-radius:9px;
+  font-family:'Outfit',sans-serif;font-size:14px;color:var(--ink);
+  background:var(--cream);transition:all 0.2s;outline:none;-webkit-appearance:none;
+}
+input:focus,select:focus{border-color:var(--uae-green);background:var(--white);box-shadow:0 0 0 3px rgba(0,115,47,0.08);}
+input::placeholder{color:#bfb9af;}
+.search-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:14px;}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:11px 22px;border-radius:9px;
+  font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;
+  cursor:pointer;transition:all 0.2s;border:none;white-space:nowrap;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--uae-green) 0%,var(--uae-green2) 100%);
+  color:#fff;box-shadow:0 3px 12px rgba(0,115,47,0.25);
+}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,115,47,0.3);}
 .btn-primary:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
-.btn-ghost{background:transparent;color:var(--ink-muted);border:1.5px solid var(--border);}
-.btn-ghost:hover{border-color:var(--ink);color:var(--ink);background:var(--parchment);}
-.btn-gold{background:var(--gold);color:var(--ink);font-weight:700;}
-.btn-gold:hover{background:var(--gold-light);transform:translateY(-1px);}
-.btn-green{background:var(--uae-green);color:#fff;font-weight:700;}
-.btn-green:hover{background:#005a24;transform:translateY(-1px);box-shadow:var(--shadow-sm);}
-.btn-green:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+.btn-ghost{background:var(--white);color:var(--muted);border:1.5px solid var(--border2);}
+.btn-ghost:hover{border-color:var(--ink);color:var(--ink);}
+.btn-gold{
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);
+  color:var(--ink);font-weight:700;box-shadow:0 3px 12px rgba(201,147,42,0.3);
+}
+.btn-gold:hover{transform:translateY(-1px);}
 
-/* ── NOTICES ── */
-.notice{padding:12px 16px;border-radius:8px;font-size:12px;line-height:1.6;margin-top:16px;display:flex;gap:10px;align-items:flex-start;}
-.notice-neutral{background:var(--parchment-dark);border:1px solid var(--border);color:var(--ink-muted);}
-.notice-uae{background:var(--uae-red-soft);border:1px solid rgba(255,0,0,0.1);color:var(--ink-soft);border-left:3px solid var(--uae-red);}
-.notice-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
+/* ── NOTICE ── */
+.notice{
+  padding:11px 15px;border-radius:9px;
+  font-size:12px;line-height:1.6;margin-top:15px;
+  display:flex;gap:9px;align-items:flex-start;
+}
+.notice-neutral{background:var(--cream);border:1.5px solid var(--border);color:var(--muted);}
+.notice-icon{font-size:13px;flex-shrink:0;margin-top:1px;}
 
-/* ── STATES ── */
-.empty{text-align:center;padding:60px 28px;}
-.empty-icon{font-size:52px;margin-bottom:16px;opacity:0.25;}
-.empty-title{font-family:'Playfair Display',serif;font-size:20px;color:#ccc;margin-bottom:8px;}
-.empty-sub{font-size:13px;color:#bbb;}
-.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 28px;gap:16px;}
-.spinner{width:36px;height:36px;border:3px solid var(--parchment-dark);border-top-color:var(--gold);border-radius:50%;animation:spin 0.75s linear infinite;}
-.spinner-green{border-top-color:var(--uae-green);}
+/* ── EMPTY ── */
+.empty{text-align:center;padding:44px 28px;}
+.empty-icon{font-size:44px;margin-bottom:14px;opacity:0.2;}
+.empty-title{font-family:'Cormorant Garamond',serif;font-size:19px;color:#ccc;margin-bottom:6px;}
+.empty-sub{font-size:12px;color:#bbb;}
+
+/* ── LOADING ── */
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 28px;gap:14px;}
+.spinner{width:36px;height:36px;border:3px solid var(--cream2);border-top-color:var(--uae-green);border-radius:50%;animation:spin 0.75s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.loading p{font-size:13px;color:var(--ink-muted);}
+.loading p{font-size:13px;color:var(--muted);}
 .loading small{font-size:11px;color:#bbb;}
 
-/* ── RESULTS ── */
-.result-card{border-radius:12px;border:1.5px solid var(--border);overflow:hidden;animation:fadeUp 0.3s ease;margin-bottom:20px;}
+/* ── RESULT CARD ── */
+.result-card{border-radius:12px;border:1.5px solid var(--border);overflow:hidden;animation:fadeUp 0.3s ease;margin-bottom:18px;box-shadow:var(--shadow-sm);}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-.result-head{padding:18px 22px;display:flex;align-items:flex-start;gap:16px;justify-content:space-between;}
-.rh-red{background:var(--red-soft);border-bottom:1px solid #F5C6C2;}
-.rh-amber{background:var(--amber-soft);border-bottom:1px solid #FAD7A0;}
-.rh-green{background:var(--green-soft);border-bottom:1px solid #A9DFBF;}
+.result-head{padding:18px 22px;display:flex;align-items:flex-start;gap:14px;justify-content:space-between;}
+.rh-red{background:linear-gradient(135deg,#fff5f5,#ffe8e8);border-bottom:1.5px solid #fecaca;}
+.rh-amber{background:linear-gradient(135deg,#fffbf0,#fff3d0);border-bottom:1.5px solid #fde68a;}
+.rh-green{background:linear-gradient(135deg,#f0faf5,#dcfce7);border-bottom:1.5px solid #bbf7d0;}
 .verdict{padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;}
-.v-red{background:var(--red);color:#fff;}
+.v-red{background:var(--uae-red);color:#fff;}
 .v-amber{background:var(--amber);color:#fff;}
-.v-green{background:var(--green);color:#fff;}
-.result-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;line-height:1.3;}
-.result-meta{font-size:12px;color:var(--ink-muted);margin-top:3px;}
+.v-green{background:var(--uae-green);color:#fff;}
+.result-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;line-height:1.3;}
+.result-meta{font-size:12px;color:var(--muted);margin-top:3px;}
 .result-body{padding:20px 22px;background:#fff;}
-.flag{display:flex;gap:10px;padding:10px 14px;border-radius:8px;margin-bottom:8px;align-items:flex-start;}
-.flag-r{background:#FDF2F2;border:1px solid #F5C6C2;}
-.flag-a{background:#FFFBF0;border:1px solid #FAD7A0;}
-.flag-g{background:#F0FAF5;border:1px solid #A9DFBF;}
-.flag-b{background:var(--blue-soft);border:1px solid #AED6F1;}
-.flag-icon{font-size:15px;flex-shrink:0;margin-top:1px;}
+.flag{display:flex;gap:9px;padding:10px 13px;border-radius:9px;margin-bottom:7px;align-items:flex-start;}
+.flag-r{background:#fff5f5;border:1.5px solid #fecaca;}
+.flag-a{background:var(--amber-soft);border:1.5px solid #fde68a;}
+.flag-g{background:var(--green-soft);border:1.5px solid #bbf7d0;}
+.flag-b{background:var(--blue-soft);border:1.5px solid #bfdbfe;}
+.flag-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
 .flag-rule{font-size:13px;font-weight:600;color:var(--ink);}
-.flag-note{font-size:12px;color:#666;margin-top:3px;line-height:1.4;}
-.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:8px;margin:14px 0;}
-.comp-item{padding:10px 12px;border-radius:8px;background:var(--parchment);border:1px solid var(--border);}
+.flag-note{font-size:12px;color:#666;margin-top:3px;line-height:1.5;}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin:12px 0;}
+.comp-item{padding:10px 13px;border-radius:9px;background:var(--cream);border:1.5px solid var(--border);}
 .comp-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.6px;color:#aaa;margin-bottom:3px;}
-.comp-val{font-size:13px;font-weight:500;}
-.cv-ok{color:var(--green);}.cv-warn{color:var(--amber);}.cv-flag{color:var(--red);}
-.ai-section{border-top:1px solid var(--parchment-dark);padding-top:16px;margin-top:16px;}
-.ai-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-muted);margin-bottom:12px;display:flex;align-items:center;gap:7px;}
-.ai-badge{padding:2px 8px;background:var(--parchment-dark);border-radius:4px;font-size:10px;color:#aaa;font-weight:400;text-transform:none;letter-spacing:0;}
-.narrative{font-size:13px;line-height:1.7;color:var(--ink-soft);background:var(--parchment);padding:13px 15px;border-radius:8px;border:1px solid var(--border);margin-top:10px;}
-.info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-top:12px;}
+.comp-val{font-size:13px;font-weight:600;}
+.cv-ok{color:var(--uae-green);}
+.cv-warn{color:var(--amber);}
+.cv-flag{color:var(--uae-red);}
+.ai-section{border-top:1.5px solid var(--cream2);padding-top:16px;margin-top:16px;}
+.ai-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:11px;display:flex;align-items:center;gap:7px;}
+.ai-badge{padding:2px 8px;background:var(--cream);border-radius:4px;font-size:10px;color:#aaa;font-weight:400;text-transform:none;letter-spacing:0;border:1px solid var(--border);}
+.narrative{font-size:13px;line-height:1.7;color:var(--ink2);background:var(--cream);padding:13px 15px;border-radius:9px;border:1.5px solid var(--border);margin-top:9px;}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-top:11px;}
 .info-item{display:flex;flex-direction:column;gap:2px;}
 .info-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#ccc;}
 .info-val{font-size:13px;font-weight:500;color:var(--ink);}
-
-/* ── SUMMARY ── */
-.summary-row{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;}
-.sum-card{flex:1;min-width:110px;padding:16px 18px;border-radius:12px;text-align:center;border:1.5px solid var(--border);}
-.sum-count{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;line-height:1;}
-.sum-label{font-size:11px;color:var(--ink-muted);margin-top:5px;text-transform:uppercase;letter-spacing:0.6px;}
-.sum-red{background:var(--red-soft);border-color:#F5C6C2;}.sum-red .sum-count{color:var(--red);}
-.sum-amber{background:var(--amber-soft);border-color:#FAD7A0;}.sum-amber .sum-count{color:var(--amber);}
-.sum-green{background:var(--green-soft);border-color:#A9DFBF;}.sum-green .sum-count{color:var(--green);}
-.sum-total{background:var(--parchment-dark);}.sum-total .sum-count{color:var(--ink);}
-
-/* ── BULK UPLOAD ── */
-.upload-zone{border:2px dashed var(--border);border-radius:12px;padding:40px 24px;text-align:center;background:var(--parchment);transition:all 0.2s;cursor:pointer;}
-.upload-zone:hover,.upload-zone.dragover{border-color:var(--gold);background:var(--gold-pale);}
-.upload-icon{font-size:36px;margin-bottom:12px;opacity:0.5;}
-.upload-title{font-size:15px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;}
-.upload-sub{font-size:12px;color:var(--ink-muted);margin-bottom:16px;}
+.rating-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;background:var(--blue-soft);border:1.5px solid #bfdbfe;font-size:13px;font-weight:600;color:var(--blue);margin:8px 0;}
+.summary-row{display:flex;gap:11px;margin-bottom:22px;flex-wrap:wrap;}
+.sum-card{flex:1;min-width:100px;padding:16px 18px;border-radius:12px;text-align:center;border:1.5px solid var(--border);}
+.sum-count{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;line-height:1;}
+.sum-label{font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:0.6px;}
+.sum-red{background:#fff5f5;border-color:#fecaca;}
+.sum-red .sum-count{color:var(--uae-red);}
+.sum-amber{background:var(--amber-soft);border-color:#fde68a;}
+.sum-amber .sum-count{color:var(--amber);}
+.sum-green{background:var(--green-soft);border-color:#bbf7d0;}
+.sum-green .sum-count{color:var(--uae-green);}
+.sum-total{background:var(--cream);border-color:var(--border);}
+.sum-total .sum-count{color:var(--ink);}
+.upload-zone{border:2px dashed var(--border2);border-radius:12px;padding:36px 24px;text-align:center;background:var(--cream);transition:all 0.2s;cursor:pointer;}
+.upload-zone:hover{border-color:var(--gold);background:var(--gold-pale);}
+.upload-zone.dragover{border-color:var(--gold);background:var(--gold-pale);transform:scale(1.01);}
+.upload-icon{font-size:32px;margin-bottom:11px;opacity:0.4;}
+.upload-title{font-size:14px;font-weight:600;color:var(--ink2);margin-bottom:5px;}
+.upload-sub{font-size:12px;color:var(--muted);margin-bottom:14px;}
 #file-input{display:none;}
-.template-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px;}
-.tmpl-card{padding:16px 18px;border-radius:10px;border:1.5px solid var(--border);background:#fff;display:flex;align-items:center;gap:14px;}
-.tmpl-icon{width:40px;height:40px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px;}
-.tmpl-en .tmpl-icon{background:var(--blue-soft);}.tmpl-ar .tmpl-icon{background:var(--gold-pale);}
-.tmpl-info h4{font-size:14px;font-weight:600;margin-bottom:3px;}
-.tmpl-info p{font-size:11px;color:var(--ink-muted);line-height:1.4;}
-.tmpl-dl{margin-left:auto;flex-shrink:0;padding:7px 14px;border-radius:7px;background:var(--parchment-dark);border:1px solid var(--border);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;color:var(--ink-soft);}
-.tmpl-dl:hover{background:var(--ink);color:#fff;}
-.prog-wrap{height:6px;background:var(--parchment-dark);border-radius:3px;margin:14px 0 6px;overflow:hidden;}
-.prog-bar{height:100%;background:linear-gradient(to right,var(--uae-green),var(--gold));border-radius:3px;transition:width 0.3s ease;}
-.prog-label{font-size:12px;color:var(--ink-muted);}
-
-/* ── READING LIST ── */
-.rl-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
-
-/* Usage bar */
-.usage-bar{
-  background:linear-gradient(135deg,#0f1a12 0%,#1a3320 50%,#0f1a12 100%);
-  border-radius:14px;padding:20px 26px;display:flex;align-items:center;
-  justify-content:space-between;gap:16px;margin-bottom:28px;
-  border:1px solid rgba(0,115,47,0.25);
-  box-shadow:0 4px 20px rgba(0,0,0,0.15);
-  position:relative;overflow:hidden;
-}
-.usage-bar::before{
-  content:'📚';position:absolute;right:140px;top:50%;transform:translateY(-50%);
-  font-size:80px;opacity:0.04;pointer-events:none;
-}
-.usage-left h3{font-family:'Playfair Display',serif;font-size:17px;color:#fff;margin-bottom:4px;}
-.usage-left p{font-size:11px;color:rgba(255,255,255,0.35);line-height:1.5;}
-.usage-right{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex-shrink:0;}
-.usage-count{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--gold-light);}
-.usage-count span{font-size:12px;color:rgba(255,255,255,0.35);font-weight:400;font-family:'DM Sans',sans-serif;margin-left:4px;}
-.usage-track{width:150px;height:7px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;}
-.usage-fill{height:100%;background:linear-gradient(to right,var(--uae-green),var(--gold-light));border-radius:4px;transition:width 0.5s ease;}
-.usage-fill.warn{background:linear-gradient(to right,var(--amber),var(--red));}
-
-/* Genre locked */
-.genre-lock-label{font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;background:var(--gold-pale);color:var(--amber);border:1px solid rgba(201,168,76,0.3);margin-left:6px;vertical-align:middle;letter-spacing:0.5px;}
-.genre-lock-note{font-size:11px;color:var(--amber);margin-top:6px;display:flex;align-items:center;gap:4px;}
-
-/* Book cards */
-.rl-book-card{border-radius:16px;overflow:hidden;animation:fadeUp 0.4s ease;margin-bottom:18px;background:#fff;box-shadow:var(--shadow-sm);border:1.5px solid var(--border);position:relative;}
-.rl-book-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(to bottom,var(--uae-green),var(--gold));}
-.rl-book-head{padding:20px 22px 16px 26px;background:linear-gradient(135deg,#f6fdf8 0%,#eef8f2 100%);border-bottom:1px solid #d4edde;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
-.rl-book-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--uae-green);opacity:0.6;margin-bottom:7px;}
-.rl-book-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:600;line-height:1.25;color:var(--ink);}
-.rl-book-author{font-size:13px;color:var(--ink-muted);margin-top:5px;}
-.rl-badge{padding:5px 13px;border-radius:20px;flex-shrink:0;font-size:11px;font-weight:700;letter-spacing:0.4px;white-space:nowrap;background:var(--uae-green);color:#fff;}
-.rl-book-body{padding:18px 22px 18px 26px;}
-.rl-level{display:inline-flex;align-items:center;gap:6px;padding:5px 13px;border-radius:20px;background:var(--gold-pale);border:1px solid rgba(201,168,76,0.25);font-size:12px;font-weight:600;color:var(--amber);margin-bottom:13px;}
-.rl-desc{font-size:13px;line-height:1.75;color:var(--ink-soft);background:var(--parchment);padding:13px 15px;border-radius:10px;border:1px solid var(--border);margin-bottom:12px;}
-.rl-tags{display:flex;gap:7px;flex-wrap:wrap;}
-.rl-tag{padding:4px 11px;border-radius:12px;font-size:11px;font-weight:500;background:var(--parchment-dark);color:var(--ink-muted);border:1px solid var(--border);}
-.rl-clear{font-size:11px;color:var(--uae-green);font-weight:600;display:flex;align-items:center;gap:5px;margin-top:10px;}
-.rl-datestamp{font-size:11px;color:#bbb;text-align:center;padding:18px 0 4px;font-style:italic;}
-
-/* Results header */
-.rl-results-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:22px;}
-.rl-results-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--ink);}
-.rl-results-sub{font-size:12px;color:var(--ink-muted);margin-top:3px;}
-.rl-screened-badge{padding:6px 14px;border-radius:20px;background:var(--uae-green-soft);border:1px solid rgba(0,115,47,0.2);font-size:11px;font-weight:700;color:var(--uae-green);letter-spacing:0.5px;}
-
-/* Upgrade wall */
-.upgrade-wall{background:linear-gradient(135deg,#0f1a12,#1a3320);border-radius:16px;padding:36px;text-align:center;margin-top:10px;border:1px solid rgba(0,115,47,0.25);box-shadow:var(--shadow-md);}
-.upgrade-wall h3{font-family:'Playfair Display',serif;font-size:22px;color:#fff;margin-bottom:10px;}
-.upgrade-wall p{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7;margin-bottom:24px;}
-
-/* ── MODAL ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);}
-.modal-box{background:#fff;border-radius:20px;max-width:460px;width:100%;padding:38px;position:relative;box-shadow:0 24px 64px rgba(0,0,0,0.3);animation:fadeUp 0.25s ease;}
-.modal-close{position:absolute;top:16px;right:16px;background:var(--parchment-dark);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--ink-muted);transition:background 0.2s;}
-.modal-close:hover{background:var(--border);}
-.modal-icon{font-size:42px;text-align:center;margin-bottom:14px;}
-.modal-title{font-family:'Playfair Display',serif;font-size:23px;font-weight:700;text-align:center;margin-bottom:8px;color:var(--ink);}
-.modal-sub{font-size:13px;color:var(--ink-muted);text-align:center;line-height:1.65;margin-bottom:26px;}
-.modal-form{display:flex;flex-direction:column;gap:12px;}
-.modal-form input{background:#fff;border:1.5px solid var(--border);}
-.modal-form input:focus{border-color:var(--uae-green);box-shadow:0 0 0 3px rgba(0,115,47,0.1);}
-.modal-submit{width:100%;padding:13px;background:var(--uae-green);color:#fff;border:none;border-radius:9px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;margin-top:4px;}
-.modal-submit:hover{background:#005a24;transform:translateY(-1px);}
-.modal-privacy{font-size:11px;color:#bbb;text-align:center;margin-top:12px;}
-.modal-success{text-align:center;padding:8px 0;}
-.modal-success .s-icon{font-size:52px;margin-bottom:14px;}
-.modal-success p{font-size:14px;color:var(--ink-soft);line-height:1.65;margin-top:10px;}
+.template-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px;}
+.tmpl-card{padding:16px 18px;border-radius:11px;border:1.5px solid var(--border);background:#fff;display:flex;align-items:center;gap:12px;transition:all 0.2s;}
+.tmpl-card:hover{border-color:var(--gold);box-shadow:var(--shadow-sm);}
+.tmpl-icon{width:40px;height:40px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.tmpl-en .tmpl-icon{background:var(--blue-soft);}
+.tmpl-ar .tmpl-icon{background:var(--gold-pale);}
+.tmpl-info h4{font-size:13px;font-weight:600;margin-bottom:2px;}
+.tmpl-info p{font-size:11px;color:var(--muted);line-height:1.4;}
+.tmpl-dl{margin-left:auto;padding:7px 13px;background:var(--cream);border:1.5px solid var(--border2);border-radius:7px;font-size:12px;font-weight:600;color:var(--ink);cursor:pointer;transition:all 0.2s;white-space:nowrap;flex-shrink:0;}
+.tmpl-dl:hover{background:var(--gold-pale);border-color:var(--gold);color:var(--gold);}
+.prog-wrap{width:100%;height:5px;background:var(--cream2);border-radius:10px;overflow:hidden;margin-top:13px;}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--uae-green),var(--gold2));border-radius:10px;transition:width 0.3s;}
+.prog-label{font-size:12px;color:var(--muted);margin-top:6px;}
+.premium-gate{background:linear-gradient(135deg,var(--ink) 0%,var(--ink2) 100%);border-radius:12px;padding:32px;text-align:center;border:1.5px solid rgba(201,147,42,0.2);box-shadow:var(--shadow-md);}
+.premium-gate h3{font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;margin-bottom:8px;}
+.premium-gate p{font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:20px;line-height:1.6;}
+.premium-features{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bottom:22px;}
+.pf-item{display:flex;align-items:center;gap:7px;font-size:12px;color:rgba(255,255,255,0.65);}
+.pf-icon{color:var(--gold2);}
+.step-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.step-num{width:20px;height:20px;border-radius:50%;background:var(--uae-green);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.lbl-free{font-size:11px;font-weight:700;color:var(--uae-green);background:var(--uae-green-pale);padding:2px 9px;border-radius:10px;margin-left:7px;vertical-align:middle;border:1px solid rgba(0,115,47,0.2);}
+.lbl-premium{font-size:11px;font-weight:700;color:var(--gold);background:var(--gold-pale);padding:2px 9px;border-radius:10px;margin-left:7px;vertical-align:middle;border:1px solid rgba(201,147,42,0.2);}
 
 /* ── FOOTER ── */
-.footer{background:var(--ink);color:rgba(255,255,255,0.28);font-size:12px;line-height:1.8;text-align:center;padding:32px 32px;margin-top:64px;}
-.footer-uae{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px;}
-.fstripe{display:flex;height:3px;width:56px;border-radius:2px;overflow:hidden;}
-.fsr{flex:1;background:var(--uae-red);}.fsw{flex:1;background:#fff;}.fsg{flex:1;background:var(--uae-green);}
-.footer strong{color:rgba(255,255,255,0.5);}
+.footer{background:var(--ink);color:rgba(255,255,255,0.3);font-size:11px;text-align:center;padding:28px 32px;line-height:2;margin-top:48px;}
+.footer strong{color:rgba(255,255,255,0.55);}
+.footer-flag{display:flex;height:3px;width:80px;margin:0 auto 16px;border-radius:2px;overflow:hidden;}
+.footer-flag div{flex:1;}
 
 @media(max-width:768px){
-  .main{padding:20px 16px;}
-  .hero{padding:48px 20px 40px;min-height:auto;}
+  .main{padding:18px 14px;}
+  .hero{padding:32px 18px 0;}
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-visual{display:none;}
   .hero h2{font-size:28px;}
-  .search-grid,.rl-form-grid{grid-template-columns:1fr;}
+  .search-grid{grid-template-columns:1fr;}
   .tabs{width:100%;overflow-x:auto;}
   .template-cards{grid-template-columns:1fr;}
-  .header-inner,.main-nav-inner{padding-left:16px;padding-right:16px;}
-  .main-nav-inner{overflow-x:auto;}
-  .hero::after{display:none;}
-  .usage-bar{flex-direction:column;align-items:flex-start;}
-  .usage-bar::before{display:none;}
+  .header-inner{padding:0 16px;}
 }
 </style>
 </head>
 <body>
 
-<div class="uae-bar"></div>
+<!-- FLAG BAR -->
+<div class="flag-bar"><div class="fb-g"></div><div class="fb-w"></div><div class="fb-r"></div></div>
 
 <!-- HEADER -->
 <header class="header">
   <div class="header-inner">
-    <div class="logo" onclick="window.scrollTo(0,0)">
-      <div class="logo-mark">SC</div>
-      <div class="logo-text"><h1>ShelfCheck</h1><p>UAE School Library Tools</p></div>
-    </div>
+    <a class="logo" href="#">
+      <div class="logo-mark">
+        <span class="lm-text">S<span style="color:var(--gold2);">C</span></span>
+        <span class="lm-tick">✓</span>
+      </div>
+      <div class="logo-text">
+        <h1>ShelfCheck</h1>
+        <p>Book Screening for School Libraries</p>
+      </div>
+    </a>
     <div class="header-right">
-      <div class="header-flag"><div class="hf-r"></div><div class="hf-w"></div><div class="hf-g"></div></div>
-      <span class="header-tag">🇦🇪 UAE Compliant</span>
+      <div class="lang-tag">🇦🇪 UAE</div>
     </div>
   </div>
-  <nav class="main-nav">
-    <div class="main-nav-inner">
-      <button class="main-nav-tab active" id="main-tab-shelfcheck" onclick="switchMainTab('shelfcheck')">
-        <span>🔍</span> ShelfCheck <span class="nav-badge">Free</span>
-      </button>
-      <button class="main-nav-tab" id="main-tab-readinglist" onclick="switchMainTab('readinglist')">
-        <span>📚</span> Reading List Generator <span class="nav-badge nav-badge-green">New</span>
-      </button>
-    </div>
-  </nav>
 </header>
 
-<!-- ══════════════ SHELFCHECK PAGE ══════════════ -->
-<div id="page-shelfcheck">
-  <section class="hero hero-shelfcheck">
-    <div class="hero-bg"></div>
-    <div class="hero-books"></div>
-    <div class="hero-shelf"></div>
-    <div class="hero-spine hero-spine-1"></div>
-    <div class="hero-spine hero-spine-2"></div>
-    <div class="hero-spine hero-spine-3"></div>
-    <div class="hero-spine hero-spine-4"></div>
-    <div class="hero-spine hero-spine-5"></div>
-    <div class="hero-spine hero-spine-6"></div>
-    <div class="hero-inner">
-      <div class="hero-eyebrow">✦ UAE School Libraries</div>
-      <h2>Book Screening for<br><em>School Libraries</em></h2>
-      <p class="hero-sub">Instantly screen any book against UAE content guidelines. Know what belongs on your shelf — before it becomes a problem.</p>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-pattern"></div>
+  <div class="hero-geo"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-eyebrow">✦ For School Libraries</div>
+      <h2>Instantly screen any book<br>against <em>content guidelines</em></h2>
+      <p class="hero-sub">A practical tool that helps school librarians make informed, confident decisions about the books on their shelves.</p>
+      <div class="hero-tag">Built by a librarian, for librarians</div>
+      <div style="margin-top:14px;font-size:11px;color:var(--gold);letter-spacing:0.4px;opacity:0.85;">Compliance data last updated: January 2026</div>
     </div>
-  </section>
+    <div class="hero-visual">
+      <!-- Illustrated library shelf SVG -->
+      <svg class="shelf-svg" viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background glow -->
+        <defs>
+          <radialGradient id="glow" cx="50%" cy="80%" r="50%">
+            <stop offset="0%" stop-color="rgba(201,147,42,0.15)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+          </radialGradient>
+          <filter id="shadow">
+            <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.3"/>
+          </filter>
+        </defs>
+        <rect width="400" height="280" fill="url(#glow)"/>
 
-  <main class="main">
-    <div class="tabs">
-      <button class="tab active" onclick="switchTab('single')" id="tab-single"><span class="ti">🔍</span> Single Book Check</button>
-      <button class="tab" onclick="switchTab('bulk')" id="tab-bulk"><span class="ti">📋</span> Bulk Check <span class="pdot"></span></button>
-      <button class="tab" onclick="switchTab('report')" id="tab-report"><span class="ti">📄</span> Report <span class="pdot"></span></button>
+        <!-- SHELF 1 - bottom -->
+        <rect x="20" y="220" width="360" height="12" rx="3" fill="#8B6914" opacity="0.9"/>
+        <rect x="15" y="228" width="370" height="4" rx="2" fill="#6B4F10" opacity="0.6"/>
+
+        <!-- Books on shelf 1 -->
+        <!-- Book 1 - tall red -->
+        <rect x="35" y="160" width="28" height="62" rx="3" fill="#C0392B"/>
+        <rect x="35" y="160" width="5" height="62" rx="1" fill="rgba(0,0,0,0.15)"/>
+        <rect x="40" y="175" width="18" height="2" rx="1" fill="rgba(255,255,255,0.4)"/>
+        <rect x="40" y="180" width="14" height="2" rx="1" fill="rgba(255,255,255,0.3)"/>
+        <rect x="40" y="185" width="16" height="2" rx="1" fill="rgba(255,255,255,0.2)"/>
+
+        <!-- Book 2 - green -->
+        <rect x="66" y="168" width="24" height="54" rx="3" fill="#00732F"/>
+        <rect x="66" y="168" width="4" height="54" rx="1" fill="rgba(0,0,0,0.15)"/>
+        <rect x="72" y="180" width="12" height="2" rx="1" fill="rgba(255,255,255,0.4)"/>
+        <rect x="72" y="185" width="14" height="2" rx="1" fill="rgba(255,255,255,0.3)"/>
+
+        <!-- Book 3 - gold/cream tilted slightly -->
+        <rect x="93" y="165" width="20" height="57" rx="3" fill="#C9932A"/>
+        <rect x="93" y="165" width="4" height="57" rx="1" fill="rgba(0,0,0,0.15)"/>
+        <rect x="99" y="178" width="10" height="2" rx="1" fill="rgba(255,255,255,0.5)"/>
+        <rect x="99" y="183" width="8" height="2" rx="1" fill="rgba(255,255,255,0.3)"/>
+
+        <!-- Book 4 - dark blue -->
+        <rect x="116" y="172" width="26" height="50" rx="3" fill="#1A3A5C"/>
+        <rect x="116" y="172" width="5" height="50" rx="1" fill="rgba(0,0,0,0.15)"/>
+        <rect x="123" y="184" width="13" height="2" rx="1" fill="rgba(255,255,255,0.3)"/>
+        <rect x="123" y="189" width="10" height="2" rx="1" fill="rgba(255,255,255,0.2)"/>
+
+        <!-- Book 5 - cream/beige -->
+        <rect x="145" y="163" width="22" height="59" rx="3" fill="#E8DCC8"/>
+        <rect x="145" y="163" width="4" height="59" rx="1" fill="rgba(0,0,0,0.1)"/>
+        <rect x="151" y="176" width="11" height="2" rx="1" fill="rgba(100,80,40,0.4)"/>
+        <rect x="151" y="181" width="13" height="2" rx="1" fill="rgba(100,80,40,0.3)"/>
+        <rect x="151" y="186" width="9" height="2" rx="1" fill="rgba(100,80,40,0.2)"/>
+
+        <!-- Book 6 - burgundy -->
+        <rect x="170" y="170" width="25" height="52" rx="3" fill="#7D2645"/>
+        <rect x="170" y="170" width="4" height="52" rx="1" fill="rgba(0,0,0,0.15)"/>
+        <rect x="176" y="182" width="13" height="2" rx="1" fill="rgba(255,255,255,0.3)"/>
+
+        <!-- Book 7 - teal -->
+        <rect x="198" y="166" width="23" height="56" rx="3" fill="#0E7490"/>
+        <rect x="198" y="166" width="4" height="56" rx="1" fill="rgba(0,0,0,0.15)"/>
+        <rect x="204" y="179" width="11" height="2" rx="1" fill="rgba(255,255,255,0.4)"/>
+        <rect x="204" y="184" width="13" height="2" rx="1" fill="rgba(255,255,255,0.25)"/>
+
+        <!-- Book 8 - orange -->
+        <rect x="224" y="173" width="21" height="49" rx="3" fill="#C05621"/>
+        <rect x="224" y="173" width="4" height="49" rx="1" fill="rgba(0,0,0,0.15)"/>
+        <rect x="230" y="185" width="10" height="2" rx="1" fill="rgba(255,255,255,0.3)"/>
+
+        <!-- Book 9 - green dark -->
+        <rect x="248" y="161" width="27" height="61" rx="3" fill="#1A5C2E"/>
+        <rect x="248" y="161" width="5" height="61" rx="1" fill="rgba(0,0,0,0.15)"/>
+        <rect x="255" y="174" width="14" height="2" rx="1" fill="rgba(255,255,255,0.35)"/>
+        <rect x="255" y="179" width="11" height="2" rx="1" fill="rgba(255,255,255,0.25)"/>
+        <rect x="255" y="184" width="13" height="2" rx="1" fill="rgba(255,255,255,0.2)"/>
+
+        <!-- Book 10 - gold thick -->
+        <rect x="278" y="167" width="30" height="55" rx="3" fill="#B7860B"/>
+        <rect x="278" y="167" width="5" height="55" rx="1" fill="rgba(0,0,0,0.1)"/>
+        <rect x="285" y="180" width="17" height="2" rx="1" fill="rgba(255,255,255,0.4)"/>
+        <rect x="285" y="185" width="14" height="2" rx="1" fill="rgba(255,255,255,0.3)"/>
+        <rect x="285" y="190" width="16" height="2" rx="1" fill="rgba(255,255,255,0.2)"/>
+
+        <!-- Book 11 - purple -->
+        <rect x="311" y="174" width="22" height="48" rx="3" fill="#553C7B"/>
+        <rect x="311" y="174" width="4" height="48" rx="1" fill="rgba(0,0,0,0.15)"/>
+        <rect x="317" y="186" width="10" height="2" rx="1" fill="rgba(255,255,255,0.3)"/>
+
+        <!-- Book 12 - red slim -->
+        <rect x="336" y="169" width="18" height="53" rx="3" fill="#9B1C1C"/>
+        <rect x="336" y="169" width="3" height="53" rx="1" fill="rgba(0,0,0,0.15)"/>
+
+        <!-- Compliance checkmarks floating -->
+        <!-- Green check circle -->
+        <circle cx="75" cy="148" r="13" fill="rgba(0,115,47,0.9)" filter="url(#shadow)"/>
+        <text x="75" y="153" text-anchor="middle" font-size="13" fill="white">✓</text>
+
+        <!-- Red x circle -->
+        <circle cx="160" cy="145" r="13" fill="rgba(239,51,64,0.9)" filter="url(#shadow)"/>
+        <text x="160" y="150" text-anchor="middle" font-size="11" fill="white">✕</text>
+
+        <!-- Amber circle -->
+        <circle cx="295" cy="147" r="13" fill="rgba(198,124,0,0.9)" filter="url(#shadow)"/>
+        <text x="295" y="152" text-anchor="middle" font-size="11" fill="white">!</text>
+
+        <!-- Decorative Arabic pattern motif top right -->
+        <g opacity="0.15" transform="translate(340,20)">
+          <polygon points="30,0 38,12 52,12 42,22 46,36 30,28 14,36 18,22 8,12 22,12" fill="none" stroke="var(--gold2)" stroke-width="1.5"/>
+          <circle cx="30" cy="18" r="8" fill="none" stroke="var(--gold2)" stroke-width="1"/>
+        </g>
+
+        <!-- Small open book icon -->
+        <g transform="translate(160,30)" opacity="0.8">
+          <path d="M0,15 Q15,-2 30,15 Q45,-2 60,15 L60,45 Q45,30 30,45 Q15,30 0,45 Z" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+          <line x1="30" y1="15" x2="30" y2="45" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+        </g>
+
+        <!-- Bottom fade -->
+        <rect x="0" y="230" width="400" height="50" fill="url(#glow)" opacity="0.5"/>
+      </svg>
     </div>
+  </div>
+</section>
 
-    <!-- SINGLE -->
-    <div id="panel-single">
-      <div class="card">
-        <div class="card-header">
-          <h2>Single Book Check <span style="font-size:12px;font-weight:400;color:var(--uae-green);background:var(--uae-green-soft);padding:2px 10px;border-radius:12px;margin-left:8px;vertical-align:middle;border:1px solid rgba(0,115,47,0.2);">Free</span></h2>
-          <p>Enter any book's details to screen it against UAE content guidelines.</p>
-        </div>
-        <div class="card-body">
-          <div class="search-grid">
-            <div class="field"><label class="field-label">ISBN <span class="req">★ recommended</span></label><input type="text" id="isbn" placeholder="e.g. 9780743273565" maxlength="20"/></div>
-            <div class="field"><label class="field-label">Book Title</label><input type="text" id="title" placeholder="e.g. The God Delusion"/></div>
-            <div class="field"><label class="field-label">Author</label><input type="text" id="author" placeholder="e.g. Richard Dawkins"/></div>
-          </div>
-          <div style="display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap;">
-            <div class="field" style="flex:1;min-width:200px;"><label class="field-label">Publisher <span class="opt">(recommended for Arabic books)</span></label><input type="text" id="publisher" placeholder="Publisher name"/></div>
-            <div class="field" style="min-width:160px;"><label class="field-label">Country</label>
-              <select id="country"><option value="UAE">🇦🇪 UAE</option><option disabled>── Coming Soon ──</option><option disabled>🇸🇦 Saudi Arabia</option><option disabled>🇧🇭 Bahrain</option><option disabled>🇰🇼 Kuwait</option><option disabled>🇶🇦 Qatar</option></select>
-            </div>
-          </div>
-          <div class="search-actions">
-            <button class="btn btn-primary" onclick="runCheck()" id="check-btn"><span>🔍</span> Check This Book</button>
-            <button class="btn btn-ghost" onclick="clearForm()">Clear</button>
-            <button class="btn btn-ghost" onclick="demo('flag')">Try Flagged Example</button>
-            <button class="btn btn-ghost" onclick="demo('clear')">Try Clear Example</button>
-          </div>
-          <div class="notice notice-uae"><span class="notice-icon">🇦🇪</span><span>ShelfCheck screens books against UAE content guidelines and compiled reference data. Results are for guidance only — final decisions remain with your school leadership. Fines for non-compliant library content can be significant.</span></div>
-        </div>
-        <div id="results">
-          <div class="empty"><div class="empty-icon">🔍</div><div class="empty-title">Ready to Screen</div><div class="empty-sub">Enter a title, author, or ISBN above and press Check</div></div>
-        </div>
-      </div>
-    </div>
+<!-- MAIN -->
+<main class="main">
 
-    <!-- BULK -->
-    <div id="panel-bulk" style="display:none;">
-      <div class="card" style="margin-bottom:20px;">
-        <div class="card-header">
-          <h2>Bulk Book Check <span style="font-size:12px;font-weight:600;color:var(--gold);background:var(--gold-pale);padding:2px 10px;border-radius:12px;margin-left:8px;vertical-align:middle;border:1px solid rgba(201,168,76,0.2);">Premium</span></h2>
-          <p>Upload your book list and screen multiple titles at once.</p>
-        </div>
-        <div class="card-body">
-          <div style="margin-bottom:24px;">
-            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--ink-muted);margin-bottom:12px;">Step 1 — Download the right template</div>
-            <div class="template-cards">
-              <div class="tmpl-card tmpl-en"><div class="tmpl-icon">🇬🇧</div><div class="tmpl-info"><h4>English Books Template</h4><p>ISBN · Title · Author · Publisher</p></div><button class="tmpl-dl" onclick="downloadTemplate('english')">⬇ Download</button></div>
-              <div class="tmpl-card tmpl-ar"><div class="tmpl-icon">🇦🇪</div><div class="tmpl-info"><h4>Arabic Books Template</h4><p>Title · Author · Publisher · ISBN</p></div><button class="tmpl-dl" onclick="downloadTemplate('arabic')">⬇ Download</button></div>
-            </div>
-          </div>
-          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--ink-muted);margin-bottom:12px;">Step 2 — Upload your file</div>
-          <div class="upload-zone" id="drop-zone" onclick="document.getElementById('file-input').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
-            <input type="file" id="file-input" accept=".xlsx,.xls,.csv" onchange="handleFileSelect(event)"/>
-            <div class="upload-icon">📂</div>
-            <div class="upload-title">Click to upload or drag & drop</div>
-            <div class="upload-sub">Accepts .xlsx or .csv files only</div>
-            <button class="btn btn-ghost" style="pointer-events:none;">Choose File</button>
-          </div>
-          <div id="file-name" style="font-size:12px;color:var(--ink-muted);margin-top:8px;display:none;"></div>
-          <div style="margin-top:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-            <button class="btn btn-primary" onclick="runBulkCheck()" id="bulk-btn" disabled style="opacity:0.4;"><span>🔍</span> Run Bulk Check</button>
-            <span id="bulk-status" style="font-size:12px;color:var(--ink-muted);"></span>
-          </div>
-          <div id="bulk-progress" style="display:none;"><div class="prog-wrap"><div class="prog-bar" id="prog-fill" style="width:0%"></div></div><div class="prog-label" id="prog-label">Processing...</div></div>
-          <div class="notice notice-neutral" style="margin-top:16px;"><span class="notice-icon">💡</span><span>Use the exact template provided. Do not rename columns. Delete sample rows before uploading.</span></div>
-        </div>
-      </div>
-      <div id="bulk-results"></div>
-    </div>
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('single')" id="tab-single">
+      <span class="ti">🔍</span> Single Book Check
+    </button>
+    <button class="tab" onclick="switchTab('bulk')" id="tab-bulk">
+      <span class="ti">📋</span> Bulk Check
+      <span class="premium-dot"></span>
+    </button>
+    <button class="tab" onclick="switchTab('datacurrency')" id="tab-datacurrency">
+      <span class="ti">📋</span> Data Sources
+    </button>
+    <button class="tab" onclick="switchTab('report')" id="tab-report">
+      <span class="ti">📄</span> Report
+      <span class="premium-dot"></span>
+    </button>
+  </div>
 
-    <!-- REPORT -->
-    <div id="panel-report" style="display:none;">
-      <div class="card">
-        <div class="card-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-          <div>
-            <h2>Compliance Report <span style="font-size:12px;font-weight:600;color:var(--gold);background:var(--gold-pale);padding:2px 10px;border-radius:12px;margin-left:8px;vertical-align:middle;border:1px solid rgba(201,168,76,0.2);">Premium</span></h2>
-            <p style="margin-top:4px;font-size:13px;color:var(--ink-muted);">Summary of all books screened in this session</p>
-          </div>
-          <button class="btn btn-gold" id="dl-btn" onclick="downloadReport()" style="opacity:0.4;cursor:not-allowed;" disabled>⬇️ Download Report</button>
-        </div>
-        <div id="report-body" style="padding:28px;">
-          <div class="empty"><div class="empty-icon">📄</div><div class="empty-title">No Results Yet</div><div class="empty-sub">Run single or bulk checks first, then return here</div></div>
-        </div>
-      </div>
-    </div>
-  </main>
-</div>
-
-<!-- ══════════════ READING LIST PAGE ══════════════ -->
-<div id="page-readinglist" style="display:none;">
-  <section class="hero hero-readinglist">
-    <div class="hero-bg"></div>
-    <div class="hero-pattern"></div>
-    <div class="hero-inner">
-      <div class="hero-eyebrow">✦ UAE-Compliant Recommendations</div>
-      <h2>Reading List<br><em>Generator</em></h2>
-      <p class="hero-sub">Pre-screened, UAE-compliant book recommendations for school librarians. Every title verified. Every suggestion grade-appropriate.</p>
-    </div>
-  </section>
-
-  <main class="main">
-    <div class="usage-bar" id="usage-bar">
-      <div class="usage-left">
-        <h3>Free Tier — <span id="usage-remaining">12</span> books remaining</h3>
-        <p>Genre filtering &amp; unlimited access available in Premium · Coming soon</p>
-      </div>
-      <div class="usage-right">
-        <div class="usage-count"><span id="usage-used">0</span><span>of 12 used</span></div>
-        <div class="usage-track"><div class="usage-fill" id="usage-fill" style="width:0%"></div></div>
-      </div>
-    </div>
-
+  <!-- SINGLE CHECK -->
+  <div id="panel-single">
     <div class="card">
       <div class="card-header">
-        <h2>Generate a Reading List <span style="font-size:12px;font-weight:400;color:var(--uae-green);background:var(--uae-green-soft);padding:2px 10px;border-radius:12px;margin-left:8px;vertical-align:middle;border:1px solid rgba(0,115,47,0.2);">Free</span></h2>
-        <p>Select a grade to receive 3 UAE-compliant, age-appropriate book recommendations.</p>
+        <div class="card-header-icon">🔍</div>
+        <div>
+          <h2>Single Book Check <span class="lbl-free">Free</span></h2>
+          <p>Enter any book's details to screen it against content guidelines.</p>
+        </div>
       </div>
       <div class="card-body">
-        <div class="rl-form-grid">
+        <div class="search-grid">
           <div class="field">
-            <label class="field-label">Grade <span class="req">★</span></label>
-            <select id="rl-grade">
-              <option value="">— Select Grade —</option>
-              <option value="KG1">KG1</option><option value="KG2">KG2</option>
-              <option value="GR1">Grade 1</option><option value="GR2">Grade 2</option>
-              <option value="GR3">Grade 3</option><option value="GR4">Grade 4</option>
-              <option value="GR5">Grade 5</option><option value="GR6">Grade 6</option>
-              <option value="GR7">Grade 7</option><option value="GR8">Grade 8</option>
-              <option value="GR9">Grade 9</option>
-            </select>
+            <label class="field-label">ISBN <span class="req">★ recommended</span></label>
+            <input type="text" id="isbn" placeholder="e.g. 9780743273565" maxlength="20"/>
+            <div style="font-size:10px;color:var(--muted);margin-top:3px;">📌 Auto book lookup via ISBN coming in next version</div>
           </div>
           <div class="field">
-            <label class="field-label">Genre <span class="genre-lock-label">🔒 PREMIUM</span></label>
-            <select id="rl-genre" disabled><option>All Genres — Genre filter unlocks in Premium</option></select>
-            <div class="genre-lock-note">🔒 Select specific genres with Premium — coming soon</div>
+            <label class="field-label">Book Title</label>
+            <input type="text" id="title" placeholder="e.g. The Great Gatsby"/>
+          </div>
+          <div class="field">
+            <label class="field-label">Author</label>
+            <input type="text" id="author" placeholder="e.g. F. Scott Fitzgerald"/>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;">
+          <div class="field" style="flex:1;min-width:190px;">
+            <label class="field-label">Publisher <span class="opt">(recommended for Arabic books)</span></label>
+            <input type="text" id="publisher" placeholder="Publisher name"/>
+          </div>
+          <div class="field" style="min-width:150px;">
+            <label class="field-label">Country</label>
+            <select id="country">
+              <option value="UAE">🇦🇪 UAE</option>
+              <option disabled>── Coming Soon ──</option>
+              <option disabled>🇸🇦 Saudi Arabia</option>
+              <option disabled>🇧🇭 Bahrain</option>
+              <option disabled>🇰🇼 Kuwait</option>
+              <option disabled>🇶🇦 Qatar</option>
+            </select>
           </div>
         </div>
         <div class="search-actions">
-          <button class="btn btn-green" onclick="generateReadingList()" id="rl-btn"><span>📚</span> Generate Reading List</button>
-          <button class="btn btn-ghost" onclick="clearReadingList()">Clear</button>
+          <button class="btn btn-primary" onclick="runCheck()" id="check-btn">
+            <span>🔍</span> Check This Book
+          </button>
+          <button class="btn btn-ghost" onclick="clearForm()">Clear</button>
+          <button class="btn btn-ghost" onclick="demo('flag')">Try Example →</button>
+          <button class="btn btn-ghost" onclick="demo('clear')">Try Clear →</button>
         </div>
-        <div class="notice notice-uae" style="margin-top:16px;">
-          <span class="notice-icon">🇦🇪</span>
-          <span>All titles are pre-screened against UAE content guidelines. Banned authors, flagged titles, and all prohibited content categories are excluded from every recommendation.</span>
+        <div class="notice notice-neutral">
+          <span class="notice-icon">ℹ️</span>
+          <span><strong>Important:</strong> ShelfCheck screens against a known titles and authors database. A result of "No Known Flags" means this title does not appear in our current database — it does not certify the book is compliant. Grade-level filtering, ISBN auto-lookup and live regulatory data feeds are coming in the next version. Always verify with your school's curriculum vetting committee before shelving.</span>
         </div>
       </div>
-    </div>
-
-    <div id="rl-results" style="margin-top:28px;">
-      <div class="empty"><div class="empty-icon">📚</div><div class="empty-title">Your Reading List Will Appear Here</div><div class="empty-sub">Select a grade above and press Generate</div></div>
-    </div>
-  </main>
-</div>
-
-<!-- REGISTRATION MODAL -->
-<div class="modal-overlay" id="reg-modal" style="display:none;">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div id="modal-form-wrap">
-      <div class="modal-icon">📚</div>
-      <div class="modal-title">You've Used Your 12 Free Books</div>
-      <div class="modal-sub">ShelfCheck Premium is coming soon — unlimited reading lists, genre filtering, bulk export &amp; more. Register your interest to get early access.</div>
-      <form class="modal-form" action="https://formsubmit.co/nostalgyfying@gmail.com" method="POST" onsubmit="handleModalSubmit(event)">
-        <input type="hidden" name="_subject" value="ShelfCheck Premium — Interest Registration"/>
-        <input type="hidden" name="_captcha" value="false"/>
-        <input type="hidden" name="_template" value="table"/>
-        <input type="text" name="name" placeholder="Your Name" required/>
-        <input type="email" name="email" placeholder="School Email Address" required/>
-        <input type="text" name="school" placeholder="School / Organisation Name" required/>
-        <button type="submit" class="modal-submit">Register My Interest →</button>
-      </form>
-      <div class="modal-privacy">Your details are only used to notify you about ShelfCheck Premium. No spam, ever.</div>
-    </div>
-    <div id="modal-success-wrap" style="display:none;">
-      <div class="modal-success">
-        <div class="s-icon">✅</div>
-        <div class="modal-title">You're Registered!</div>
-        <p>Thank you — we'll be in touch when ShelfCheck Premium launches. You'll be among the first to get access.</p>
-        <button class="btn btn-green" style="margin-top:22px;width:100%;justify-content:center;" onclick="closeModal()">Close</button>
+      <div id="results">
+        <div class="empty">
+          <div class="empty-icon">📚</div>
+          <div class="empty-title">Ready to Screen</div>
+          <div class="empty-sub">Enter details above and press Check</div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
+
+  <!-- DATA CURRENCY DASHBOARD -->
+  <div id="panel-datacurrency" style="display:none;">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon">📋</div>
+        <div>
+          <h2>Data Currency Dashboard</h2>
+          <p>Exact regulatory sources, laws and circulars currently active in ShelfCheck's screening database.</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div style="background:#fff8e6;border:1.5px solid #fde68a;border-radius:10px;padding:14px 16px;margin-bottom:22px;font-size:12px;color:#7a5c00;line-height:1.6;">
+          <strong>⚠️ Transparency Notice:</strong> ShelfCheck screens against a static compiled database. It does not pull live data from government APIs (no public API currently exists). The database is updated manually when new circulars or regulatory changes are identified. The dates below reflect when each source was last verified and incorporated.
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div style="border:1.5px solid var(--border);border-radius:11px;overflow:hidden;">
+            <div style="background:var(--cream2);padding:12px 16px;border-bottom:1.5px solid var(--border);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--muted);">Federal Laws</div>
+            <div style="padding:14px 16px;">
+              <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--cream2);">
+                <div style="font-size:13px;font-weight:600;color:var(--ink);">UAE Federal Decree-Law No. 15 of 1980</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:3px;">Publications and Publishing Law — governs all printed content in UAE</div>
+                <div style="font-size:11px;color:var(--uae-green);font-weight:600;margin-top:4px;">✅ Last verified: January 2026</div>
+              </div>
+              <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--cream2);">
+                <div style="font-size:13px;font-weight:600;color:var(--ink);">UAE Federal Law No. 2 of 2015</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:3px;">Combating Discrimination and Hatred — prohibits content promoting hatred or discrimination</div>
+                <div style="font-size:11px;color:var(--uae-green);font-weight:600;margin-top:4px;">✅ Last verified: January 2026</div>
+              </div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--ink);">UAE Federal Decree-Law No. 34 of 2021</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:3px;">Combating Rumours and Cybercrime — covers digital and print content standards</div>
+                <div style="font-size:11px;color:var(--uae-green);font-weight:600;margin-top:4px;">✅ Last verified: January 2026</div>
+              </div>
+            </div>
+          </div>
+          <div style="border:1.5px solid var(--border);border-radius:11px;overflow:hidden;">
+            <div style="background:var(--cream2);padding:12px 16px;border-bottom:1.5px solid var(--border);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--muted);">MOE & KHDA Circulars</div>
+            <div style="padding:14px 16px;">
+              <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--cream2);">
+                <div style="font-size:13px;font-weight:600;color:var(--ink);">MOE Library Content Circular — 2025</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:3px;">Updated non-compliant titles and authors list for UAE school libraries</div>
+                <div style="font-size:11px;color:var(--uae-green);font-weight:600;margin-top:4px;">✅ Last verified: January 2026</div>
+              </div>
+              <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--cream2);">
+                <div style="font-size:13px;font-weight:600;color:var(--ink);">KHDA Rainbow Imagery Circular — 2024</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:3px;">Prohibition of rainbow imagery in school library collections and displays</div>
+                <div style="font-size:11px;color:var(--uae-green);font-weight:600;margin-top:4px;">✅ Last verified: January 2026</div>
+              </div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--ink);">UAE Media Council — Age Rating Framework</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:3px;">E / 3+ / 6+ / 10+ / 13+ / 17+ / 21+ classification system for printed content</div>
+                <div style="font-size:11px;color:var(--uae-green);font-weight:600;margin-top:4px;">✅ Last verified: January 2026</div>
+              </div>
+            </div>
+          </div>
+          <div style="border:1.5px solid var(--border);border-radius:11px;overflow:hidden;">
+            <div style="background:var(--cream2);padding:12px 16px;border-bottom:1.5px solid var(--border);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--muted);">Content Categories in Database</div>
+            <div style="padding:14px 16px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <div style="font-size:12px;color:var(--ink);display:flex;align-items:center;gap:6px;"><span style="color:var(--uae-green);">✅</span> LGBTQ+ content</div>
+                <div style="font-size:12px;color:var(--ink);display:flex;align-items:center;gap:6px;"><span style="color:var(--uae-green);">✅</span> Pig characters</div>
+                <div style="font-size:12px;color:var(--ink);display:flex;align-items:center;gap:6px;"><span style="color:var(--uae-green);">✅</span> Witchcraft / occult</div>
+                <div style="font-size:12px;color:var(--ink);display:flex;align-items:center;gap:6px;"><span style="color:var(--uae-green);">✅</span> Rainbow imagery</div>
+                <div style="font-size:12px;color:var(--ink);display:flex;align-items:center;gap:6px;"><span style="color:var(--uae-green);">✅</span> Atheism / secularism</div>
+                <div style="font-size:12px;color:var(--ink);display:flex;align-items:center;gap:6px;"><span style="color:var(--uae-green);">✅</span> Judaism / Israel refs</div>
+                <div style="font-size:12px;color:var(--ink);display:flex;align-items:center;gap:6px;"><span style="color:var(--uae-green);">✅</span> Dystopian anti-authority</div>
+                <div style="font-size:12px;color:var(--ink);display:flex;align-items:center;gap:6px;"><span style="color:var(--uae-green);">✅</span> Holocaust / genocide</div>
+                <div style="font-size:12px;color:var(--ink);display:flex;align-items:center;gap:6px;"><span style="color:var(--uae-green);">✅</span> Child rebellion (positive)</div>
+                <div style="font-size:12px;color:var(--ink);display:flex;align-items:center;gap:6px;"><span style="color:var(--uae-green);">✅</span> Racism / racial slurs</div>
+                <div style="font-size:12px;color:var(--ink);display:flex;align-items:center;gap:6px;"><span style="color:var(--uae-green);">✅</span> Sexual content</div>
+                <div style="font-size:12px;color:var(--ink);display:flex;align-items:center;gap:6px;"><span style="color:var(--uae-green);">✅</span> Drug / alcohol content</div>
+                <div style="font-size:12px;color:var(--ink);display:flex;align-items:center;gap:6px;"><span style="color:var(--uae-green);">✅</span> Middle East protests</div>
+                <div style="font-size:12px;color:var(--ink);display:flex;align-items:center;gap:6px;"><span style="color:var(--uae-green);">✅</span> Banned publishers (40+)</div>
+              </div>
+            </div>
+          </div>
+          <div style="border:1.5px solid var(--border);border-radius:11px;overflow:hidden;">
+            <div style="background:var(--cream2);padding:12px 16px;border-bottom:1.5px solid var(--border);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--muted);">Database Size</div>
+            <div style="padding:14px 16px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div style="background:var(--cream);border-radius:9px;padding:12px;text-align:center;border:1.5px solid var(--border);">
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--uae-red);">57</div>
+                  <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-top:2px;">Banned Authors</div>
+                </div>
+                <div style="background:var(--cream);border-radius:9px;padding:12px;text-align:center;border:1.5px solid var(--border);">
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--uae-red);">40+</div>
+                  <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-top:2px;">Banned Publishers</div>
+                </div>
+                <div style="background:var(--cream);border-radius:9px;padding:12px;text-align:center;border:1.5px solid var(--border);">
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--uae-red);">70+</div>
+                  <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-top:2px;">Flagged Titles</div>
+                </div>
+                <div style="background:var(--cream);border-radius:9px;padding:12px;text-align:center;border:1.5px solid var(--border);">
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--amber);">Jan 2026</div>
+                  <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-top:2px;">Last Updated</div>
+                </div>
+              </div>
+              <div style="margin-top:14px;padding:10px 13px;background:#fff8e6;border-radius:9px;border:1.5px solid #fde68a;font-size:11px;color:#7a5c00;line-height:1.5;">
+                <strong>Coming in next version:</strong> Grade-level filtering (Early Years / Primary / Middle / High School), ISBN auto-lookup via Open Library API, and expanded titles database.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BULK CHECK -->
+  <div id="panel-bulk" style="display:none;">
+    <div class="card" style="margin-bottom:18px;">
+      <div class="card-header">
+        <div class="card-header-icon">📋</div>
+        <div>
+          <h2>Bulk Book Check <span class="lbl-premium">Premium</span></h2>
+          <p>Upload your book list and screen multiple titles at once.</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div style="margin-bottom:22px;">
+          <div class="step-label"><div class="step-num">1</div> Download the template for your book list</div>
+          <div class="template-cards">
+            <div class="tmpl-card tmpl-en">
+              <div class="tmpl-icon">🇬🇧</div>
+              <div class="tmpl-info">
+                <h4>English Books Template</h4>
+                <p>ISBN · Title · Author · Publisher</p>
+              </div>
+              <button class="tmpl-dl" onclick="downloadTemplate('english')">⬇ Download</button>
+            </div>
+            <div class="tmpl-card tmpl-ar">
+              <div class="tmpl-icon">🇦🇪</div>
+              <div class="tmpl-info">
+                <h4>Arabic Books Template</h4>
+                <p>Title · Author · Publisher · ISBN</p>
+              </div>
+              <button class="tmpl-dl" onclick="downloadTemplate('arabic')">⬇ Download</button>
+            </div>
+          </div>
+        </div>
+        <div class="step-label"><div class="step-num">2</div> Fill in and upload your file</div>
+        <div class="upload-zone" id="drop-zone" onclick="document.getElementById('file-input').click()"
+          ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+          <input type="file" id="file-input" accept=".xlsx,.xls,.csv" onchange="handleFileSelect(event)"/>
+          <div class="upload-icon">📂</div>
+          <div class="upload-title">Click to upload or drag & drop</div>
+          <div class="upload-sub">Accepts .xlsx or .csv files only</div>
+          <button class="btn btn-ghost" style="pointer-events:none;">Choose File</button>
+        </div>
+        <div id="file-name" style="font-size:12px;color:var(--muted);margin-top:8px;display:none;"></div>
+        <div style="margin-top:15px;display:flex;gap:9px;align-items:center;flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="runBulkCheck()" id="bulk-btn" disabled style="opacity:0.4;">
+            <span>🔍</span> Run Bulk Check
+          </button>
+          <span id="bulk-status" style="font-size:12px;color:var(--muted);"></span>
+        </div>
+        <div id="bulk-progress" style="display:none;">
+          <div class="prog-wrap"><div class="prog-bar" id="prog-fill" style="width:0%"></div></div>
+          <div class="prog-label" id="prog-label">Processing...</div>
+        </div>
+        <div class="notice notice-neutral" style="margin-top:15px;">
+          <span class="notice-icon">💡</span>
+          <span>Use the exact template above. Do not rename columns. Delete sample rows before uploading.</span>
+        </div>
+      </div>
+    </div>
+    <div id="bulk-results"></div>
+  </div>
+
+  <!-- REPORT -->
+  <div id="panel-report" style="display:none;">
+    <div class="card">
+      <div class="card-header" style="justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div class="card-header-icon">📄</div>
+          <div>
+            <h2>Compliance Report <span class="lbl-premium">Premium</span></h2>
+            <p>Summary of all books screened in this session</p>
+          </div>
+        </div>
+        <button class="btn btn-gold" id="dl-btn" onclick="downloadReport()" style="opacity:0.4;cursor:not-allowed;" disabled>
+          ⬇️ Download Report
+        </button>
+      </div>
+      <div id="report-body" style="padding:26px;">
+        <div class="empty">
+          <div class="empty-icon">📄</div>
+          <div class="empty-title">No Results Yet</div>
+          <div class="empty-sub">Run single or bulk checks first, then return here</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
 <footer class="footer">
-  <div class="footer-uae">
-    <div class="fstripe"><div class="fsr"></div><div class="fsw"></div><div class="fsg"></div></div>
-    <strong>ShelfCheck</strong>
-    <div class="fstripe"><div class="fsr"></div><div class="fsw"></div><div class="fsg"></div></div>
-  </div>
-  Book Screening &amp; Reading List Tools for UAE School Libraries<br>
-  Data compiled from UAE government content guidelines and official regulatory frameworks.<br>
-  ⚠️ This tool assists librarians in screening books. It does not constitute legal advice. Final decisions remain with school leadership and management.<br>
+  <div class="footer-flag"><div style="background:var(--uae-green)"></div><div style="background:#fff;opacity:0.3"></div><div style="background:var(--uae-red)"></div></div>
+  <strong>ShelfCheck</strong> — Book Screening for School Libraries &nbsp;·&nbsp; 🇦🇪 UAE<br>
+  Compiled from content guidelines and official regulatory frameworks.<br>
+  ⚠️ This tool assists librarians. It does not constitute legal advice. Final decisions remain with school leadership.<br>
+  ShelfCheck is a pre-screening tool. It filters out known non-compliant titles so librarians can focus their expertise exactly where it is needed. Final physical inspection remains the responsibility of school staff.<br>
   ShelfCheck is not affiliated with any government department.
 </footer>
 
 <script>
-// ══════════════════════════════════════════════
-// CLEAN BOOKS DATABASE
-// All titles manually verified against UAE content rules:
-// No pigs, no witchcraft/occult, no Judaism/Hebrew/Israel,
-// No LGBTQ+, no racism, no rape/sexual content, no genocide/Holocaust,
-// No child rebellion against parents as positive theme,
-// No dystopian anti-authority, no Middle East protests,
-// No gruesome violence, no alcohol/drugs, no Christianity promotion
-// ══════════════════════════════════════════════
-const CLEAN_BOOKS = {
-  KG1:[
-    {title:"The Very Hungry Caterpillar",author:"Eric Carle",level:"KG1 Easy",genre:"Picture Book",themes:"Counting, nature, growth",description:"A caterpillar eats through a week's worth of colourful food before transforming into a beautiful butterfly. Teaches counting, days of the week and the wonder of nature through bold, joyful illustrations."},
-    {title:"Goodnight Moon",author:"Margaret Wise Brown",level:"KG1 Easy",genre:"Bedtime Story",themes:"Bedtime, routine, calm",description:"A young bunny says goodnight to everything in the room in soothing, gentle rhymes. A timeless bedtime classic loved for its quiet rhythm, warm colours and reassuring routine."},
-    {title:"Brown Bear, Brown Bear, What Do You See?",author:"Bill Martin Jr.",level:"KG1 Easy",genre:"Picture Book",themes:"Colours, animals, repetition",description:"A series of animals ask each other what they see, introducing young children to colours and animals through simple, rhythmic repetition. A favourite first book for early learners."}
-  ],
-  KG2:[
-    {title:"The Gruffalo",author:"Julia Donaldson",level:"KG2 Easy",genre:"Rhyming Story",themes:"Courage, wit, problem-solving",description:"A clever mouse walks through a dangerous forest and invents a fearsome creature to scare away predators — only to encounter the real thing. A witty, brilliantly rhyming tale of quick thinking and bravery."},
-    {title:"Zog",author:"Julia Donaldson",level:"KG2 Easy",genre:"Rhyming Story",themes:"Learning, perseverance, kindness",description:"Zog the dragon works hard at dragon school, always helped by a kind young girl when things go wrong. A joyful, beautifully illustrated story about effort, kindness and never giving up."},
-    {title:"Owl Babies",author:"Martin Waddell",level:"KG2 Easy",genre:"Picture Book",themes:"Family, separation anxiety, reassurance",description:"Three baby owls wake in the night to find their mother gone and worry about her return. A tender, comforting story about the anxiety of waiting and the deep relief of a parent coming home."}
-  ],
-  GR1:[
-    {title:"Flat Stanley",author:"Jeff Brown",level:"GR1 Easy",genre:"Humour / Adventure",themes:"Adventure, family, problem-solving",description:"Stanley Lambchop wakes up one morning completely flat after a bulletin board falls on him. Instead of despair, he turns his unusual condition into a series of creative adventures with his family."},
-    {title:"Frog and Toad Are Friends",author:"Arnold Lobel",level:"GR1 Easy",genre:"Early Reader",themes:"Friendship, loyalty, kindness",description:"Five gentle stories about the warm, funny friendship between Frog and Toad. Perfect early chapter book — simple vocabulary, big heart, and memorable moments that every child recognises from their own friendships."},
-    {title:"Magic Tree House: Dinosaurs Before Dark",author:"Mary Pope Osborne",level:"GR1 Easy / GR2 Intermediate",genre:"Adventure",themes:"Adventure, history, curiosity",description:"Jack and Annie discover a magic tree house that transports them back to the age of dinosaurs. The first in a beloved adventure series that makes history and learning irresistibly exciting."}
-  ],
-  GR2:[
-    {title:"James and the Giant Peach",author:"Roald Dahl",level:"GR2 Easy / GR3 Intermediate",genre:"Fantasy Adventure",themes:"Courage, friendship, escape, imagination",description:"Young James escapes his miserable life through a magic peach that grows to enormous size, inside which he finds giant insect friends. Together they journey across the ocean in one of Roald Dahl's most inventive and joyful adventures."},
-    {title:"Fantastic Mr Fox",author:"Roald Dahl",level:"GR2 Easy",genre:"Humour / Adventure",themes:"Family, cleverness, courage",description:"Mr Fox and his family are hunted by three furious farmers, but Mr Fox outsmarts them all to feed his family and their woodland friends. A short, funny, fast-moving story about wit, loyalty and family love."},
-    {title:"The Enormous Crocodile",author:"Roald Dahl",level:"GR2 Easy",genre:"Humour / Picture Book",themes:"Justice, animals, humour",description:"A boastful, greedy crocodile plans to eat children for lunch, but is outwitted at every turn by the other jungle animals. Funny, fast and satisfying — the crocodile gets exactly what he deserves."}
-  ],
-  GR3:[
-    {title:"Sarah, Plain and Tall",author:"Patricia MacLachlan",level:"GR3 Easy",genre:"Historical Fiction",themes:"Family, acceptance, kindness",description:"Two children on the American prairie wait for their father's mail-order bride to arrive. A quiet, beautifully written story about longing, family and learning to accept change with an open heart."},
-    {title:"My Father's Dragon",author:"Ruth Stiles Gannett",level:"GR3 Easy / GR4 Intermediate",genre:"Fantasy Adventure",themes:"Courage, kindness, animals",description:"A young boy travels to Wild Island to rescue a baby dragon being used as a pack animal by the other animals. A charming, witty adventure full of clever problem-solving and gentle humour."},
-    {title:"The Invention of Hugo Cabret",author:"Brian Selznick",level:"GR3 Intermediate / GR4 Advanced",genre:"Mystery",themes:"Mystery, art, belonging, history",description:"An orphan boy who secretly maintains the clocks in a Paris railway station holds a mystery connected to an old toymaker and the earliest days of cinema. A stunning, unique novel told partly through extraordinary illustrations."}
-  ],
-  GR4:[
-    {title:"The Phantom Tollbooth",author:"Norton Juster",level:"GR4 Intermediate",genre:"Fantasy / Adventure",themes:"Curiosity, learning, imagination, wordplay",description:"Bored young Milo drives through a mysterious tollbooth into a kingdom of words and numbers, where he must rescue the princesses Rhyme and Reason. A brilliantly inventive, funny celebration of learning and curiosity."},
-    {title:"Island of the Blue Dolphins",author:"Scott O'Dell",level:"GR4 Intermediate / GR5 Advanced",genre:"Historical Fiction / Survival",themes:"Survival, courage, solitude, resilience",description:"Based on a true story, a young Native American girl is stranded alone on a remote island for years and must survive by her intelligence and courage. A powerful, quietly remarkable story of endurance and inner strength."},
-    {title:"Where the Mountain Meets the Moon",author:"Grace Lin",level:"GR4 Intermediate",genre:"Fantasy / Folk Tales",themes:"Adventure, family, fortune, storytelling",description:"Young Minli sets off on a quest to find the Old Man of the Moon, hoping to change her family's fortune. Woven with Chinese folk tales and beautiful illustrations, a lyrical adventure about stories and the power of hope."}
-  ],
-  GR5:[
-    {title:"Hatchet",author:"Gary Paulsen",level:"GR5 Intermediate",genre:"Survival / Adventure",themes:"Survival, resilience, self-reliance, nature",description:"Thirteen-year-old Brian survives a plane crash in the Canadian wilderness armed only with a hatchet, and must survive alone for months. A gripping, fast-paced story of grit, resourcefulness and the quiet strength of the human spirit."},
-    {title:"The Secret Garden",author:"Frances Hodgson Burnett",level:"GR5 Intermediate",genre:"Classic Fiction",themes:"Healing, nature, friendship, transformation",description:"A spoilt, lonely girl is sent to a gloomy manor on the Yorkshire moors and discovers a hidden, locked garden that transforms both her and those around her. A beautiful story about the restorative power of nature and kindness."},
-    {title:"Heidi",author:"Johanna Spyri",level:"GR5 Easy / GR6 Intermediate",genre:"Classic Fiction",themes:"Family, nature, kindness, belonging",description:"Young Heidi is sent to live with her reclusive grandfather in the Swiss Alps, where she flourishes — and where her joyful spirit transforms everyone around her. A timeless, gentle story about love, belonging and the goodness of simple life."}
-  ],
-  GR6:[
-    {title:"Holes",author:"Louis Sachar",level:"GR6 Intermediate",genre:"Adventure / Mystery",themes:"Justice, friendship, fate, perseverance",description:"Stanley Yelnats is sent to a bizarre desert detention camp where the boys dig holes all day. A brilliantly plotted mystery that weaves together three timelines, building to a deeply satisfying conclusion about justice and fate."},
-    {title:"Esperanza Rising",author:"Pam Muñoz Ryan",level:"GR6 Intermediate / GR7 Advanced",genre:"Historical Fiction",themes:"Resilience, family, identity, hardship",description:"Esperanza grows up privileged in Mexico but is forced to flee to California as a farm worker. A moving, beautifully written story about loss, dignity, the love of family and the strength to rise again."},
-    {title:"Counting by 7s",author:"Holly Goldberg Sloan",level:"GR6 Intermediate",genre:"Contemporary Fiction",themes:"Resilience, belonging, kindness, community",description:"Gifted twelve-year-old Willow Chance loses her parents and must find her way in the world. A warm, funny, deeply hopeful story about an extraordinary girl and the unexpected community that forms around her."}
-  ],
-  GR7:[
-    {title:"Homeless Bird",author:"Gloria Whelan",level:"GR7 Intermediate",genre:"Historical Fiction",themes:"Resilience, identity, courage, womanhood",description:"Thirteen-year-old Koly is married off in India, widowed young and abandoned, but finds her own path through talent and determination. A quietly powerful story about a girl who refuses to be defeated by circumstances."},
-    {title:"My Side of the Mountain",author:"Jean Craighead George",level:"GR7 Intermediate",genre:"Survival / Adventure",themes:"Self-reliance, nature, freedom, independence",description:"Sam runs away from his crowded New York home to live alone in the Catskill Mountains, surviving off the land for a full year. A rich, detailed, inspiring story of independence, wilderness and self-discovery."},
-    {title:"Fever 1793",author:"Laurie Halse Anderson",level:"GR7 Intermediate / GR8 Advanced",genre:"Historical Fiction",themes:"Survival, courage, family, resilience",description:"Sixteen-year-old Mattie Cook survives the devastating yellow fever epidemic that swept Philadelphia in 1793, coming of age amid tragedy and rebuilding her life from the wreckage. A vivid, gripping and beautifully researched historical novel."}
-  ],
-  GR8:[
-    {title:"The Alchemist",author:"Paulo Coelho",level:"GR8 Intermediate / GR9 Advanced",genre:"Philosophical Fiction",themes:"Purpose, dreams, destiny, journey",description:"A young Andalusian shepherd travels across the world in search of treasure and discovers that the real journey was within. A luminous, widely beloved fable about following your dreams and listening to the universe — enormously popular in UAE schools."},
-    {title:"The Pearl",author:"John Steinbeck",level:"GR8 Intermediate",genre:"Literary Fiction",themes:"Greed, fate, family, loss",description:"A poor pearl diver discovers the greatest pearl in the world and watches as it slowly destroys everything he loves. A short, haunting parable about the corrupting power of greed and the cost of ambition."},
-    {title:"The Old Man and the Sea",author:"Ernest Hemingway",level:"GR8 Advanced",genre:"Literary Fiction",themes:"Perseverance, dignity, nature, struggle",description:"An aging Cuban fisherman battles alone at sea with a giant marlin for three days. A short, magnificent novel about human perseverance, dignity in defeat and the profound relationship between man and nature."}
-  ],
-  GR9:[
-    {title:"A Separate Peace",author:"John Knowles",level:"GR9 Intermediate / Advanced",genre:"Literary Fiction",themes:"Friendship, jealousy, identity, loss of innocence",description:"At a New England boarding school during wartime, a boy's complicated friendship and jealousy toward his golden classmate leads to tragedy. A beautifully written, psychologically rich novel about the painful transition from childhood to adulthood."},
-    {title:"Tuesdays with Morrie",author:"Mitch Albom",level:"GR9 Intermediate",genre:"Literary Non-Fiction",themes:"Life, wisdom, mentorship, meaning",description:"Mitch Albom reconnects with his dying former professor Morrie Schwartz every Tuesday, and the lessons they share become a meditation on how to live. A short, moving book widely read in UAE schools for its wisdom and humanity."},
-    {title:"The Little Prince",author:"Antoine de Saint-Exupéry",level:"GR9 Easy / Advanced",genre:"Philosophical Fiction",themes:"Identity, belonging, love, meaning",description:"A pilot stranded in the desert meets a small prince from another planet, and their conversations unfold into one of literature's most profound meditations on what truly matters in life. A slim, timeless masterpiece read and loved across all ages."}
-  ]
-};
-
-// ══════════════════════════════════════════════
-// BANNED CONTENT CROSS-CHECK
-// Any book title/author in CLEAN_BOOKS is validated
-// against the ShelfCheck banned database before display
-// ══════════════════════════════════════════════
-const BANNED_TITLES_CHECK = [
-  "dog man","captain underpants","elmer","rainbow fairies","love frankie",
-  "bad girls","boy in the dress","i am jazz","the god delusion","sapiens",
-  "the handmaid's tale","hunger games","fast food nation","things they carried",
-  "charlotte's web","animal farm","the giver","frankenstein","matilda",
-  "horrid henry","boy in the striped pyjamas","harry potter","the witches",
-  "the lion the witch","narnia","percy jackson","his dark materials","golden compass",
-  "a brief history of time","the selfish gene","the magic of reality"
-];
-const BANNED_AUTHORS_CHECK = [
-  "richard dawkins","sam harris","christopher hitchens","yuval noah harari",
-  "sayyid qutb","hassan al-banna","sarah j maas","colleen hoover","dav pilkey",
-  "j.k. rowling","rowling"
-];
-
-function isBannedBook(title, author) {
-  const t = (title||'').toLowerCase();
-  const a = (author||'').toLowerCase();
-  return BANNED_TITLES_CHECK.some(b => t.includes(b)) ||
-         BANNED_AUTHORS_CHECK.some(b => a.includes(b));
-}
-
-// ══════════════════════════════════════════════
-// USAGE TRACKING
-// ══════════════════════════════════════════════
-const FREE_LIMIT = 12;
-const PER_SEARCH = 3;
-
-function getUsed(){return parseInt(localStorage.getItem('sc_used')||'0');}
-function setUsed(n){localStorage.setItem('sc_used',String(n));}
-function updateUsageUI(){
-  const used=getUsed(), rem=Math.max(0,FREE_LIMIT-used), pct=Math.min(100,(used/FREE_LIMIT)*100);
-  document.getElementById('usage-used').textContent=used;
-  document.getElementById('usage-remaining').textContent=rem;
-  const fill=document.getElementById('usage-fill');
-  fill.style.width=pct+'%';
-  if(pct>=75)fill.classList.add('warn'); else fill.classList.remove('warn');
-}
-
-// ══════════════════════════════════════════════
-// MAIN NAV
-// ══════════════════════════════════════════════
-function switchMainTab(tab){
-  ['shelfcheck','readinglist'].forEach(t=>{
-    document.getElementById('page-'+t).style.display=t===tab?'block':'none';
-    document.getElementById('main-tab-'+t).classList.toggle('active',t===tab);
-  });
-  if(tab==='readinglist')updateUsageUI();
-}
-
-// ══════════════════════════════════════════════
-// READING LIST GENERATOR
-// ══════════════════════════════════════════════
-function generateReadingList(){
-  const grade=document.getElementById('rl-grade').value;
-  if(!grade){
-    document.getElementById('rl-results').innerHTML=`<div style="padding:10px 0;color:var(--amber);font-weight:500;">⚠️ Please select a grade.</div>`;
-    return;
-  }
-  const used=getUsed();
-  if(used>=FREE_LIMIT){showModal();return;}
-
-  const rawBooks=(CLEAN_BOOKS[grade]||[]).filter(b=>!isBannedBook(b.title,b.author));
-  if(!rawBooks.length){
-    document.getElementById('rl-results').innerHTML=`<div class="empty"><div class="empty-icon">📚</div><div class="empty-title">No books available for this grade yet</div><div class="empty-sub">We're adding more titles. Please check back soon.</div></div>`;
-    return;
-  }
-
-  setUsed(used+PER_SEARCH);
-  updateUsageUI();
-
-  const today=new Date().toLocaleDateString('en-GB',{month:'long',year:'numeric'});
-  let html=`<div class="rl-results-header"><div><div class="rl-results-title">Recommended Books — ${grade}</div><div class="rl-results-sub">3 UAE-compliant recommendations · Pre-screened &amp; verified</div></div><div class="rl-screened-badge">🇦🇪 UAE SCREENED</div></div>`;
-
-  rawBooks.forEach((book,i)=>{
-    html+=`
-    <div class="rl-book-card">
-      <div class="rl-book-head">
-        <div>
-          <div class="rl-book-num">Book ${i+1} of 3</div>
-          <div class="rl-book-title">${escHtml(book.title)}</div>
-          <div class="rl-book-author">by ${escHtml(book.author)}</div>
-        </div>
-        <span class="rl-badge">✅ UAE Compliant</span>
-      </div>
-      <div class="rl-book-body">
-        <div class="rl-level">📖 ${escHtml(book.level)}</div>
-        <div class="rl-desc">${escHtml(book.description)}</div>
-        <div class="rl-tags">
-          <span class="rl-tag">📚 ${escHtml(book.genre)}</span>
-          <span class="rl-tag">✨ ${escHtml(book.themes)}</span>
-          <span class="rl-tag">🎓 ${grade}</span>
-        </div>
-        <div class="rl-clear">✅ Screened against UAE content guidelines — no prohibited content detected</div>
-      </div>
-    </div>`;
-  });
-
-  html+=`<div class="rl-datestamp">Compliance data last updated ${today}</div>`;
-
-  const newUsed=getUsed();
-  if(newUsed>=FREE_LIMIT){
-    html+=`
-    <div class="upgrade-wall">
-      <div style="font-size:36px;margin-bottom:14px;">🔒</div>
-      <h3>You've Used Your 12 Free Books</h3>
-      <p>ShelfCheck Premium is coming soon — unlimited reading lists, genre filtering, bulk export and more. Register your interest to get early access and a special launch price.</p>
-      <button class="btn btn-green" onclick="showModal()" style="margin:0 auto;">Register My Interest →</button>
-    </div>`;
-  }
-
-  document.getElementById('rl-results').innerHTML=html;
-}
-
-function clearReadingList(){
-  document.getElementById('rl-grade').value='';
-  document.getElementById('rl-results').innerHTML=`<div class="empty"><div class="empty-icon">📚</div><div class="empty-title">Your Reading List Will Appear Here</div><div class="empty-sub">Select a grade above and press Generate</div></div>`;
-}
-
-// ══════════════════════════════════════════════
-// MODAL
-// ══════════════════════════════════════════════
-function showModal(){document.getElementById('reg-modal').style.display='flex';document.body.style.overflow='hidden';}
-function closeModal(){document.getElementById('reg-modal').style.display='none';document.body.style.overflow='';}
-function handleModalSubmit(e){
-  e.preventDefault();
-  const form=e.target, data=new FormData(form);
-  fetch(form.action,{method:'POST',body:data,headers:{'Accept':'application/json'}})
-    .then(()=>{document.getElementById('modal-form-wrap').style.display='none';document.getElementById('modal-success-wrap').style.display='block';})
-    .catch(()=>{document.getElementById('modal-form-wrap').style.display='none';document.getElementById('modal-success-wrap').style.display='block';});
-}
-document.getElementById('reg-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
-
-function escHtml(s){return(s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-
-// ══════════════════════════════════════════════
-// SHELFCHECK DATABASE
-// ══════════════════════════════════════════════
-const DB={
-  banned_authors:[
+const DB = {
+  banned_authors: [
     {en:"Steven Pinker",ar:"استيفن بينكر"},{en:"Richard Dawkins",ar:"ريتشارد دوكينز"},
     {en:"Sam Harris",ar:"سام هاريس"},{en:"Daniel Dennett",ar:"دانيال دينيت"},
     {en:"Christopher Hitchens",ar:"كريستوفر هيتشنز"},{en:"Lawrence Krauss",ar:"لورانس كراوس"},
@@ -825,12 +835,12 @@ const DB={
     {en:"Hisham Awadi",ar:"هشام عوضي"},{en:"Nawaf Takruri",ar:"نواف هايل تكروري"},
     {en:"Saoud Al-Fanesan",ar:"سعود الفنيسان"},{en:"Fahmi Huwaidi",ar:"فهمي هويدي"},
     {en:"Majdi Kamel",ar:"مجدي محمد كامل"},{en:"Malik Bennabi",ar:"مالك بن نبي"},
-    {en:"Ishaq Ahmad Farhan",ar:"إسحاق أحمد فرحان"},{en:"Mohammed Al-Rashid",ar:"محمد أحمد الراشد"},
-    {en:"Rauf Shalabi",ar:"رؤوف شلبي"},{en:"Mohammed Rabi",ar:"محمد ربيع"},
-    {en:"Abdul-Muta'al Al-Jabri",ar:"عبدالمتعال الجبري"},{en:"Bertrand Russell",ar:"برتراند رسل"},
-    {en:"Yuval Noah Harari",ar:"يوفال نوح هراري"},
+    {en:"Yusuf al-Qaradawi",ar:"يوسف القرضاوي"},{en:"Ishaq Ahmad Farhan",ar:"إسحاق أحمد فرحان"},
+    {en:"Mohammed Al-Rashid",ar:"محمد أحمد الراشد"},{en:"Rauf Shalabi",ar:"رؤوف شلبي"},
+    {en:"Mohammed Rabi",ar:"محمد ربيع"},{en:"Abdul-Muta'al Al-Jabri",ar:"عبدالمتعال الجبري"},
+    {en:"Bertrand Russell",ar:"برتراند رسل"},
   ],
-  banned_publishers:[
+  banned_publishers: [
     "KUBE Publishing","Islamic Foundation","NAIT","MAS","IIIT","ISNA",
     "Les Editions Tawhid","Les Editions Al Bouraq","Les Editions Nawa",
     "Maison d'Ennour","La Librairie Al Qalam","Casa Islamica","Gema Insani Press",
@@ -846,127 +856,218 @@ const DB={
     "Arab Center for Research and Policy Studies",
     "Al Jazeera Studies Center","European Council for Fatwa and Research",
   ],
-  moe_2025:[
-    {en:"Religion and Science",author:"Bertrand Russell"},
-    {en:"Sapiens",author:"Yuval Noah Harari"},
-    {en:"The End of Faith",author:"Sam Harris"},
-    {en:"The God Delusion",author:"Richard Dawkins"},
-    {en:"Waking Up",author:"Sam Harris"},
-    {en:"God is Not Great",author:"Christopher Hitchens"},
-    {en:"Enlightenment Now",author:"Steven Pinker"},
-    {en:"A Universe from Nothing",author:"Lawrence Krauss"},
-    {en:"The Selfish Gene",author:"Richard Dawkins"},
-    {en:"Breaking the Spell",author:"Daniel Dennett"},
-    {en:"The Blind Watchmaker",author:"Richard Dawkins"},
-    {en:"A Brief History of Time",author:"Stephen Hawking"},
-    {en:"The Magic of Reality",author:"Richard Dawkins"},
-    {en:"Milestones",author:"Sayyid Qutb"},
-    {en:"In the Shade of the Quran",author:"Sayyid Qutb"},
-    {en:"The Islamic State",author:"Abu Ali Al-Mawdudi"},
-    {en:"Jihad in Islam",author:"Abu Ali Al-Mawdudi"},
+  moe_2025: [
+    {en:"Religion and Science",ar:"الدين والعلم",author:"Bertrand Russell"},
+    {en:"Sapiens",ar:"العاقل",author:"Yuval Noah Harari"},
+    {en:"The End of Faith",ar:"نهاية الإيمان",author:"Sam Harris"},
+    {en:"The God Delusion",ar:"وهم الإله",author:"Richard Dawkins"},
+    {en:"Waking Up",ar:"الصحوة",author:"Sam Harris"},
+    {en:"God is Not Great",ar:"الله ليس عظيماً",author:"Christopher Hitchens"},
+    {en:"Enlightenment Now",ar:"عصر التنوير",author:"Steven Pinker"},
+    {en:"A Universe from Nothing",ar:"كون من لا شيء",author:"Lawrence Krauss"},
+    {en:"The Selfish Gene",ar:"الجين الأناني",author:"Richard Dawkins"},
+    {en:"Breaking the Spell",ar:"كسر التعويذة",author:"Daniel Dennett"},
+    {en:"Atheism: A Very Short Introduction",ar:"الإلحاد مقدمة قصيرة",author:"Julian Baggini"},
+    {en:"The Blind Watchmaker",ar:"صانع الساعات الأعمى",author:"Richard Dawkins"},
+    {en:"A Brief History of Time",ar:"تاريخ موجز للزمن",author:"Stephen Hawking"},
+    {en:"The Magic of Reality",ar:"سحر الواقع",author:"Richard Dawkins"},
+    {en:"Mortality",ar:"الفناء",author:"Christopher Hitchens"},
+    {en:"Milestones",ar:"معالم في الطريق",author:"Sayyid Qutb"},
+    {en:"In the Shade of the Quran",ar:"في ظلال القرآن",author:"Sayyid Qutb"},
+    {en:"The Islamic State",ar:"الدولة الإسلامية",author:"Abu Ali Al-Mawdudi"},
+    {en:"Jihad in Islam",ar:"الجهاد في الإسلام",author:"Abu Ali Al-Mawdudi"},
   ],
-  flagged_titles:[
-    {t:"Charlotte's Web",reason:"Pig as main character",action:"REMOVE"},
-    {t:"Animal Farm",reason:"Pigs as main characters + political allegory",action:"REMOVE"},
-    {t:"The Giver",reason:"Euthanasia, infanticide, dystopian anti-authority themes",action:"REMOVE"},
-    {t:"Matilda",reason:"Child rebellion against parents/authority as positive theme",action:"REMOVE"},
-    {t:"Horrid Henry",reason:"Child rebellion against parents/authority as positive theme",action:"REMOVE"},
-    {t:"Frankenstein",reason:"Gruesome content",action:"REMOVE"},
-    {t:"Boy in the Striped Pyjamas",reason:"Holocaust, Nazi concentration camps, genocide",action:"REMOVE"},
-    {t:"To Kill a Mockingbird",reason:"Racism, racial slurs, rape themes",action:"REMOVE"},
-    {t:"Lord of the Flies",reason:"Gruesome violence, murder of children",action:"REMOVE"},
-    {t:"Roll of Thunder Hear My Cry",reason:"Racism, racial violence",action:"REMOVE"},
-    {t:"The Handmaid's Tale",reason:"Sexual content, anti-authority dystopia",action:"REMOVE"},
-    {t:"Hunger Games",reason:"Anti-authority dystopia, graphic violence",action:"REMOVE"},
-    {t:"Harry Potter",reason:"Witchcraft as central positive theme",action:"REMOVE",series:true},
-    {t:"The Witches",reason:"Witchcraft",action:"REMOVE"},
-    {t:"Narnia",reason:"Witchcraft, Christian allegory",action:"REMOVE",series:true},
-    {t:"Percy Jackson",reason:"Mythology presented as real, witchcraft/magic",action:"REMOVE",series:true},
-    {t:"His Dark Materials",reason:"Anti-religion, witchcraft",action:"REMOVE",series:true},
-    {t:"The Golden Compass",reason:"Anti-religion, witchcraft",action:"REMOVE"},
-    {t:"Captain Underpants",reason:"Inappropriate content, disrespect of authority",action:"REMOVE",series:true},
-    {t:"Dog Man",reason:"Inappropriate content",action:"REMOVE",series:true},
-    {t:"Elmer",reason:"Rainbow imagery",action:"REMOVE",series:true},
-    {t:"Rainbow Fairies",reason:"Rainbow imagery",action:"REMOVE",series:true},
-    {t:"Love Frankie",reason:"LGBTQ+ themes",action:"REMOVE"},
-    {t:"Bad Girls",reason:"Flagged during compliance review",action:"REMOVE"},
-    {t:"Boy in the Dress",reason:"Gender/LGBTQ+ themes",action:"REMOVE"},
-    {t:"I Am Jazz",reason:"Transgender themes",action:"REMOVE"},
-    {t:"Drama",reason:"LGBTQ+ themes",action:"REMOVE"},
-    {t:"George",reason:"LGBTQ+ themes",action:"REMOVE"},
-    {t:"Prince and Knight",reason:"LGBTQ+ themes",action:"REMOVE"},
-    {t:"The Family Book",reason:"Same-sex family depictions",action:"REMOVE"},
-    {t:"Worm Loves Worm",reason:"Same-sex marriage themes",action:"REMOVE"},
-    {t:"This Day in June",reason:"LGBTQ+ Pride content",action:"REMOVE"},
-    {t:"Bill's New Frock",reason:"Gender/LGBTQ+ themes",action:"REMOVE"},
-    {t:"Bedtime Stories for Rebel Girls",reason:"Contains LGBTQ+ biographical content",action:"REVIEW"},
-    {t:"Dork Diaries",reason:"Bad role model behaviour",action:"WATCH",series:true},
-    {t:"Things They Carried",reason:"Flagged during compliance review",action:"REMOVE"},
-    {t:"Fast Food Nation",reason:"Flagged during compliance review",action:"REMOVE"},
-    {t:"Teen Pioneers",reason:"Flagged during compliance review",action:"REMOVE"},
+  flagged_titles: [
+    {t:"Elmer",a:"David McKee",reason:"Rainbow imagery",precise_reason:"contains prominent rainbow imagery not permitted in UAE school libraries under 2024 guidelines",action:"REMOVE",series:true},
+    {t:"Captain Underpants",a:"Dav Pilkey",reason:"Inappropriate content",precise_reason:"author appears on MOE all-titles banned list; series contains inappropriate humour and disrespectful content",action:"REMOVE",series:true},
+    {t:"Dog Man",a:"Dav Pilkey",reason:"Inappropriate content",precise_reason:"author appears on MOE all-titles banned list; series contains content incompatible with school library standards",action:"REMOVE",series:true},
+    {t:"Rainbow Fairies",a:"Daisy Meadows",reason:"Rainbow imagery",precise_reason:"series title and cover imagery contain prominent rainbow symbolism not permitted under 2024 UAE guidelines",action:"REMOVE",series:true},
+    {t:"Teen Pioneers",a:"Ben Hubbard",reason:"Content flagged during compliance review",precise_reason:"flagged during UAE MOE compliance review — content deemed unsuitable for school libraries",action:"REMOVE"},
+    {t:"Frankenstein",a:"Nick Dear",reason:"Flagged — Note: Mary Shelley original is permitted",precise_reason:"this stage adaptation (Nick Dear) flagged; note that the original Mary Shelley novel is permitted",action:"REMOVE"},
+    {t:"New Penguin Book of Love Poetry",a:"Jon Stallworthy",reason:"Inappropriate content",precise_reason:"contains sexually suggestive poetry not suitable for UAE school library collections",action:"REMOVE"},
+    {t:"My Story",a:"Marilyn Monroe",reason:"Sexual content",precise_reason:"contains sexual content and adult themes not appropriate for school libraries",action:"REMOVE"},
+    {t:"Bad Girls",a:"Jacqueline Wilson",reason:"Flagged during compliance review",precise_reason:"flagged during UAE MOE compliance review — content deemed unsuitable for school libraries",action:"REMOVE"},
+    {t:"Love Frankie",a:"Jacqueline Wilson",reason:"LGBTQ+ themes",precise_reason:"contains LGBTQ+ themes not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Boy in the Dress",a:"David Walliams",reason:"Gender/LGBTQ+ themes",precise_reason:"contains cross-dressing and gender non-conformity themes not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Billy Bonker",a:"Giles Andreae",reason:"Flagged during compliance review",precise_reason:"flagged during UAE MOE compliance review — content deemed unsuitable for school libraries",action:"REMOVE"},
+    {t:"Red",a:"Michael Hall",reason:"LGBTQ+ themes",precise_reason:"picture book with LGBTQ+ identity themes not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Australia to Zimbabwe",a:"Various",reason:"Flagged during compliance review",precise_reason:"flagged during UAE MOE compliance review — contains content incompatible with UAE guidelines",action:"REMOVE"},
+    {t:"Bedtime Stories for Rebel Girls",a:"Elena Favilli",reason:"Contains LGBTQ+ biographical content",precise_reason:"includes biographical content about LGBTQ+ individuals not permitted in UAE school libraries",action:"REVIEW"},
+    {t:"Dork Diaries",a:"Rachel Renée Russell",reason:"Noted as bad role model — no removal action requested",precise_reason:"noted as presenting poor role-model behaviour; monitoring only — no removal required at this time",action:"WATCH",series:true},
+    {t:"Horrid Henry",a:"Francesca Simon",reason:"Noted as bad role model — no removal action requested",precise_reason:"noted as presenting poor role-model behaviour and disrespectful conduct; monitoring only — no removal required",action:"WATCH",series:true},
+    {t:"Things They Carried",a:"Tim O'Brien",reason:"Flagged during compliance review",precise_reason:"contains graphic violence, drug use and sexual content not appropriate for school libraries",action:"REMOVE"},
+    {t:"Fast Food Nation",a:"Eric Schlosser",reason:"Flagged during compliance review",precise_reason:"flagged during UAE MOE compliance review — content deemed unsuitable for school libraries",action:"REMOVE"},
+    {t:"Hunger Games",a:"Suzanne Collins",reason:"Flagged during compliance review",precise_reason:"contains sustained violence and themes of state oppression flagged during UAE compliance review",action:"REMOVE"},
+    {t:"The Time Machine",a:"H.G. Wells",reason:"Flagged during compliance review",precise_reason:"flagged during UAE MOE compliance review — content deemed unsuitable for school libraries",action:"REMOVE"},
+    {t:"Drama",a:"Raina Telgemeier",reason:"LGBTQ+ themes",precise_reason:"contains LGBTQ+ characters and themes not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"George",a:"Alex Gino",reason:"LGBTQ+ themes",precise_reason:"centres on transgender child protagonist — LGBTQ+ themes not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"I Am Jazz",a:"Jessica Herthel",reason:"Transgender themes",precise_reason:"depicts transgender child — transgender themes not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Prince and Knight",a:"Daniel Haack",reason:"LGBTQ+ themes",precise_reason:"depicts same-sex romance between male characters — LGBTQ+ themes not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"The Family Book",a:"Todd Parr",reason:"Same-sex family depictions",precise_reason:"includes depictions of same-sex parent families not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Worm Loves Worm",a:"J.J. Austrian",reason:"Same-sex marriage themes",precise_reason:"depicts same-sex marriage — not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"This Day in June",a:"Gayle Pitman",reason:"LGBTQ+ Pride content",precise_reason:"depicts LGBTQ+ Pride parade and celebrations not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Bill's New Frock",a:"Anne Fine",reason:"Gender/LGBTQ+ themes",precise_reason:"contains gender-swap and gender identity themes not permitted in UAE school libraries",action:"REMOVE"},
   ],
-  all_books_banned_authors:[
+    {t:"Charlotte's Web",a:"E.B. White",reason:"Pig as central character",precise_reason:"pig is the central character and protagonist — not permitted in UAE school libraries under content guidelines prohibiting pig characters",action:"REMOVE"},
+    {t:"Animal Farm",a:"George Orwell",reason:"Pigs as main characters plus political allegory",precise_reason:"pigs are the central characters; also contains allegory challenging political authority — not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"The Giver",a:"Lois Lowry",reason:"Euthanasia and dystopian anti-authority themes",precise_reason:"contains infanticide, euthanasia of elderly and dystopian society that challenges authority — not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Matilda",a:"Roald Dahl",reason:"Child rebellion against parents and authority as positive theme",precise_reason:"central theme is a child defying and outsmarting her parents and headmistress — child rebellion against parents presented as positive not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"The Witches",a:"Roald Dahl",reason:"Witchcraft as central theme",precise_reason:"witchcraft and occult themes are central to the narrative — not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Boy in the Striped Pyjamas",a:"John Boyne",reason:"Holocaust, Nazi concentration camps, genocide",precise_reason:"set in a Nazi concentration camp during the Holocaust — genocide, mass killings and Nazi content not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Lord of the Flies",a:"William Golding",reason:"Gruesome violence and murder of children",precise_reason:"contains sustained gruesome violence including murder of children — not appropriate for UAE school libraries",action:"REMOVE"},
+    {t:"1984",a:"George Orwell",reason:"Dystopian anti-authority society",precise_reason:"depicts a totalitarian dystopian society in explicit opposition to authority — anti-authority dystopian content not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Nineteen Eighty-Four",a:"George Orwell",reason:"Dystopian anti-authority society",precise_reason:"depicts a totalitarian dystopian society in explicit opposition to authority — anti-authority dystopian content not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Brave New World",a:"Aldous Huxley",reason:"Sexual content and dystopian anti-authority themes",precise_reason:"contains explicit sexual content and depicts a dystopian society that challenges authority — not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Maze Runner",a:"James Dashner",reason:"Dystopian anti-authority themes and sustained violence",precise_reason:"dystopian series with anti-authority themes and sustained graphic violence — not permitted in UAE school libraries",action:"REMOVE",series:true},
+    {t:"Divergent",a:"Veronica Roth",reason:"Dystopian anti-authority themes",precise_reason:"dystopian series centred on rebellion against controlling authority — not permitted in UAE school libraries",action:"REMOVE",series:true},
+    {t:"Twilight",a:"Stephenie Meyer",reason:"Occult themes and romance",precise_reason:"centres on vampires and occult supernatural themes alongside romantic content — not permitted in UAE school libraries",action:"REMOVE",series:true},
+    {t:"The Da Vinci Code",a:"Dan Brown",reason:"Religious controversy and anti-Christian content",precise_reason:"contains content that challenges and misrepresents religious figures and institutions — not appropriate for UAE school libraries",action:"REMOVE"},
+    {t:"Of Mice and Men",a:"John Steinbeck",reason:"Euthanasia and racial slurs",precise_reason:"contains euthanasia, racial slurs and language not appropriate for UAE school libraries",action:"REMOVE"},
+    {t:"Catcher in the Rye",a:"J.D. Salinger",reason:"Child rebellion against authority, language and adult themes",precise_reason:"protagonist openly rebels against all adult authority — child rebellion as positive theme not permitted; contains strong language and adult content",action:"REMOVE"},
+    {t:"The Kite Runner",a:"Khaled Hosseini",reason:"Rape, graphic violence and war content",precise_reason:"contains depiction of rape of a child, graphic violence, and Taliban-era Afghanistan conflict — not appropriate for UAE school libraries",action:"REMOVE"},
+    {t:"A Thousand Splendid Suns",a:"Khaled Hosseini",reason:"Domestic abuse, violence and war content",precise_reason:"contains sustained domestic violence, abuse and Middle East war content — not appropriate for UAE school libraries",action:"REMOVE"},
+    {t:"Slaughterhouse-Five",a:"Kurt Vonnegut",reason:"Anti-war, anti-authority and adult content",precise_reason:"anti-authority anti-war content with adult language and themes — not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"The Color Purple",a:"Alice Walker",reason:"Racism, sexual violence and LGBTQ+ themes",precise_reason:"contains racism, sexual violence and LGBTQ+ themes — not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Catch-22",a:"Joseph Heller",reason:"Anti-war, anti-authority and adult content",precise_reason:"anti-authority anti-war satire with adult themes — not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"The Fault in Our Stars",a:"John Green",reason:"Romance and death of children",precise_reason:"contains teenage romance and graphic depiction of death of young people — not appropriate for UAE school libraries",action:"REMOVE"},
+    {t:"Looking for Alaska",a:"John Green",reason:"Sexual content, alcohol and death",precise_reason:"contains sexual content, underage drinking and death — not appropriate for UAE school libraries",action:"REMOVE"},
+    {t:"The Handmaid's Tale",a:"Margaret Atwood",reason:"Sexual content, dystopian anti-authority and feminist themes",precise_reason:"contains explicit sexual content and sustained dystopian anti-authority narrative — not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"To Kill a Mockingbird",a:"Harper Lee",reason:"Racism, racial slurs and rape",precise_reason:"contains racial slurs and rape themes — not permitted in UAE school libraries despite literary merit",action:"REMOVE"},
+    {t:"Harry Potter",a:"J.K. Rowling",reason:"Witchcraft as central positive theme",precise_reason:"entire series centres on witchcraft and magic as positive heroic themes — not permitted in UAE school libraries",action:"REMOVE",series:true},
+    {t:"Philosopher's Stone",a:"J.K. Rowling",reason:"Witchcraft as central positive theme",precise_reason:"Harry Potter series — witchcraft and magic as central heroic themes not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Chamber of Secrets",a:"J.K. Rowling",reason:"Witchcraft as central positive theme",precise_reason:"Harry Potter series — witchcraft and magic as central heroic themes not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Prisoner of Azkaban",a:"J.K. Rowling",reason:"Witchcraft as central positive theme",precise_reason:"Harry Potter series — witchcraft and magic as central heroic themes not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Narnia",a:"C.S. Lewis",reason:"Witchcraft and Christian allegory",precise_reason:"contains witchcraft themes and is a Christian religious allegory — not permitted in UAE school libraries",action:"REMOVE",series:true},
+    {t:"Lion the Witch",a:"C.S. Lewis",reason:"Witchcraft and Christian allegory",precise_reason:"contains White Witch/witchcraft themes and is a Christian allegory — not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Percy Jackson",a:"Rick Riordan",reason:"Mythology and magic presented as real",precise_reason:"centres on Greek mythology and magic presented as reality — occult and polytheistic content not permitted in UAE school libraries",action:"REMOVE",series:true},
+    {t:"His Dark Materials",a:"Philip Pullman",reason:"Anti-religion and occult themes",precise_reason:"explicitly anti-religious narrative with occult magic themes — not permitted in UAE school libraries",action:"REMOVE",series:true},
+    {t:"The Golden Compass",a:"Philip Pullman",reason:"Anti-religion and occult themes",precise_reason:"anti-religious narrative with occult themes — not permitted in UAE school libraries",action:"REMOVE"},
+    {t:"Mortal Instruments",a:"Cassandra Clare",reason:"Witchcraft, occult and LGBTQ+ themes",precise_reason:"contains witchcraft, occult and LGBTQ+ characters — not permitted in UAE school libraries",action:"REMOVE",series:true},
+    {t:"Infernal Devices",a:"Cassandra Clare",reason:"Witchcraft, occult and LGBTQ+ themes",precise_reason:"contains witchcraft, occult and LGBTQ+ characters — not permitted in UAE school libraries",action:"REMOVE",series:true},
+  all_books_banned_authors: [
     {author:"sarah j maas",display:"Sarah J. Maas"},
     {author:"colleen hoover",display:"Colleen Hoover"},
     {author:"dav pilkey",display:"Dav Pilkey"},
   ],
-  age_ratings:{
-    "E":"General — suitable for all ages.",
-    "3+":"Ages 3+. Simple stories, educational.",
-    "6+":"Ages 6+. Minimal fantasy violence only.",
-    "10+":"Ages 10+. Some cartoon violence.",
-    "13+":"Ages 13+. Fantasy adventure, some violence.",
-    "17+":"Ages 17+. Mature themes.",
-    "21+":"Ages 21+ only. NOT for school libraries.",
+  age_ratings: {
+    "E":"General — suitable for all ages. No sexual content, violence, drugs or inappropriate language.",
+    "3+":"Ages 3 and above. Simple stories, educational. No violence, sexual content or adult themes.",
+    "6+":"Ages 6 and above. Minimal fantasy violence only. No sexual content, drugs, alcohol or strong language.",
+    "10+":"Ages 10 and above. Superhero/fantasy, some cartoon violence. No sexual content, drugs or strong language.",
+    "13+":"Ages 13 and above. Fantasy adventure, some violence. No sexual content, drug use or explicit language.",
+    "17+":"Ages 17 and above. Mature themes, some sexual suggestion, real combat violence. Strong language may be present.",
+    "21+":"Ages 21 and above only. Extreme violence, partial nudity. NOT appropriate for school libraries.",
   },
 };
 
-let allResults=[],uploadedData=[];
+let allResults=[], uploadedData=[];
 const norm=s=>(s||'').toLowerCase().replace(/[^a-z0-9\u0600-\u06ff\s]/g,'').trim();
 
 function switchTab(t){
-  ['single','bulk','report'].forEach(x=>{
+  ['single','bulk','report','datacurrency'].forEach(x=>{
     document.getElementById('panel-'+x).style.display=x===t?'block':'none';
     document.getElementById('tab-'+x).classList.toggle('active',x===t);
   });
-  if(t==='report')renderReport();
+  if(t==='report') renderReport();
 }
 
 function dbCheck(isbn,title,author,publisher){
-  const flags=[],nt=norm(title),na=norm(author),np=norm(publisher);
+  const flags=[];
+  const nt=norm(title),na=norm(author),np=norm(publisher);
   for(const a of DB.banned_authors){
     const em=na.length>2&&(norm(a.en||'').includes(na)||na.includes(norm(a.en||'')));
     const am=na.length>2&&(norm(a.ar||'').includes(na)||na.includes(norm(a.ar||'')));
-    if(em||am)flags.push({sev:'RED',rule:`Banned author: ${a.en}${a.ar?' ('+a.ar+')':''}`,note:'All books by this author are non-compliant regardless of title.'});
+    if(em||am) flags.push({sev:'RED',rule:`Flagged — author ${a.en}${a.ar?' ('+a.ar+')':''} appears on the UAE MOE banned authors list`,note:'All titles by this author are non-compliant for UAE school libraries regardless of subject matter.'});
   }
   for(const a of DB.all_books_banned_authors){
     if(na.length>4&&na.includes(a.author)&&!flags.some(f=>f.rule.includes(a.display)))
-      flags.push({sev:'RED',rule:`Banned author: ${a.display}`,note:'All titles by this author are non-compliant.'});
+      flags.push({sev:'RED',rule:`Flagged — author ${a.display} appears on UAE school library non-compliant authors list`,note:'All titles by this author are non-compliant for UAE school library collections.'});
   }
   for(const p of DB.banned_publishers){
     if(np.length>2&&(norm(p).includes(np)||np.includes(norm(p))))
-      flags.push({sev:'RED',rule:`Banned publisher: ${p}`,note:'All books from this publisher are non-compliant.'});
+      flags.push({sev:'RED',rule:`Flagged — publisher "${p}" is on the UAE MOE non-compliant publishers list`,note:'All books from this publisher are non-compliant for UAE school libraries regardless of title or subject.'});
   }
   for(const b of DB.moe_2025){
     const tm=nt.length>2&&(norm(b.en).includes(nt)||nt.includes(norm(b.en)));
-    if(tm)flags.push({sev:'RED',rule:`Non-compliant title: "${b.en}"`,note:`Author: ${b.author}. Does not meet UAE content guidelines.`});
+    if(tm) flags.push({sev:'RED',rule:`Flagged — "${b.en}" appears on UAE MOE 2025 non-compliant titles list`,note:`Author: ${b.author}. Reason: contains content contrary to UAE values (atheism, secularism, or anti-religious themes). Not permitted in UAE school libraries.`});
   }
   for(const b of DB.flagged_titles){
     const tm=nt.length>2&&(norm(b.t).includes(nt)||nt.includes(norm(b.t)));
     if(tm){
-      const sev=b.action==='WATCH'||b.action==='REVIEW'?'AMBER':'RED';
-      flags.push({sev,rule:b.action==='WATCH'?`Under review: "${b.t}"`:b.action==='REVIEW'?`Requires review: "${b.t}"`:`Non-compliant title: "${b.t}"`,note:`${b.reason}.${b.series?' Entire series affected.':''}${b.action==='WATCH'?' No removal action required at this time.':''}`});
+      const sev=b.action==='WATCH'?'AMBER':b.action==='REVIEW'?'AMBER':'RED';
+      // Build specific flag reason text based on the reason field
+      const reasonMap={
+        'LGBTQ+ themes':'Flagged — contains LGBTQ+ themes not permitted in UAE school libraries',
+        'Gender/LGBTQ+ themes':'Flagged — contains gender identity and LGBTQ+ themes not permitted in UAE school libraries',
+        'Transgender themes':'Flagged — contains transgender themes not permitted in UAE school libraries',
+        'Same-sex family depictions':'Flagged — depicts same-sex family structures, not permitted in UAE school libraries',
+        'Same-sex marriage themes':'Flagged — contains same-sex marriage themes not permitted in UAE school libraries',
+        'LGBTQ+ Pride content':'Flagged — contains LGBTQ+ Pride content not permitted in UAE school libraries',
+        'Contains LGBTQ+ biographical content':'Requires review — contains LGBTQ+ biographical content which must be assessed before shelving',
+        'Rainbow imagery':'Flagged — contains rainbow imagery flagged under UAE compliance guidelines (2024)',
+        'Sexual content':'Flagged — contains sexual content not appropriate for UAE school libraries',
+        'Inappropriate content':'Flagged — contains content deemed inappropriate under UAE school library content guidelines',
+        'Noted as bad role model — no removal action requested':'Under monitoring — noted during compliance review as depicting poor role models; no removal required at this time',
+        'Flagged during compliance review':'Flagged during UAE MOE compliance review — not approved for UAE school library shelves',
+        'Flagged — Note: Mary Shelley original is permitted':'Flagged — this adaptation (Nick Dear) was flagged during compliance review; the original Mary Shelley text is permitted',
+      };
+      const specificReason=reasonMap[b.reason]||(b.action==='WATCH'?`Under review: "${b.t}" — ${b.reason}`:b.action==='REVIEW'?`Requires review: "${b.t}" — ${b.reason}`:`Flagged — "${b.t}" — ${b.reason}`);
+      const noteText=`${b.series?'Entire series affected. ':''}${b.action==='WATCH'?'Monitoring only — no removal action required at this time.':''}`;
+      flags.push({sev,rule:specificReason,note:noteText.trim()||undefined});
     }
   }
   return flags;
 }
 
 async function aiCheck(isbn,title,author,publisher,dbFlags){
-  const sys=`You are ShelfCheck, a UAE school library book screening assistant. Screen books against UAE content guidelines precisely. Do not over-flag.
-UAE CONTENT RULES: No LGBTQ+ content, no rainbow imagery, no maps showing Israel or Persian Gulf (must say Arabian Gulf), no nudity/anatomical diagrams, no sexual content/drugs/alcohol, no atheism/secularism, no political extremism, no content disrespectful of Islam or UAE leadership, no pigs as characters, no witchcraft/occult presented positively, no Holocaust/genocide/concentration camps, no child rebellion against parents as positive theme, no dystopian anti-authority societies, no Middle East protests or Arab Spring content, no racism or racial slurs, no rape or sexual violence, no gruesome violence or gore.
-UAE AGE RATINGS: E=Everyone, 3+=simple stories, 6+=minimal fantasy violence, 10+=cartoon violence ok, 13+=some violence no sex, 17+=mature, 21+=extreme NOT for schools.
+  const sys=`You are ShelfCheck, a UAE school library book screening assistant. Your default position is CAUTION. If a book could plausibly contain prohibited content, flag it. Do not give the benefit of the doubt. A false negative (missing a banned book) is far more damaging than a false positive.
+
+UAE CONTENT RULES — flag ANY book that contains:
+- LGBTQ+ content, characters, relationships or themes of any kind
+- Pigs as characters, on covers, or featured in the story
+- Witchcraft, magic, occult presented positively (Harry Potter, Narnia, Percy Jackson, His Dark Materials ALL flagged)
+- Rainbow imagery used as LGBTQ+ symbolism
+- Maps showing Israel or using "Persian Gulf" (must be "Arabian Gulf")
+- Nudity, anatomical diagrams, sexual content, romance
+- Alcohol, drugs, substance use (even casual)
+- Atheism, secularism, anti-religious content
+- Judaism, Hebrew language, Israel references
+- Christianity promoted as a religion (mention of Jesus acceptable, promotion not)
+- Content disrespectful of Islam or UAE leadership or national values
+- Holocaust, genocide, concentration camps, mass killings, Nazi references
+- Child rebellion against parents or authority presented as positive or heroic
+- Dystopian societies that challenge or oppose authority or government
+- Middle East protests, Arab Spring, Arab uprisings, political instability
+- Racism, racial slurs, racial violence (even in historical context)
+- Rape, sexual violence, abuse (even implied)
+- Gruesome violence, gore, torture, murder of children
+- Teen mental health books that contain sex/drug chapters
+- Iran/Hezbollah political content
+- Euthanasia, mercy killing, infanticide
+Screen books against UAE content guidelines. Be precise. Do not over-flag.
+
+UAE CONTENT GUIDELINES:
+- LGBTQ+ content of any kind
+- Rainbow imagery (flagged as of 2024)
+- Maps showing Israel or "Persian Gulf" (must say "Arabian Gulf")
+- Nudity or anatomical diagrams
+- Art/art history books containing nude paintings
+- Sexual content, drug use, alcohol
+- Atheism, secularism, anti-religious content
+- Political extremism or glorification of banned groups
+- Iran/Hezbollah political content
+- Content disrespectful of Islam, UAE leadership or national values
+- Teen mental health books (often contain sex/drug chapters)
+
+UAE MEDIA COUNCIL AGE RATINGS:
+E=Everyone, 3+=simple no violence, 6+=minimal fantasy violence,
+10+=cartoon violence ok, 13+=some violence no sex, 17+=mature some sexual suggestion,
+21+=extreme adult content NOT for school libraries
+
+GRADE RANGE: Provide a recommended grade range for UAE schools (e.g. "KG–Grade 2", "Grades 3–5", "Grades 6–8", "Grades 9–12"). If the book is flagged/non-compliant, set grade_range to "Not recommended for any grade level in UAE schools".
+
 Respond ONLY in this exact JSON (no markdown):
-{"found":true/false,"full_title":"...","genre":"...","fiction":true/false,"year":"...","age_group":"...","popularity":"...","themes":"...","synopsis":"...","rating":"E/3+/6+/10+/13+/17+/21+","rating_reason":"...","compliance":{"lgbtq":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"rainbows":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"maps":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"nudity":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"sex_drugs":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"violence":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"religious":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"political":{"s":"CLEAR/FLAG/REVIEW","d":"..."}},"verdict":"SAFE/REVIEW/FLAG","summary":"...","librarian_tip":"..."}`;
+{"found":true/false,"full_title":"...","genre":"...","fiction":true/false,"year":"...","age_group":"...","popularity":"...","themes":"...","synopsis":"...","rating":"E/3+/6+/10+/13+/17+/21+","rating_reason":"...","grade_range":"e.g. Grades 4–6 / KG–Grade 2 / Not recommended for any grade level in UAE schools","compliance":{"lgbtq":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"rainbows":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"maps":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"nudity":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"sex_drugs":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"violence":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"religious":{"s":"CLEAR/FLAG/REVIEW","d":"..."},"political":{"s":"CLEAR/FLAG/REVIEW","d":"..."}},"verdict":"SAFE/REVIEW/FLAG","summary":"...","librarian_tip":"..."}`;
   const msg=`Screen this book:\nISBN: ${isbn||'N/A'} | Title: ${title||'N/A'} | Author: ${author||'N/A'} | Publisher: ${publisher||'N/A'}\nDB flags: ${dbFlags.length?dbFlags.map(f=>f.rule).join('; '):'None'}`;
   const res=await fetch('/api/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:[{role:'user',content:msg}]})});
   const d=await res.json();
@@ -977,42 +1078,45 @@ Respond ONLY in this exact JSON (no markdown):
 function renderResult(isbn,title,author,publisher,dbFlags,ai){
   const hasRed=dbFlags.some(f=>f.sev==='RED')||(ai?.verdict==='FLAG');
   const hasAmber=dbFlags.some(f=>f.sev==='AMBER')||(ai?.verdict==='REVIEW');
-  const verdict=hasRed?'NON-COMPLIANT':hasAmber?'REVIEW REQUIRED':'CLEAR';
+  const verdict=hasRed?'Flagged in Database':hasAmber?'Manual Review Recommended':'No Known Flags';
   const vc=hasRed?'v-red':hasAmber?'v-amber':'v-green';
   const hc=hasRed?'rh-red':hasAmber?'rh-amber':'rh-green';
   const icon=hasRed?'🔴':hasAmber?'🟡':'🟢';
   const dTitle=ai?.full_title||title||'Unknown Title';
   const dAuthor=ai?.author_name||author||'';
-  let h=`<div class="result-card"><div class="result-head ${hc}"><div><div class="result-title">${dTitle}</div><div class="result-meta">${dAuthor?'by '+dAuthor:''}${isbn?' · ISBN: '+isbn:''}${publisher?' · '+publisher:''}</div></div><span class="verdict ${vc}">${icon} ${verdict}</span></div><div class="result-body">`;
+  // Grade range: use AI result, or fallback based on verdict for DB-only flags
+  const gradeRange=ai?.grade_range||(hasRed?'Not recommended for any grade level in UAE schools':null);
+  let h=`<div class="result-card"><div class="result-head ${hc}"><div><div class="result-title">${dTitle}</div><div class="result-meta">${dAuthor?'by '+dAuthor:''}${isbn?' · ISBN: '+isbn:''}${publisher?' · '+publisher:''}</div>${gradeRange?`<div style="margin-top:6px;font-size:12px;font-weight:500;color:${hasRed?'var(--uae-red)':hasAmber?'var(--amber)':'var(--uae-green)'};">📚 Recommended grade range: ${gradeRange}</div>`:''}</div><span class="verdict ${vc}">${icon} ${verdict}</span></div><div class="result-body">`;
   if(dbFlags.length>0){
-    h+=`<div style="margin-bottom:16px;">`;
+    h+=`<div style="margin-bottom:14px;">`;
     for(const f of dbFlags){const fc=f.sev==='RED'?'flag-r':'flag-a';const fi=f.sev==='RED'?'🔴':'🟡';h+=`<div class="flag ${fc}"><div class="flag-icon">${fi}</div><div><div class="flag-rule">${f.rule}</div>${f.note?`<div class="flag-note">${f.note}</div>`:''}</div></div>`;}
     h+=`</div>`;
-  }else{
-    h+=`<div class="flag flag-g" style="margin-bottom:16px;"><div class="flag-icon">✅</div><div><div class="flag-rule">No matches found in screening databases</div><div class="flag-note">This title, author and publisher do not appear in current non-compliant reference data.</div></div></div>`;
+  } else {
+    h+=`<div class="flag flag-g" style="margin-bottom:14px;"><div class="flag-icon">✅</div><div><div class="flag-rule">No matches found in screening databases</div><div class="flag-note">This title, author and publisher do not appear in current non-compliant reference data.</div></div></div>`;
   }
   if(ai){
-    h+=`<div class="ai-section"><div class="ai-title">Content Assessment <span class="ai-badge">AI-assisted · UAE content guidelines</span></div>`;
+    h+=`<div class="ai-section"><div class="ai-title">Content Assessment <span class="ai-badge">AI-assisted · Based on UAE content guidelines</span></div>`;
     if(ai.compliance){
       const labels={lgbtq:'LGBTQ+',rainbows:'Rainbows',maps:'Maps/Geography',nudity:'Nudity/Body',sex_drugs:'Sex/Drugs/Alcohol',violence:'Violence',religious:'Religious Content',political:'Political Content'};
       h+=`<div class="comp-grid">`;
-      for(const [k,label] of Object.entries(labels)){const c=ai.compliance[k];if(!c)continue;const cs=c.s==='FLAG'?'cv-flag':c.s==='REVIEW'?'cv-warn':'cv-ok';const ci=c.s==='FLAG'?'🔴':c.s==='REVIEW'?'🟡':'✅';h+=`<div class="comp-item"><div class="comp-label">${label}</div><div class="comp-val ${cs}">${ci} ${c.s}</div>${c.d&&c.d!=='N/A'?`<div style="font-size:11px;color:#aaa;margin-top:2px;">${c.d}</div>`:''}</div>`;}
+      for(const[k,label]of Object.entries(labels)){const c=ai.compliance[k];if(!c)continue;const cs=c.s==='FLAG'?'cv-flag':c.s==='REVIEW'?'cv-warn':'cv-ok';const ci=c.s==='FLAG'?'🔴':c.s==='REVIEW'?'🟡':'✅';h+=`<div class="comp-item"><div class="comp-label">${label}</div><div class="comp-val ${cs}">${ci} ${c.s}</div>${c.d&&c.d!=='N/A'?`<div style="font-size:11px;color:#aaa;margin-top:2px;">${c.d}</div>`:''}</div>`;}
       h+=`</div>`;
     }
-    if(ai.rating)h+=`<div class="flag flag-b" style="margin:10px 0;"><div class="flag-icon">🏷️</div><div><div class="flag-rule">UAE Age Rating: <strong>${ai.rating}</strong></div><div class="flag-note">${DB.age_ratings[ai.rating]||''}</div>${ai.rating_reason?`<div class="flag-note" style="margin-top:3px;">${ai.rating_reason}</div>`:''}</div></div>`;
+    if(ai.rating) h+=`<div class="flag flag-b" style="margin:9px 0;"><div class="flag-icon">🏷️</div><div><div class="flag-rule">UAE Age Rating: <strong>${ai.rating}</strong></div><div class="flag-note">${DB.age_ratings[ai.rating]||''}</div>${ai.rating_reason?`<div class="flag-note" style="margin-top:2px;">${ai.rating_reason}</div>`:''}</div></div>`;
     if(ai.found){
       h+=`<div class="info-grid">`;
       const fields=[['Genre',ai.genre],['Type',ai.fiction!==undefined?(ai.fiction?'Fiction':'Non-Fiction'):null],['Age Group',ai.age_group],['Year',ai.year],['Popularity',ai.popularity],['Themes',ai.themes]];
-      for(const [l,v] of fields){if(v)h+=`<div class="info-item"><div class="info-label">${l}</div><div class="info-val">${v}</div></div>`;}
+      for(const[l,v]of fields){if(v)h+=`<div class="info-item"><div class="info-label">${l}</div><div class="info-val">${v}</div></div>`;}
       h+=`</div>`;
-      if(ai.synopsis)h+=`<div class="narrative" style="margin-top:12px;"><strong>Synopsis:</strong> ${ai.synopsis}</div>`;
+      if(ai.synopsis) h+=`<div class="narrative" style="margin-top:11px;"><strong>Synopsis:</strong> ${ai.synopsis}</div>`;
     }
-    if(ai.summary)h+=`<div class="narrative" style="margin-top:10px;"><strong>Assessment:</strong> ${ai.summary}</div>`;
-    if(ai.librarian_tip)h+=`<div class="narrative" style="margin-top:8px;border-left:3px solid var(--gold);padding-left:12px;"><strong>💡 Librarian Note:</strong> ${ai.librarian_tip}</div>`;
+    if(ai.summary) h+=`<div class="narrative" style="margin-top:9px;"><strong>Assessment:</strong> ${ai.summary}</div>`;
+    if(ai.librarian_tip) h+=`<div class="narrative" style="margin-top:8px;border-left:3px solid var(--gold);padding-left:11px;"><strong>💡 Librarian Note:</strong> ${ai.librarian_tip}</div>`;
     h+=`</div>`;
   }
   h+=`</div></div>`;
-  return{html:h,verdict:hasRed?'RED':hasAmber?'AMBER':'GREEN',title:dTitle,author:dAuthor};
+  const finalVerdict=hasRed?'RED':hasAmber?'AMBER':'GREEN';
+  return{html:h,verdict:finalVerdict,title:dTitle,author:dAuthor};
 }
 
 async function runCheck(){
@@ -1020,20 +1124,20 @@ async function runCheck(){
   const title=document.getElementById('title').value.trim();
   const author=document.getElementById('author').value.trim();
   const publisher=document.getElementById('publisher').value.trim();
-  if(!isbn&&!title&&!author){document.getElementById('results').innerHTML=`<div style="padding:20px 28px;color:var(--amber);font-weight:500;">⚠️ Please enter at least a title, author or ISBN.</div>`;return;}
+  if(!isbn&&!title&&!author){document.getElementById('results').innerHTML=`<div style="padding:18px 26px;color:var(--amber);font-weight:500;">⚠️ Please enter at least a title, author or ISBN.</div>`;return;}
   const btn=document.getElementById('check-btn');
-  btn.disabled=true;btn.innerHTML='<span class="spinner" style="width:16px;height:16px;border-width:2px;display:inline-block;margin-right:6px;vertical-align:middle;"></span> Screening...';
-  document.getElementById('results').innerHTML=`<div class="loading"><div class="spinner"></div><p>Screening against UAE content guidelines...</p><small>Checking reference databases · AI content assessment</small></div>`;
+  btn.disabled=true;btn.innerHTML='<span class="spinner" style="width:15px;height:15px;border-width:2px;display:inline-block;margin-right:6px;"></span> Screening...';
+  document.getElementById('results').innerHTML=`<div class="loading"><div class="spinner"></div><p>Screening against content guidelines...</p><small>Checking reference databases · AI content assessment</small></div>`;
   try{
     const dbFlags=dbCheck(isbn,title,author,publisher);
     const ai=await aiCheck(isbn,title,author,publisher,dbFlags);
     const r=renderResult(isbn,title,author,publisher,dbFlags,ai);
-    document.getElementById('results').innerHTML=`<div style="padding:0 22px 22px;">${r.html}</div>`;
+    document.getElementById('results').innerHTML=`<div style="padding:0 20px 20px;">${r.html}</div>`;
     allResults.push({isbn,title:r.title,author:r.author,publisher,verdict:r.verdict,dbFlags,ai,ts:new Date()});
   }catch(e){
     const dbFlags=dbCheck(isbn,title,author,publisher);
     const r=renderResult(isbn,title,author,publisher,dbFlags,null);
-    document.getElementById('results').innerHTML=`<div style="padding:0 22px 22px;">${r.html}</div>`;
+    document.getElementById('results').innerHTML=`<div style="padding:0 20px 20px;">${r.html}</div>`;
     allResults.push({isbn,title:r.title,author:r.author,publisher,verdict:r.verdict,dbFlags,ai:null,ts:new Date()});
   }
   btn.disabled=false;btn.innerHTML='<span>🔍</span> Check This Book';
@@ -1047,33 +1151,25 @@ function handleFileSelect(e){const f=e.target.files[0];if(f)processUpload(f);}
 async function processUpload(file){
   const fn=document.getElementById('file-name');fn.style.display='block';fn.textContent=`📎 ${file.name} (${(file.size/1024).toFixed(1)} KB)`;
   try{
-    const XLSX=await loadXLSX(),data=await file.arrayBuffer(),wb=XLSX.read(data,{type:'array'}),ws=wb.Sheets[wb.SheetNames[0]],rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+    const XLSX=await loadXLSX();const data=await file.arrayBuffer();const wb=XLSX.read(data,{type:'array'});const ws=wb.Sheets[wb.SheetNames[0]];const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
     uploadedData=[];const headers=(rows[0]||[]).map(h=>String(h).toLowerCase());
-    for(let i=1;i<rows.length;i++){
-      const row=rows[i];if(!row.some(c=>c))continue;
-      let isbn='',title='',author='',publisher='';
+    for(let i=1;i<rows.length;i++){const row=rows[i];if(!row.some(c=>c))continue;let isbn='',title='',author='',publisher='';
       for(let j=0;j<headers.length;j++){const h=headers[j],v=String(row[j]||'').trim();if(h.includes('isbn'))isbn=v;else if(h.includes('title')||h.includes('عنوان'))title=v;else if(h.includes('author')||h.includes('مؤلف'))author=v;else if(h.includes('publisher')||h.includes('ناشر'))publisher=v;else if(!isbn&&/^\d{10,13}$/.test(v.replace(/-/g,'')))isbn=v;else if(!title&&v.length>2)title=v;else if(!author&&v.length>2)author=v;}
       if(isbn||title||author)uploadedData.push({isbn,title,author,publisher});
     }
-    document.getElementById('bulk-btn').disabled=false;document.getElementById('bulk-btn').style.opacity='1';
-    document.getElementById('bulk-status').textContent=`✅ ${uploadedData.length} books ready to screen`;
-  }catch(e){fn.textContent=`❌ Error reading file.`;document.getElementById('bulk-status').textContent='';}
+    document.getElementById('bulk-btn').disabled=false;document.getElementById('bulk-btn').style.opacity='1';document.getElementById('bulk-status').textContent=`✅ ${uploadedData.length} books ready to screen`;
+  }catch(e){fn.textContent=`❌ Error reading file. Please use the provided template.`;document.getElementById('bulk-status').textContent='';}
 }
 
-async function loadXLSX(){
-  if(window.XLSX)return window.XLSX;
-  return new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';s.onload=()=>res(window.XLSX);s.onerror=rej;document.head.appendChild(s);});
-}
+async function loadXLSX(){if(window.XLSX)return window.XLSX;return new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';s.onload=()=>res(window.XLSX);s.onerror=rej;document.head.appendChild(s);});}
 
 async function runBulkCheck(){
-  if(!uploadedData.length)return;
-  const btn=document.getElementById('bulk-btn');btn.disabled=true;
+  if(!uploadedData.length)return;const btn=document.getElementById('bulk-btn');btn.disabled=true;
   document.getElementById('bulk-progress').style.display='block';document.getElementById('bulk-results').innerHTML='';
   let results=[];
   for(let i=0;i<uploadedData.length;i++){
     const b=uploadedData[i];const pct=Math.round(((i+1)/uploadedData.length)*100);
-    document.getElementById('prog-fill').style.width=pct+'%';
-    document.getElementById('prog-label').textContent=`Checking ${i+1} of ${uploadedData.length}: "${b.title||b.isbn||'...'}"`;
+    document.getElementById('prog-fill').style.width=pct+'%';document.getElementById('prog-label').textContent=`Checking ${i+1} of ${uploadedData.length}: "${b.title||b.isbn||'...'}"`;
     const dbFlags=dbCheck(b.isbn,b.title,b.author,b.publisher);let ai=null;
     if(dbFlags.length===0&&b.title){try{ai=await aiCheck(b.isbn,b.title,b.author,b.publisher,dbFlags);}catch{}}
     const r=renderResult(b.isbn,b.title,b.author,b.publisher,dbFlags,ai);results.push(r);
@@ -1088,25 +1184,22 @@ function renderReport(){
   if(!allResults.length)return;
   const reds=allResults.filter(r=>r.verdict==='RED'),ambers=allResults.filter(r=>r.verdict==='AMBER'),greens=allResults.filter(r=>r.verdict==='GREEN');
   let h=`<div class="summary-row"><div class="sum-card sum-total"><div class="sum-count">${allResults.length}</div><div class="sum-label">Total</div></div><div class="sum-card sum-red"><div class="sum-count">${reds.length}</div><div class="sum-label">Non-Compliant</div></div><div class="sum-card sum-amber"><div class="sum-count">${ambers.length}</div><div class="sum-label">Review</div></div><div class="sum-card sum-green"><div class="sum-count">${greens.length}</div><div class="sum-label">Clear</div></div></div>`;
-  const sec=(t,items,cls,bc)=>{if(!items.length)return'';let s=`<h3 style="font-family:'Playfair Display',serif;font-size:16px;margin:20px 0 10px;color:${bc};">${t} (${items.length})</h3>`;for(const r of items)s+=`<div style="padding:10px 14px;background:${cls};border-radius:8px;margin-bottom:6px;border-left:3px solid ${bc};"><strong>${r.title}</strong>${r.author?' by '+r.author:''}${r.dbFlags.length?`<div style="font-size:11px;color:#888;margin-top:3px;">${r.dbFlags.map(f=>f.rule).join(' · ')}</div>`:''}</div>`;return s;};
-  h+=sec('🔴 Non-Compliant',reds,'var(--red-soft)','var(--red)');
-  h+=sec('🟡 Review Required',ambers,'var(--amber-soft)','var(--amber)');
-  h+=sec('🟢 Clear',greens,'var(--green-soft)','var(--green)');
-  document.getElementById('report-body').innerHTML=h;
-  const dl=document.getElementById('dl-btn');dl.disabled=false;dl.style.opacity='1';dl.style.cursor='pointer';
+  const section=(title,items,cls,bc)=>{if(!items.length)return '';let s=`<h3 style="font-family:'Cormorant Garamond',serif;font-size:16px;margin:18px 0 9px;color:${bc};">${title} (${items.length})</h3>`;for(const r of items)s+=`<div style="padding:10px 14px;background:${cls};border-radius:9px;margin-bottom:6px;border-left:3px solid ${bc};"><strong>${r.title}</strong>${r.author?' by '+r.author:''}${r.dbFlags.length?`<div style="font-size:11px;color:#888;margin-top:2px;">${r.dbFlags.map(f=>f.rule).join(' · ')}</div>`:''}</div>`;return s;};
+  h+=section('🔴 Non-Compliant',reds,'var(--red-soft)','var(--uae-red)');h+=section('🟡 Review Required',ambers,'var(--amber-soft)','var(--amber)');h+=section('🟢 Clear',greens,'var(--green-soft)','var(--uae-green)');
+  document.getElementById('report-body').innerHTML=h;const dlBtn=document.getElementById('dl-btn');dlBtn.disabled=false;dlBtn.style.opacity='1';dlBtn.style.cursor='pointer';
 }
 
 function downloadReport(){
   const date=new Date().toLocaleDateString('en-GB');
-  let csv=`ShelfCheck Report\nDate: ${date}\n\nSUMMARY\nTotal,${allResults.length}\nNon-Compliant,${allResults.filter(r=>r.verdict==='RED').length}\nReview,${allResults.filter(r=>r.verdict==='AMBER').length}\nClear,${allResults.filter(r=>r.verdict==='GREEN').length}\n\nDETAILS\nVerdict,Title,Author,ISBN,Publisher,Reason\n`;
+  let csv=`ShelfCheck — Book Screening Report\nDate: ${date}\n\nSUMMARY\nTotal,${allResults.length}\nNon-Compliant,${allResults.filter(r=>r.verdict==='RED').length}\nReview Required,${allResults.filter(r=>r.verdict==='AMBER').length}\nClear,${allResults.filter(r=>r.verdict==='GREEN').length}\n\nDETAILS\nVerdict,Title,Author,ISBN,Publisher,Reason\n`;
   for(const r of allResults){const reason=r.dbFlags.map(f=>f.rule).join('; ')||(r.ai?.summary||'AI Assessment');csv+=`"${r.verdict}","${r.title}","${r.author||''}","${r.isbn||''}","${r.publisher||''}","${reason}"\n`;}
-  csv+=`\nFor internal library use only.`;
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=`ShelfCheck_Report_${date.replace(/\//g,'-')}.csv`;a.click();
+  csv+=`\nNOTE: For internal library use only. Final decisions remain with school leadership.\nCompliance data last updated: January 2026`;
+  const blob=new Blob([csv],{type:'text/csv'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`ShelfCheck_Report_${date.replace(/\//g,'-')}.csv`;a.click();
 }
 
 function downloadTemplate(type){
-  if(type==='english'){const csv=`ISBN (Mandatory),Book Title (Mandatory),Author (Mandatory),Publisher (Optional)\n9780743273565,The Great Gatsby,F. Scott Fitzgerald,Scribner\n(delete sample rows),,,`;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='ShelfCheck_English_Template.csv';a.click();}
-  else{const csv=`Book Title - عنوان الكتاب,Author - المؤلف,Publisher - الناشر,ISBN\nمعالم في الطريق,سيد قطب,دار الشروق,\n(delete sample rows),,,`;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));a.download='ShelfCheck_Arabic_Template.csv';a.click();}
+  if(type==='english'){const csv=`ISBN (Mandatory),Book Title (Mandatory),Author (Mandatory),Publisher (Optional)\n9780743273565,The Great Gatsby,F. Scott Fitzgerald,Scribner\n(delete sample rows and add your books here),,,`;const blob=new Blob([csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ShelfCheck_English_Template.csv';a.click();}
+  else{const csv=`Book Title - عنوان الكتاب (Mandatory),Author - المؤلف (Mandatory),Publisher - الناشر (Mandatory),ISBN (Optional)\nمعالم في الطريق,سيد قطب,دار الشروق,\n(delete sample rows),,,`;const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ShelfCheck_Arabic_Template.csv';a.click();}
 }
 
 function demo(type){
@@ -1116,11 +1209,9 @@ function demo(type){
 }
 function clearForm(){
   ['isbn','title','author','publisher'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('results').innerHTML=`<div class="empty"><div class="empty-icon">🔍</div><div class="empty-title">Ready to Screen</div><div class="empty-sub">Enter a title, author or ISBN above and press Check</div></div>`;
+  document.getElementById('results').innerHTML=`<div class="empty"><div class="empty-icon">📚</div><div class="empty-title">Ready to Screen</div><div class="empty-sub">Enter details above and press Check</div></div>`;
 }
-
-document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('page-shelfcheck').style.display!=='none'&&document.getElementById('panel-single').style.display!=='none')runCheck();});
-updateUsageUI();
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('panel-single').style.display!=='none')runCheck();});
 </script>
 </body>
 </html>
